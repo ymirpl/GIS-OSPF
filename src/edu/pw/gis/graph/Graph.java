@@ -2,12 +2,11 @@
  * 
  */
 package edu.pw.gis.graph;
-
 import java.util.*;
 
 public class Graph {
 	public List<Edge> edgeList = new ArrayList<Edge>();
-	public ArrayList<Node> nodeArray = new ArrayList<Node>();
+	public List<Node> nodeList = new ArrayList<Node>();
 
 	public int noNodes; // number of nodes
 
@@ -35,24 +34,20 @@ public class Graph {
 	}
 
 	public void addNode(Node n) {
-		this.nodeArray.add(n);
-		this.adjList.get(n.id).node_id = n.id; // zalozenie, ze przychodza wezly
-												// w kolejnosci idekow
+		this.nodeList.add(n);
+		this.adjList.get(n.id).n = n; //  zalozenie, ze przychodza wezly w kolejnosci idekow
 	}
 
 	public void addEdge(Edge e) {
 		this.edgeList.add(e);
-		this.adjList.get(e.source.id).list.add(new NodeEdge(e.target.id, e));
+		this.adjList.get(e.source.id).list.add(new NodeEdge(e.target, e));
 	}
 
 	public void printAdjList() {
-		for (AdjElement element : this.adjList) {
-			if (!(element.node_id == -1)) {
-				System.out.print("Node "
-						+ this.nodeArray.get(element.node_id).name + ": ");
-				for (NodeEdge t : element.list) {
-					System.out.println(t.node_id + "(" + t.e.id + "), ");
-				}
+		for (AdjElement element: this.adjList) {
+			System.out.print("Node " + element.n.name + ": " );
+			for (NodeEdge t: element.list) {
+				System.out.println(t.n.name  + "(" + t.e.id + "), ");
 			}
 		}
 		System.out.println();
@@ -68,8 +63,17 @@ public class Graph {
 		g.addEdge(e);
 		e = new Edge(1, 100, n1, n, "test");
 		g.addEdge(e);
-
+		
 		g.printAdjList();
+		System.out.println(g.nodeList.get(1).name);
+
+		// zmieniamy via edge
+		g.adjList.get(0).list.get(0).n.name = "zmieniony";
+		
+		
+		g.printAdjList();
+		System.out.println(g.nodeList.get(1).name);
+
 
 	}
 
