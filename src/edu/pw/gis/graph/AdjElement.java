@@ -11,6 +11,6 @@ public class AdjElement {
 	}
 	
 	public AdjElement() {
-		this.n = null;
+		this.n = new Node();
 	}
 }

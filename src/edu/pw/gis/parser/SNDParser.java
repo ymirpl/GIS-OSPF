@@ -107,8 +107,9 @@ public class SNDParser {
 					if (qName.equalsIgnoreCase("node")) {
 						System.out.println("Node name: " + node.id + " " + node.name);
 						System.out.println("x: " + node.draw_x + " y: " + node.draw_y);
+						graph.addNode(node);
+						graph.printAdjList();
 					}
-					graph.addNode(node);
 				}
 
 				public void characters(char ch[], int start, int length)
@@ -176,8 +177,6 @@ public class SNDParser {
 		
 //		for(int i = 0; i < snd_parser.node_list.size(); i++)
 //			System.out.println("(" + i +") " + snd_parser.node_list.get(i));
-		
-		snd_parser.graph.addNode(new Node(1,1.0,1.0,"test"));
 		
 		snd_parser.graph.printAdjList();
 	}
