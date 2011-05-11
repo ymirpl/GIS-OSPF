@@ -5,13 +5,12 @@ package edu.pw.gis.graph;
 import java.util.*;
 
 public class Graph {
-	public List<Node> nodeList = new ArrayList<Node>();
 	public List<Edge> edgeList = new ArrayList<Edge>();
 	
 	public int noNodes; // number of nodes
 	
 	public ArrayList<ArrayList<Float>> flowMatrix; // macierz przeplywow, indeksami sa numery wezlow
-	public ArrayList<ArrayList<Tuple>> adjList; // listy sasiedztwa dla kazdego wierzcholka
+	public ArrayList<AdjElement> adjList; // listy sasiedztwa dla kazdego wierzcholka
 	
 	public Graph(int noNodes) {
 		this.noNodes = noNodes;
@@ -22,27 +21,27 @@ public class Graph {
 			this.flowMatrix.add(i, new ArrayList<Float>(this.noNodes)); 
 		}
 		
-		this.adjList = new ArrayList<ArrayList<Tuple>>(this.noNodes);
+		this.adjList = new ArrayList<AdjElement>(this.noNodes);
 		
 		for (int i = 0; i < this.noNodes; ++i) {
-			this.adjList.add(i, new ArrayList<Tuple>()); 
+			this.adjList.add(i, new AdjElement()); 
 		}
 			
 	}
 	
 	public void addNode(Node n) {
-		this.nodeList.add(n); // @TODO zalozenie, ze przychodza wezly w kolejnosci ideksow
+		this.adjList.get(n.id).n = n; //  zalozenie, ze przychodza wezly w kolejnosci idekow
 	}
 	
 	public void addEdge(Edge e) {
 		this.edgeList.add(e);
-		this.adjList.get(e.source.id).add(new Tuple(e.target, e));
+		this.adjList.get(e.source.id).list.add(new NodeEdge(e.target, e));
 	}
 	
 	public void printAdjList() {
-		for (ArrayList<Tuple> list: this.adjList) {
-			System.out.print("Node " + this.adjList.indexOf(list) + ": ");
-			for (Tuple t: list) {
+		for (AdjElement element: this.adjList) {
+			System.out.print("Node " + element.n.id + ": ");
+			for (NodeEdge t: element.list) {
 				System.out.println(t.n.id  + "(" + t.e.id + "), ");
 			}
 		}
@@ -59,8 +58,6 @@ public class Graph {
 		e = new Edge(1, 100, n1, n);
 		g.addEdge(e);
 		
-		g.nodeList.get(1).name = "aaaa";
-		System.out.println(g.adjList.get(0).get(0).n.name);
 		
 		g.printAdjList();
 
