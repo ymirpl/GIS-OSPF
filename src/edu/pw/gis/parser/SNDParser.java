@@ -12,6 +12,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.Attributes;
 
+import edu.pw.gis.graph.Edge;
 import edu.pw.gis.graph.Graph;
 import edu.pw.gis.graph.Node;
 
@@ -24,9 +25,8 @@ public class SNDParser {
 	public int nodes_no = 0;
 	public int edges_no = 0;
 	public Graph graph;
-	
-	public ArrayList<String> node_list = new ArrayList<String>();
 
+	private ArrayList<String> nodes_list = new ArrayList<String>();
 	/*
 	 * Funkcja zliczaj¹ca liczbê wierszy i krawêdzi w grafie zapisanym w pliku
 	 * XML. Zliczamy wêz³y node i links
@@ -77,7 +77,22 @@ public class SNDParser {
 
 				boolean b_coord_x = false;
 				boolean b_coord_y = false;
-				Node node = new Node();
+				boolean b_edge_capacity = false;
+				boolean b_edge_source = false;
+				boolean b_edge_target = false;
+
+				// Parametry wêz³a
+				int node_id = -1;
+				double node_coord_x = -1;
+				double node_coord_y = -1;
+				String node_name = "";
+
+				// Parametry krawêdzi
+				int edge_id = -1;
+				double edge_capacity; // pojemnosc
+				Node edge_source;
+				Node edge_target;
+				String edge_name;
 
 				public void startElement(String uri, String localName,
 						String qName, Attributes attributes)
@@ -86,9 +101,14 @@ public class SNDParser {
 					// System.out.println("Start Element :" + qName);
 
 					if (qName.equalsIgnoreCase("node")) {
-						node.name = attributes.getValue(0);
-						node_list.add(node.name);
-						node.id = node_list.size()-1;
+						node_name = attributes.getValue(0);
+						node_id++;
+						nodes_list.add(node_id, node_name);
+					}
+					
+					if (qName.equalsIgnoreCase("link")) {
+						edge_name = attributes.getValue(0);
+						edge_id++;
 					}
 
 					if (qName.equalsIgnoreCase("x")) {
@@ -99,16 +119,37 @@ public class SNDParser {
 						b_coord_y = true;
 					}
 
+					if (qName.equalsIgnoreCase("capacity")) {
+						b_edge_capacity = true;
+					}
+					
+					if (qName.equalsIgnoreCase("source")) {
+						b_edge_source = true;
+					}
+					
+					if (qName.equalsIgnoreCase("target")) {
+						b_edge_target = true;
+					}
 				}
 
 				public void endElement(String uri, String localName,
 						String qName) throws SAXException {
 
 					if (qName.equalsIgnoreCase("node")) {
-						System.out.println("Node name: " + node.id + " " + node.name);
-						System.out.println("x: " + node.draw_x + " y: " + node.draw_y);
+						Node node = new Node(node_id, node_coord_x,
+								node_coord_y, node_name);
+						System.out.println();
+						System.out.println("Node name: " + node.id + " "
+								+ node.name);
+						System.out.println("x: " + node.draw_x + " y: "
+								+ node.draw_y);
 						graph.addNode(node);
-						graph.printAdjList();
+					}
+					
+					if (qName.equalsIgnoreCase("link")) {
+						Edge edge = new Edge(edge_id, edge_capacity, edge_source, edge_target, edge_name);
+						System.out.println();
+						graph.addEdge(edge);
 					}
 				}
 
@@ -116,27 +157,34 @@ public class SNDParser {
 						throws SAXException {
 
 					if (b_coord_x) {
-						node.draw_x = Double.parseDouble(new String(ch, start, length));
+						node_coord_x = Double.parseDouble(new String(ch, start,
+								length));
 						b_coord_x = false;
 					}
 
 					if (b_coord_y) {
-						node.draw_y = Double.parseDouble(new String(ch, start, length));
+						node_coord_y = Double.parseDouble(new String(ch, start,
+								length));
 						b_coord_y = false;
 					}
-					//
-					// if (bnname) {
-					// System.out.println("Nick Name : "
-					// + new String(ch, start, length));
-					// bnname = false;
-					// }
-					//
-					// if (bsalary) {
-					// System.out.println("Salary : "
-					// + new String(ch, start, length));
-					// bsalary = false;
-					// }
 
+					if (b_edge_capacity) {
+						edge_capacity = Double.parseDouble(new String(ch, start,
+								length));
+						b_edge_capacity = false;
+					}
+					
+					if (b_edge_source) {
+						edge_source = graph.nodeArray.get(nodes_list.indexOf(new String(ch, start,
+								length)));
+						b_edge_source = false;
+					}
+					
+					if (b_edge_target) {
+						edge_target = graph.nodeArray.get(nodes_list.indexOf(new String(ch, start,
+								length)));
+						b_edge_target = false;
+					}
 				}
 
 			};
@@ -170,14 +218,14 @@ public class SNDParser {
 		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/giul39.xml");
 		System.out.println("liczba krawêdzi: " + snd_parser.getEdges_no());
 		System.out.println("liczba wêz³ów: " + snd_parser.getNodes_no());
-		
+
 		snd_parser.graph = new Graph(snd_parser.nodes_no);
-		
+
 		snd_parser.readSNDNetworkXML("xml/giul39.xml");
-		
-//		for(int i = 0; i < snd_parser.node_list.size(); i++)
-//			System.out.println("(" + i +") " + snd_parser.node_list.get(i));
-		
+
+		// for(int i = 0; i < snd_parser.node_list.size(); i++)
+		// System.out.println("(" + i +") " + snd_parser.node_list.get(i));
+
 		snd_parser.graph.printAdjList();
 	}
 

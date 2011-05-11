@@ -8,16 +8,17 @@ package edu.pw.gis.graph;
  *
  */
 public class Edge {
-	public float capacity; // pojemnosc
+	public double capacity; // pojemnosc
 	public int weight; // waga
-	public float flow; // bierzacy przeplyw
-	public float usage; // procentowe uzycie
+	public double flow; // bierzacy przeplyw
+	public double usage; // procentowe uzycie
 	public Node source;
 	public Node target;
 	public boolean inTree; // czy nalezy do grafu skroconego wlasnie rowazanego
 	public int id;
+	public String name;
 	
-	public Edge(int id, float capacity, Node source, Node target) {
+	public Edge(int id, double capacity, Node source, Node target, String name) {
 		this.id = id;
 		this.capacity = capacity;
 		this.weight = 1;
@@ -26,6 +27,7 @@ public class Edge {
 		this.source = source;
 		this.target = target;
 		this.inTree = false;
+		this.name = name;
 	}
 	
 	
