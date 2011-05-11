@@ -19,9 +19,9 @@ public class Node {
 	
 	public Node(int id, float draw_x, float draw_y, String name) {
 		this.id = id;
-		this.outDegree = 0;
-		this.incomingTraffic = 0;
-		this.distance = 0;
+		this.outDegree = -1;
+		this.incomingTraffic = -1;
+		this.distance = -1;
 		this.draw_x = draw_x;
 		this.draw_y = draw_y;
 		this.name = name;

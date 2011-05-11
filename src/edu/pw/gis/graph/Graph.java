@@ -4,29 +4,14 @@
 package edu.pw.gis.graph;
 import java.util.*;
 
-/**
- * @author ymir
- *
- */
 public class Graph {
 	public List<Node> nodeList = new ArrayList<Node>();
 	public List<Edge> edgeList = new ArrayList<Edge>();
 	
-	private int noNodes; // number of nodes
+	public int noNodes; // number of nodes
 	
 	public ArrayList<ArrayList<Float>> flowMatrix; // macierz przeplywow, indeksami sa numery wezlow
 	public ArrayList<ArrayList<Tuple>> adjList; // listy sasiedztwa dla kazdego wierzcholka
-	
-	public class Tuple {
-		public Node n;
-		public Edge e;
-		
-		public Tuple(Node n, Edge e) {
-			this.n = n; // target node
-			this.e = e; // using edge
-		}
-		
-	}
 	
 	public Graph(int noNodes) {
 		this.noNodes = noNodes;
@@ -73,6 +58,9 @@ public class Graph {
 		g.addEdge(e);
 		e = new Edge(1, 100, n1, n);
 		g.addEdge(e);
+		
+		g.nodeList.get(1).name = "aaaa";
+		System.out.println(g.adjList.get(0).get(0).n.name);
 		
 		g.printAdjList();
 
