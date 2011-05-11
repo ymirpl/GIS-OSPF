@@ -3,6 +3,8 @@
  */
 package edu.pw.gis.parser;
 
+import java.util.ArrayList;
+
 import javax.xml.parsers.SAXParserFactory;
 import javax.xml.parsers.SAXParser;
 
@@ -10,15 +12,25 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.Attributes;
 
+import edu.pw.gis.graph.Node;
+
 /**
  * @author ymir
  * 
  */
 public class SNDParser {
 
-	private int nodes_no = 0;
-	private int edges_no = 0;
+	public int nodes_no = 0;
+	public int edges_no = 0;
+	
+	public ArrayList<String> node_list = new ArrayList<String>();
 
+	/*
+	 * Funkcja zliczaj¹ca liczbê wierszy i krawêdzi w grafie zapisanym w pliku
+	 * XML. Zliczamy wêz³y node i links
+	 * 
+	 * @param xml_path: œcie¿ka do pliku XML z zapisanym grafem
+	 */
 	public void countNodesAndEdgesSNDNetworkXML(String xml_path) {
 		try {
 
@@ -43,16 +55,6 @@ public class SNDParser {
 
 				}
 
-				public void endElement(String uri, String localName,
-						String qName) throws SAXException {
-
-				}
-
-				public void characters(char ch[], int start, int length)
-						throws SAXException {
-
-				}
-
 			};
 
 			saxParser.parse(xml_path, handler);
@@ -71,26 +73,29 @@ public class SNDParser {
 
 			DefaultHandler handler = new DefaultHandler() {
 
-				boolean bfname = false;
-				boolean blname = false;
+				boolean b_coord_x = false;
+				boolean b_coord_y = false;
+				Node node = new Node();
 
 				public void startElement(String uri, String localName,
 						String qName, Attributes attributes)
 						throws SAXException {
 
+					
 					// System.out.println("Start Element :" + qName);
 
 					if (qName.equalsIgnoreCase("node")) {
-						System.out.println("Node name : "
-								+ attributes.getValue(0));
+						node.name = attributes.getValue(0);
+						node_list.add(node.name);
+						node.id = node_list.size()-1;
 					}
 
 					if (qName.equalsIgnoreCase("x")) {
-						bfname = true;
+						b_coord_x = true;
 					}
 
 					if (qName.equalsIgnoreCase("y")) {
-						blname = true;
+						b_coord_y = true;
 					}
 
 				}
@@ -98,23 +103,24 @@ public class SNDParser {
 				public void endElement(String uri, String localName,
 						String qName) throws SAXException {
 
-					// System.out.println("End Element :" + qName);
+					if (qName.equalsIgnoreCase("node")) {
+						System.out.println("Node name: " + node.id + " " + node.name);
+						System.out.println("x: " + node.draw_x + " y: " + node.draw_y);
+					}
 
 				}
 
 				public void characters(char ch[], int start, int length)
 						throws SAXException {
 
-					if (bfname) {
-						System.out.println("x : "
-								+ new String(ch, start, length));
-						bfname = false;
+					if (b_coord_x) {
+						node.draw_x = Double.parseDouble(new String(ch, start, length));
+						b_coord_x = false;
 					}
 
-					if (blname) {
-						System.out.println("y : "
-								+ new String(ch, start, length));
-						blname = false;
+					if (b_coord_y) {
+						node.draw_y = Double.parseDouble(new String(ch, start, length));
+						b_coord_y = false;
 					}
 					//
 					// if (bnname) {
@@ -131,6 +137,8 @@ public class SNDParser {
 
 				}
 
+				
+				
 			};
 
 			saxParser.parse(xml_path, handler);
@@ -162,7 +170,10 @@ public class SNDParser {
 		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/giul39.xml");
 		System.out.println("liczba krawêdzi: " + snd_parser.getEdges_no());
 		System.out.println("liczba wêz³ów: " + snd_parser.getNodes_no());
-//		snd_parser.readSNDNetworkXML("xml/giul39.xml");
+		snd_parser.readSNDNetworkXML("xml/giul39.xml");
+		
+		for(int i = 0; i < snd_parser.node_list.size(); i++)
+			System.out.println("(" + i +") " + snd_parser.node_list.get(i));
 	}
 
 }
