@@ -1,11 +1,11 @@
 package edu.pw.gis.graph;
 
 public class NodeEdge {
-	public int node_id;
+	public Node n;
 	public Edge e;
 	
-	public NodeEdge(int node_id, Edge e) {
-		this.node_id = node_id; // target node
+	public NodeEdge(Node n, Edge e) {
+		this.n = n; // target node
 		this.e = e; // using edge
 	}
 	
