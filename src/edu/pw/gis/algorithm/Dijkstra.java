@@ -7,11 +7,11 @@ public class Dijkstra {
 	private Graph g;
 	private Node startNode;
 	private PriorityQueue<Node> Q = new PriorityQueue<Node>();
-	public ArrayList<Tuple> pathList;
+	public ArrayList<NodeEdge> pathList;
 	
 	public Dijkstra(Graph g) {
 		this.g = g;
-		pathList = new ArrayList<Tuple>(this.g.noNodes);
+		pathList = new ArrayList<NodeEdge>(this.g.noNodes);
 	}
 
 	public Node getStartNode() {
