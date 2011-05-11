@@ -12,6 +12,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.Attributes;
 
+import edu.pw.gis.graph.Graph;
 import edu.pw.gis.graph.Node;
 
 /**
@@ -22,6 +23,7 @@ public class SNDParser {
 
 	public int nodes_no = 0;
 	public int edges_no = 0;
+	public Graph graph;
 	
 	public ArrayList<String> node_list = new ArrayList<String>();
 
@@ -81,7 +83,6 @@ public class SNDParser {
 						String qName, Attributes attributes)
 						throws SAXException {
 
-					
 					// System.out.println("Start Element :" + qName);
 
 					if (qName.equalsIgnoreCase("node")) {
@@ -107,7 +108,7 @@ public class SNDParser {
 						System.out.println("Node name: " + node.id + " " + node.name);
 						System.out.println("x: " + node.draw_x + " y: " + node.draw_y);
 					}
-
+					graph.addNode(node);
 				}
 
 				public void characters(char ch[], int start, int length)
@@ -137,8 +138,6 @@ public class SNDParser {
 
 				}
 
-				
-				
 			};
 
 			saxParser.parse(xml_path, handler);
@@ -170,10 +169,17 @@ public class SNDParser {
 		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/giul39.xml");
 		System.out.println("liczba krawêdzi: " + snd_parser.getEdges_no());
 		System.out.println("liczba wêz³ów: " + snd_parser.getNodes_no());
+		
+		snd_parser.graph = new Graph(snd_parser.nodes_no);
+		
 		snd_parser.readSNDNetworkXML("xml/giul39.xml");
 		
-		for(int i = 0; i < snd_parser.node_list.size(); i++)
-			System.out.println("(" + i +") " + snd_parser.node_list.get(i));
+//		for(int i = 0; i < snd_parser.node_list.size(); i++)
+//			System.out.println("(" + i +") " + snd_parser.node_list.get(i));
+		
+		snd_parser.graph.addNode(new Node(1,1.0,1.0,"test"));
+		
+		snd_parser.graph.printAdjList();
 	}
 
 }
