@@ -9,37 +9,73 @@ import java.util.*;
  *
  */
 public class Graph {
-	public List<Node> nodeList = new ArrayList<Node>(); 
+	public List<Node> nodeList = new ArrayList<Node>();
 	public List<Edge> edgeList = new ArrayList<Edge>();
 	
-	public ArrayList<ArrayList<Float>> flowMatrix = new ArrayList<ArrayList<Float>>(); // macierz przeplywow, indeksami sa numery wezlow
-	public ArrayList<ArrayList<Node>> adjList = new ArrayList<ArrayList<Node>>(); // listy sasiedztwa dla kazdego wierzcholka
-	/**
-	 * 
-	 */
+	private int noNodes; // number of nodes
 	
-	public Graph() {
+	public ArrayList<ArrayList<Float>> flowMatrix; // macierz przeplywow, indeksami sa numery wezlow
+	public ArrayList<ArrayList<Tuple>> adjList; // listy sasiedztwa dla kazdego wierzcholka
+	
+	public class Tuple {
+		public Node n;
+		public Edge e;
+		
+		public Tuple(Node n, Edge e) {
+			this.n = n; // target node
+			this.e = e; // using edge
+		}
+		
+	}
+	
+	public Graph(int noNodes) {
+		this.noNodes = noNodes;
+		
+		this.flowMatrix = new ArrayList<ArrayList<Float>>(this.noNodes);
+		
+		for (int i = 0; i < this.noNodes; ++i) {
+			this.flowMatrix.add(i, new ArrayList<Float>(this.noNodes)); 
+		}
+		
+		this.adjList = new ArrayList<ArrayList<Tuple>>(this.noNodes);
+		
+		for (int i = 0; i < this.noNodes; ++i) {
+			this.adjList.add(i, new ArrayList<Tuple>()); 
+		}
+			
 	}
 	
 	public void addNode(Node n) {
-		this.nodeList.add(n.id, n);
-		this.adjList.add(n.id, new ArrayList<Node>());
+		this.nodeList.add(n); // @TODO zalozenie, ze przychodza wezly w kolejnosci idekow
 	}
 	
 	public void addEdge(Edge e) {
-		this.edgeList.add(e.id, e);
-		this.adjList.get(e.source.id).add(e.target);
+		this.edgeList.add(e);
+		this.adjList.get(e.source.id).add(new Tuple(e.target, e));
 	}
 	
 	public void printAdjList() {
-		for (ArrayList<Node> list: this.adjList) {
-			System.out.println("Node " + this.adjList.indexOf(list) + ": ");
-			for (Node n: list) {
-				System.out.println(n.id + ", ");
+		for (ArrayList<Tuple> list: this.adjList) {
+			System.out.print("Node " + this.adjList.indexOf(list) + ": ");
+			for (Tuple t: list) {
+				System.out.println(t.n.id  + "(" + t.e.id + "), ");
 			}
-			System.out.println("\n");
 		}
 	}
 	
+	public static void main(String[] args) {
+		Graph g = new Graph(2);
+		Node n = new Node(0, 0, 0, "janek");
+		g.addNode(n);
+		Node n1 = new Node(1, 0, 0, "wiesiek");
+		g.addNode(n);
+		Edge e = new Edge(0, 100, n, n1);
+		g.addEdge(e);
+		e = new Edge(1, 100, n1, n);
+		g.addEdge(e);
+		
+		g.printAdjList();
+
+	}
 	
 }
