@@ -3,14 +3,14 @@ package edu.pw.gis.graph;
 import java.util.ArrayList;
 
 public class AdjElement {
-	public Node n;
+	public int node_id;
 	public ArrayList<NodeEdge> list = new ArrayList<NodeEdge>();
 	
-	public AdjElement(Node n) {
-		this.n = n; // target node
+	public AdjElement(int node_id) {
+		this.node_id = node_id; // target node
 	}
 	
 	public AdjElement() {
-		this.n = null;
+		this.node_id = -1;
 	}
 }

@@ -6,6 +6,7 @@ import java.util.*;
 
 public class Graph {
 	public List<Edge> edgeList = new ArrayList<Edge>();
+	public ArrayList<Node> nodeArray = new ArrayList<Node>();
 	
 	public int noNodes; // number of nodes
 	
@@ -30,19 +31,20 @@ public class Graph {
 	}
 	
 	public void addNode(Node n) {
-		this.adjList.get(n.id).n = n; //  zalozenie, ze przychodza wezly w kolejnosci idekow
+		this.nodeArray.add(n);
+		this.adjList.get(n.id).node_id = n.id; //  zalozenie, ze przychodza wezly w kolejnosci idekow
 	}
 	
 	public void addEdge(Edge e) {
 		this.edgeList.add(e);
-		this.adjList.get(e.source.id).list.add(new NodeEdge(e.target, e));
+		this.adjList.get(e.source.id).list.add(new NodeEdge(e.target.id, e));
 	}
 	
 	public void printAdjList() {
 		for (AdjElement element: this.adjList) {
-			System.out.print("Node " + element.n.id + ": ");
+			System.out.print("Node " + this.nodeArray.get(element.node_id).name + ": ");
 			for (NodeEdge t: element.list) {
-				System.out.println(t.n.id  + "(" + t.e.id + "), ");
+				System.out.println(t.node_id  + "(" + t.e.id + "), ");
 			}
 		}
 	}
@@ -52,7 +54,7 @@ public class Graph {
 		Node n = new Node(0, 0, 0, "janek");
 		g.addNode(n);
 		Node n1 = new Node(1, 0, 0, "wiesiek");
-		g.addNode(n);
+		g.addNode(n1);
 		Edge e = new Edge(0, 100, n, n1);
 		g.addEdge(e);
 		e = new Edge(1, 100, n1, n);
