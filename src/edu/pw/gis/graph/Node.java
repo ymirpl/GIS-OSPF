@@ -26,7 +26,7 @@ public class Node {
 		this.name = "";
 	}
 
-	public Node(int id, float draw_x, float draw_y, String name) {
+	public Node(int id, double draw_x, double draw_y, String name) {
 		this.id = id;
 		this.outDegree = -1;
 		this.incomingTraffic = -1;

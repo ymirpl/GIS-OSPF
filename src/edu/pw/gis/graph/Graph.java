@@ -31,7 +31,7 @@ public class Graph {
 	}
 	
 	public void addNode(Node n) {
-		this.nodeList.add(n); // @TODO zalozenie, ze przychodza wezly w kolejnosci idekow
+		this.nodeList.add(n); // @TODO zalozenie, ze przychodza wezly w kolejnosci ideksow
 	}
 	
 	public void addEdge(Edge e) {
