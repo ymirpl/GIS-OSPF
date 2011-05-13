@@ -9,4 +9,9 @@ public class NodeEdge {
 		this.e = e; // using edge
 	}
 	
+	public NodeEdge() {
+		this.n = null;
+		this.e = null;
+	}
+	
 }

@@ -11,7 +11,11 @@ public class Dijkstra {
 	
 	public Dijkstra(Graph g) {
 		this.g = g;
-		pathList = new ArrayList<NodeEdge>(this.g.noNodes);
+		pathList = new ArrayList<NodeEdge>(this.g.noNodes); // indeksom w tablicy beda odpowiadac ideki nodek docelowych
+		
+		for (int i = 0; i < g.noNodes; ++i) {
+			this.pathList.add(i, new NodeEdge()); 
+		}
 	}
 
 	public Node getStartNode() {
