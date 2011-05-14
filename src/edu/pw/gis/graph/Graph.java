@@ -45,9 +45,9 @@ public class Graph {
 
 	public void printAdjList() {
 		for (AdjElement element: this.adjList) {
-			System.out.print("Node " + element.n.name + ": " );
+			System.out.print("Node " + element.n.name + " outD: " + element.n.outDegree +" :: " );
 			for (NodeEdge t: element.list) {
-				System.out.println(t.n.name  + "(" + t.e.id + "), ");
+				System.out.println(t.n.name  + "(" + t.e.id + "), inTree:" + t.e.inTree + " ");
 			}
 		}
 		System.out.println();

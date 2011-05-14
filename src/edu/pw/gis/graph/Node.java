@@ -18,7 +18,7 @@ public class Node {
 
 	public Node() {
 		this.id = -1;
-		this.outDegree = -1;
+		this.outDegree = 0;
 		this.incomingTraffic = -1.0;
 		this.distance = -1;
 		this.draw_x = -1.0;
@@ -28,7 +28,7 @@ public class Node {
 
 	public Node(int id, double draw_x, double draw_y, String name) {
 		this.id = id;
-		this.outDegree = -1;
+		this.outDegree = 0;
 		this.incomingTraffic = -1;
 		this.distance = -1;
 		this.draw_x = draw_x;
@@ -36,4 +36,10 @@ public class Node {
 		this.name = name;
 	}
 
+	/*
+	public int compareTo(Node anotherNode) {
+		// PriorityQueue bierze najpierw te z wyzszym, wiec trzeba to odkrecic na potrzeby Q w dijkstrze @TODO ???
+		return -(this.distance - anotherNode.distance);
+	}
+	*/
 }

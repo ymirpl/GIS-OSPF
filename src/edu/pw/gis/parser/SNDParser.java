@@ -175,13 +175,13 @@ public class SNDParser {
 					}
 					
 					if (b_edge_source) {
-						edge_source = graph.nodeArray.get(nodes_list.indexOf(new String(ch, start,
+						edge_source = graph.nodeList.get(nodes_list.indexOf(new String(ch, start,
 								length)));
 						b_edge_source = false;
 					}
 					
 					if (b_edge_target) {
-						edge_target = graph.nodeArray.get(nodes_list.indexOf(new String(ch, start,
+						edge_target = graph.nodeList.get(nodes_list.indexOf(new String(ch, start,
 								length)));
 						b_edge_target = false;
 					}
@@ -216,8 +216,8 @@ public class SNDParser {
 		System.out.println("test");
 		SNDParser snd_parser = new SNDParser();
 		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/giul39.xml");
-		System.out.println("liczba krawêdzi: " + snd_parser.getEdges_no());
-		System.out.println("liczba wêz³ów: " + snd_parser.getNodes_no());
+		System.out.println("liczba krawedzi: " + snd_parser.getEdges_no());
+		System.out.println("liczba wezlow: " + snd_parser.getNodes_no());
 
 		snd_parser.graph = new Graph(snd_parser.nodes_no);
 
@@ -226,6 +226,9 @@ public class SNDParser {
 		// for(int i = 0; i < snd_parser.node_list.size(); i++)
 		// System.out.println("(" + i +") " + snd_parser.node_list.get(i));
 
+		snd_parser.graph.printAdjList();
+		snd_parser.graph.nodeList.get(3).name = "aaaaaaaa";
+		System.out.println("----- zmiana -----");
 		snd_parser.graph.printAdjList();
 	}
 
