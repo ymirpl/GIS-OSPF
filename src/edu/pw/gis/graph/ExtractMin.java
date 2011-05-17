@@ -2,7 +2,7 @@ package edu.pw.gis.graph;
 
 import java.util.Comparator;
 
-public class NodeComparator implements Comparator<Node> {
+public class ExtractMin implements Comparator<Node> {
 	@Override
 	public int compare(Node x, Node y) {
 		if (x.distance < y.distance)

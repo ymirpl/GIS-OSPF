@@ -35,11 +35,4 @@ public class Node {
 		this.draw_y = draw_y;
 		this.name = name;
 	}
-
-	/*
-	public int compareTo(Node anotherNode) {
-		// PriorityQueue bierze najpierw te z wyzszym, wiec trzeba to odkrecic na potrzeby Q w dijkstrze @TODO ???
-		return -(this.distance - anotherNode.distance);
-	}
-	*/
 }
