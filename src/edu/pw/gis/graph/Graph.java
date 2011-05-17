@@ -15,6 +15,7 @@ public class Graph {
 													// wezlow
 	public ArrayList<AdjElement> adjList; // listy sasiedztwa dla kazdego
 											// wierzcholka
+	public ArrayList<AdjElement> revertedAdjList; // lista sasiedztwa, w ktorej kierunki krawedzi wszelkich sa owdrocone 
 
 	public Graph(int noNodes) {
 		this.noNodes = noNodes;
@@ -26,21 +27,25 @@ public class Graph {
 		}
 
 		this.adjList = new ArrayList<AdjElement>(this.noNodes);
+		this.revertedAdjList = new ArrayList<AdjElement>(this.noNodes);
 
 		for (int i = 0; i < this.noNodes; ++i) {
 			this.adjList.add(i, new AdjElement());
+			this.revertedAdjList.add(i, new AdjElement());
 		}
-
+		
 	}
 
 	public void addNode(Node n) {
 		this.nodeList.add(n);
 		this.adjList.get(n.id).n = n; //  zalozenie, ze przychodza wezly w kolejnosci idekow
+		this.revertedAdjList.get(n.id).n = n;
 	}
 
 	public void addEdge(Edge e) {
 		this.edgeList.add(e);
 		this.adjList.get(e.source.id).list.add(new NodeEdge(e.target, e));
+		this.revertedAdjList.get(e.target.id).list.add(new NodeEdge(e.source, e));
 	}
 
 	public void printAdjList() {
@@ -50,7 +55,24 @@ public class Graph {
 				System.out.println(t.n.name  + "(" + t.e.id + "), inTree:" + t.e.inTree + " ");
 			}
 		}
-		System.out.println();
+		System.out.println("");
+	}
+	
+	public void printRevertedAdjList() {
+		for (AdjElement element: this.revertedAdjList) {
+			System.out.print("Node " + element.n.name + " outD: " + element.n.outDegree +" :: " );
+			for (NodeEdge t: element.list) {
+				System.out.println(t.n.name  + "(" + t.e.id + "), inTree:" + t.e.inTree + " ");
+			}
+		}
+		System.out.println("");
+	}
+	
+	public void cleanDistances() {
+		// reverts all node distances to MAX_INT, so that we can compute Dijkstra for other starting nodes
+		for (int i = 0; i < this.noNodes; ++i) {
+			nodeList.get(i).distance = Integer.MAX_VALUE;
+		}
 	}
 
 	public static void main(String[] args) {
@@ -64,6 +86,7 @@ public class Graph {
 		e = new Edge(1, 100, n1, n, "test");
 		g.addEdge(e);
 		
+		g.printRevertedAdjList();
 		g.printAdjList();
 		System.out.println(g.nodeList.get(1).name);
 

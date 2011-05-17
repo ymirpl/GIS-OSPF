@@ -38,7 +38,11 @@ public class Dijkstra {
 		}
 		
 		setInfinityDistance();
-		g.nodeList.get(startNodeId).distance = 0;
+		
+		Node startNode = g.nodeList.get(startNodeId);
+		Q.remove(startNode);
+		startNode.distance = 0;
+		Q.add(startNode);
 		
 		while(!Q.isEmpty()) {
 			Node u = Q.poll();
@@ -48,20 +52,22 @@ public class Dijkstra {
 				// graf niespojny
 				break;
 			}
-			
+
 			// dla kazdego sasiada u
-			for (NodeEdge v: g.adjList.get(u.id).list) {
+			for (NodeEdge v : g.revertedAdjList.get(u.id).list) { // use reverted list
 				int new_distance = u.distance + v.e.weight;
 				if (new_distance <= v.n.distance) {
-					Q.remove(v.n);
-					v.n.distance = new_distance;
-					u.outDegree += 1;
+					v.n.outDegree += 1; // @TODO to chyba tak, sprawdzic na rysuneczkach na kartce
 					v.e.inTree = true;
-					Q.add(v.n);
+					if (new_distance < v.n.distance) {
+						v.n.distance = new_distance;
+						Q.remove(v.n);
+						Q.add(v.n);
+					}
 				}
 			}
 		}
-		
+
 	}
 	
 	private void setInfinityDistance() {
@@ -93,7 +99,7 @@ public class Dijkstra {
 		g.printAdjList();
 		
 		Dijkstra d = new Dijkstra(g);
-		d.setStartNode(0);
+		d.setStartNode(3);
 		d.compute();
 		
 		g.printAdjList();
@@ -134,8 +140,10 @@ public class Dijkstra {
 		e = new Edge(4, 1, g.nodeList.get(0), g.nodeList.get(1), "leftmost-upper");
 		g.addEdge(e);
 		
+		g.printRevertedAdjList();
+		
 		Dijkstra d = new Dijkstra(g);
-		d.setStartNode(0);
+		d.setStartNode(3);
 		d.compute();
 		
 		g.printAdjList();
