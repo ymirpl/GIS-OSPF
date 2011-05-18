@@ -35,6 +35,16 @@ public class Graph {
 		}
 		
 	}
+	
+	public double getHighestUsage() {
+		double usage = 0;
+		for (Edge e: edgeList) {
+			if (e.usage > usage) {
+				usage = e.usage;
+			}
+		}
+		return usage;
+	}
 
 	public void addNode(Node n) {
 		this.nodeList.add(n);
@@ -74,6 +84,8 @@ public class Graph {
 			nodeList.get(i).distance = Integer.MAX_VALUE;
 		}
 	}
+	
+	
 
 	public static void main(String[] args) {
 		Graph g = new Graph(2);
