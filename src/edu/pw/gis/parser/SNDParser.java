@@ -1,6 +1,3 @@
-/**
- * 
- */
 package edu.pw.gis.parser;
 
 import java.util.ArrayList;

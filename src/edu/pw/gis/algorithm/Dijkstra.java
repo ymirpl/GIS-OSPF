@@ -57,11 +57,11 @@ public class Dijkstra {
 			for (NodeEdge v : g.revertedAdjList.get(u.id).list) { // use reverted list
 				int new_distance = u.distance + v.e.weight;
 				if (new_distance <= v.n.distance) {
-					v.n.outDegree += 1; // @TODO to chyba tak, sprawdzic na rysuneczkach na kartce
+					v.n.outDegree += 1;
 					v.e.inTree = true;
 					if (new_distance < v.n.distance) {
-						v.n.distance = new_distance;
 						Q.remove(v.n);
+						v.n.distance = new_distance;
 						Q.add(v.n);
 					}
 				}
