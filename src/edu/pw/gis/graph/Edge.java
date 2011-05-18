@@ -7,7 +7,7 @@ package edu.pw.gis.graph;
  * @author ymir
  *
  */
-public class Edge {
+public class Edge implements Cloneable{
 	public double capacity; // pojemnosc
 	public int weight; // waga
 	public double flow; // bierzacy przeplyw
@@ -30,6 +30,10 @@ public class Edge {
 		this.name = name;
 	}
 	
-	
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		Edge result = (Edge)super.clone();
+		return result;
+	}
 
 }

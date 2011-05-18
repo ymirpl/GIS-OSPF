@@ -19,7 +19,7 @@ public class Genetic {
 									// krawêdzi
 	public final double MAX_ITERATION_NO; // Maksymalna iloœæ iteracji (iloœæ
 											// pokoleñ)
-	public ArrayList<Graph> GRAPH_LIST; // badany graf
+	public ArrayList<Graph> graph_list; // badany graf
 
 	public Genetic(int max_weight, int initial_population,
 			double alfa_rate, double beta_rate, double mutation_rate,
@@ -32,19 +32,19 @@ public class Genetic {
 		this.CROSS_RATE = cross_rate;
 		this.MAX_USAGE = max_usage;
 		this.MAX_ITERATION_NO = max_iteration_no;
-		this.GRAPH_LIST = new ArrayList<Graph>();
+		this.graph_list = new ArrayList<Graph>();
 	}
 
-	public void createInitialPopulation(Graph g) {
+	public void createInitialPopulation(Graph g) throws CloneNotSupportedException {
 		//TODO tutaj potrzebne g³êbokie kopiowanie!!!
-		Graph tmp = g;
 		Random rand = new Random();
 		for (int i = 0; i < this.INITIAL_POPULATION_NO; i++) {
+			Graph tmp = (Graph) g.clone();
 			for (int j = 0; j < tmp.edgeList.size(); j ++) {
 				Edge e = tmp.edgeList.get(j); 
 				e.weight = (int)(rand.nextInt(this.MAX_WEIGHT+1) / e.capacity); 
 			}
-			this.GRAPH_LIST.add(tmp);
+			this.graph_list.add(tmp);
 		}
 	}
 
@@ -59,8 +59,31 @@ public class Genetic {
 		snd_parser.graph = new Graph(snd_parser.nodes_no);
 		snd_parser.readSNDNetworkXML("xml/test.xml");
 		
-		Genetic genetic = new Genetic(10, 10, 0.2, 0.7, 0.01, 0.5, 0.5, 100);
-		genetic.createInitialPopulation(snd_parser.graph);
+		Genetic genetic = new Genetic(10, 2, 0.2, 0.7, 0.01, 0.5, 0.5, 100);
+		try {
+			genetic.createInitialPopulation(snd_parser.graph);
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		for(int i=0; i<genetic.INITIAL_POPULATION_NO; i++)
+		{
+			System.out.println("Graf populacji " + i);
+			System.out.println();
+			genetic.graph_list.get(i).printAdjList();
+		}
+		
+		//genetic.graph_list.get(0).addNode(new Node());
+		genetic.graph_list.get(1).nodeList.get(0).name="DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDddd";
+		
+		for(int i=0; i<genetic.INITIAL_POPULATION_NO; i++)
+		{
+			System.out.println("Graf populacji " + i);
+			System.out.println();
+			System.out.println(genetic.graph_list.get(i).nodeList.get(0).name);
+			genetic.graph_list.get(i).printAdjList();
+		}
 	}
 
 }
