@@ -148,10 +148,27 @@ public class Dijkstra {
 		
 		g.printAdjList();
 	}
+	
+	public static void testSNDGraph()
+	{
+		SNDParser snd_parser = new SNDParser();
+		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/test.xml");
+		
+		snd_parser.graph = new Graph(snd_parser.nodes_no);
+		snd_parser.readSNDNetworkXML("xml/test.xml");
+		
+		Dijkstra d = new Dijkstra(snd_parser.graph);
+		d.setStartNode(7);
+		d.compute();
+		
+		snd_parser.graph.printAdjList();
+	}
+	
 	public static void main(String[] args) {
 		//testOne();
 		//testTwo();
-		testThree();
+		//testThree();
+		testSNDGraph();
 		
 		/*
 		Graph g = new Graph(2);

@@ -148,7 +148,6 @@ public class SNDParser {
 					
 					if (qName.equalsIgnoreCase("link")) {
 						Edge edge = new Edge(edge_id, edge_capacity, edge_source, edge_target, edge_name);
-						System.out.println();
 						graph.addEdge(edge);
 					}
 				}
@@ -215,13 +214,13 @@ public class SNDParser {
 	public static void main(String argv[]) {
 		System.out.println("test");
 		SNDParser snd_parser = new SNDParser();
-		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/giul39.xml");
+		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/test.xml");
 		System.out.println("liczba krawedzi: " + snd_parser.getEdges_no());
 		System.out.println("liczba wezlow: " + snd_parser.getNodes_no());
 
 		snd_parser.graph = new Graph(snd_parser.nodes_no);
 
-		snd_parser.readSNDNetworkXML("xml/giul39.xml");
+		snd_parser.readSNDNetworkXML("xml/test.xml");
 
 		// for(int i = 0; i < snd_parser.node_list.size(); i++)
 		// System.out.println("(" + i +") " + snd_parser.node_list.get(i));
