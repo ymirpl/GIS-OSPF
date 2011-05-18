@@ -143,7 +143,7 @@ public class Dijkstra {
 		g.printRevertedAdjList();
 		
 		Dijkstra d = new Dijkstra(g);
-		d.setStartNode(3);
+		d.setStartNode(1);
 		d.compute();
 		
 		g.printAdjList();

@@ -7,7 +7,7 @@ package edu.pw.gis.graph;
  * @author ymir
  * 
  */
-public class Node {
+public class Node implements Cloneable{
 	public int id;
 	public int outDegree;
 	public double incomingTraffic;
@@ -34,5 +34,11 @@ public class Node {
 		this.draw_x = draw_x;
 		this.draw_y = draw_y;
 		this.name = name;
+	}
+	
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		Node result = (Node)super.clone();
+		return result;
 	}
 }
