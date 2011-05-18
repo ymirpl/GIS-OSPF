@@ -14,7 +14,7 @@ public class FlowCalculator {
 	
 	public void compute() {
 		for (int source = 0; source < g.flowMatrix.size(); source++) {
-			ArrayList<Float> row = g.flowMatrix.get(source);
+			ArrayList<Double> row = g.flowMatrix.get(source);
 			for (int target = 0; target < g.flowMatrix.size(); target++) {
 				// compute dijkstra begging from each source
 				if (row.get(target) > 0) {
@@ -70,7 +70,7 @@ public class FlowCalculator {
 		g.addEdge(e);
 		
 		// add demands
-		g.flowMatrix.get(0).set(3,Float.parseFloat("9.0"));
+		g.flowMatrix.get(0).set(3,Double.parseDouble("9.0"));
 		
 		FlowCalculator c = new FlowCalculator(g);
 		c.compute();
