@@ -24,6 +24,9 @@ public class Graph {
 
 		for (int i = 0; i < this.noNodes; ++i) {
 			this.flowMatrix.add(i, new ArrayList<Float>(this.noNodes));
+			for (int j = 0; j < this.noNodes; ++j) {
+				this.flowMatrix.get(i).add(j, Float.parseFloat("0.0"));
+			}
 		}
 
 		this.adjList = new ArrayList<AdjElement>(this.noNodes);
@@ -62,7 +65,7 @@ public class Graph {
 		for (AdjElement element: this.adjList) {
 			System.out.print("Node " + element.n.name + " outD: " + element.n.outDegree +" :: " );
 			for (NodeEdge t: element.list) {
-				System.out.println(t.n.name  + "(" + t.e.id + "), inTree:" + t.e.inTree + " ");
+				System.out.println(t.n.name  + "(" + t.e.id + "), inTree:" + t.e.inTree + " flow:" + t.e.flow);
 			}
 		}
 		System.out.println("");
