@@ -79,6 +79,7 @@ public class Dijkstra {
 		
 		for(Edge e: this.g.edgeList) {
 			e.inTree = false;
+			e.flow = 0;
 		}
 	}
 	
