@@ -1,6 +1,8 @@
 package edu.pw.gis.algorithm;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 
 import edu.pw.gis.graph.Edge;
@@ -9,17 +11,24 @@ import edu.pw.gis.parser.SNDParser;
 
 public class Genetic {
 
-	public final int MAX_WEIGHT; // maksymalna waga krawêdzi
-	public final int INITIAL_POPULATION_NO; // liczba populacji (iloœæ wektorów)
-	public final double ALFA_RATE; // wspó³czynnik wyboru klasy A
-	public final double BETA_RATE; // wspó³czynnik wyboru klasy B
-	public final double MUTATION_RATE; // wspó³czynnik mutacji
-	public final double CROSS_RATE; // wspó³czynnik krzy¿owania
-	public final double MAX_USAGE; // Po¿¹dane maksymalne procentowe obci¹¿enie
-									// krawêdzi
-	public final double MAX_ITERATION_NO; // Maksymalna iloœæ iteracji (iloœæ
-											// pokoleñ)
+	public final int MAX_WEIGHT; // maksymalna waga kraw_dzi
+	public final int INITIAL_POPULATION_NO; // liczba populacji (ilo__ wektor_w)
+	public final double ALFA_RATE; // wsp_czynnik wyboru klasy A
+	public final double BETA_RATE; // wsp_czynnik wyboru klasy B
+	public final double MUTATION_RATE; // wsp_czynnik mutacji
+	public final double CROSS_RATE; // wsp_czynnik krzy_owania
+	public final double MAX_USAGE; // Po__dane maksymalne procentowe obci__enie
+									// kraw_dzi
+	public final double MAX_ITERATION_NO; // Maksymalna ilo__ iteracji (ilo__
+											// pokole_)
 	public ArrayList<Graph> graph_list; // badany graf
+	public ArrayList<Graph> new_graph_list; // badany graf
+
+	
+	private int cardA; // liczba osobnikow w klasie A
+	private int cardB; // liczba osobnikow w klasie B
+	
+	
 
 	public Genetic(int max_weight, int initial_population,
 			double alfa_rate, double beta_rate, double mutation_rate,
@@ -33,20 +42,111 @@ public class Genetic {
 		this.MAX_USAGE = max_usage;
 		this.MAX_ITERATION_NO = max_iteration_no;
 		this.graph_list = new ArrayList<Graph>();
+		this.new_graph_list = new ArrayList<Graph>();
+			
+		this.cardA = (int) Math.floor(ALFA_RATE * INITIAL_POPULATION_NO);
+		this.cardB = (int) Math.ceil(BETA_RATE * INITIAL_POPULATION_NO);
+		
 	}
 
 	public void createInitialPopulation(Graph g) throws CloneNotSupportedException {
-		//TODO tutaj potrzebne g³êbokie kopiowanie!!!
-		Random rand = new Random();
+		//TODO tutaj potrzebne g__bokie kopiowanie!!!
 		for (int i = 0; i < this.INITIAL_POPULATION_NO; i++) {
-			Graph tmp = (Graph) g.clone();
-			for (int j = 0; j < tmp.edgeList.size(); j ++) {
-				Edge e = tmp.edgeList.get(j); 
-				e.weight = (int)(rand.nextInt(this.MAX_WEIGHT+1) / e.capacity); 
-			}
+			Graph tmp = generateCloneWithRandomWeights(g);
 			this.graph_list.add(tmp);
 		}
 	}
+	
+	public Graph generateCloneWithRandomWeights(Graph g) {
+		Random rand = new Random();
+		Graph tmp;
+		try {
+			tmp = (Graph) g.clone();
+			for (int j = 0; j < tmp.edgeList.size(); j++) {
+				Edge e = tmp.edgeList.get(j);
+				e.weight = (int) (rand.nextInt(this.MAX_WEIGHT + 1) / e.capacity);
+			}
+
+		} catch (CloneNotSupportedException e1) {
+			e1.printStackTrace();
+			return (Graph) null;
+		}
+		return tmp;
+	}
+	
+	
+	public void evaluatePopulation() {
+		for(Graph g: graph_list) {
+			FlowCalculator c = new FlowCalculator(g);
+			c.compute();
+			g.computeHighestUsageAndClearFlows();
+			System.out.println(g.highestUsage);
+			g.printAdjList();
+		}
+		
+		// sortowanie celem pozniejszego podzialu na klasy
+		Collections.sort(graph_list, new Comparator<Graph>() {
+			public int compare(Graph g1, Graph g2) {
+				if (g1.highestUsage < g2.highestUsage) {
+					return -1;
+				}
+				else if (g1.highestUsage > g2.highestUsage) {
+					return 1;
+				}
+				else
+					return 0;
+			}
+		});
+
+	}
+	
+	public void evolutionStep() {
+		for (int i = 0; i < graph_list.size(); i++) {
+			
+			if (i < cardA) { // klasa A, przezywaja wszyscy
+				new_graph_list.add(graph_list.get(i));
+			}
+			
+			else if (i >= cardA && i < cardB) { // klasa B
+				
+			}
+			
+			if (i >= cardB) { // klasa C, umieraja, a na ich miejsce losowane sa nowe
+				new_graph_list.add(generateCloneWithRandomWeights(graph_list.get(0))); // wszystko jedno, z jakiego sklonujemy
+			}
+		}
+	
+		
+		
+		graph_list = new_graph_list;
+		new_graph_list = new ArrayList<Graph>();
+	}
+	
+	public Graph getChild(Graph g) {
+		Graph tmp;
+		Random rand = new Random();
+		int rr = rand.nextInt(cardA+1);
+		Graph dad = graph_list.get(rr);
+		rr = rand.nextInt(max - min + 1) + min;
+		Graph mom = 
+		
+		
+		
+		try {
+			tmp = (Graph) g.clone();
+			for (int j = 0; j < tmp.edgeList.size(); j++) {
+				Edge e = tmp.edgeList.get(j);
+				e.weight = (int) (rand.nextInt(this.MAX_WEIGHT + 1) / e.capacity);
+			}
+
+		} catch (CloneNotSupportedException e1) {
+			e1.printStackTrace();
+			return (Graph) null;
+		}
+		return tmp;
+	}
+	
+	
 
 	/**
 	 * @param args

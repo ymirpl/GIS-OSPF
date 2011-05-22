@@ -8,6 +8,7 @@ import java.util.*;
 public class Graph implements Cloneable {
 	public List<Edge> edgeList = new ArrayList<Edge>();
 	public List<Node> nodeList = new ArrayList<Node>();
+	public double highestUsage = 0.0;
 
 	public int noNodes; // number of nodes
 
@@ -40,12 +41,15 @@ public class Graph implements Cloneable {
 
 	}
 
-	public double getHighestUsage() {
+	public double computeHighestUsageAndClearFlows() {
 		double usage = 0;
 		for (Edge e : edgeList) {
-			if (e.usage > usage) {
-				usage = e.usage;
+			if (e.usage > highestUsage) {
+				highestUsage = e.usage;
 			}
+			e.usage = 0.0;
+			e.flow = 0.0;
+			e.inTree = false;
 		}
 		return usage;
 	}
