@@ -64,14 +64,17 @@ public class Graph implements Cloneable {
 	public void addEdge(Edge e) {
 		this.edgeList.add(e);
 		this.adjList.get(e.source.id).list.add(new NodeEdge(e.target, e));
-		this.revertedAdjList.get(e.target.id).list.add(new NodeEdge(e.source, e));
+		this.revertedAdjList.get(e.target.id).list
+				.add(new NodeEdge(e.source, e));
 	}
 
 	public void printAdjList() {
-		for (AdjElement element: this.adjList) {
-			System.out.print("Node " + element.n.name + " outD: " + element.n.outDegree +" :: " );
-			for (NodeEdge t: element.list) {
-				System.out.println(t.n.name  + "(" + t.e.id + "), inTree:" + t.e.inTree + " flow:" + t.e.flow);
+		for (AdjElement element : this.adjList) {
+			System.out.print("Node " + element.n.name + " outD: "
+					+ element.n.outDegree + " :: ");
+			for (NodeEdge t : element.list) {
+				System.out.println(t.n.name + "(" + t.e.id + "), inTree:"
+						+ t.e.inTree + " flow:" + t.e.flow);
 			}
 		}
 		System.out.println("");
@@ -105,21 +108,21 @@ public class Graph implements Cloneable {
 		// reasons
 		// similar to those for defensive copies - to prevent unwanted access to
 		// this object's internal state
-		
+
 		result.nodeList = new ArrayList<Node>(nodeList.size());
-		
+
 		for (Node o : nodeList) {
 			result.addNode((Node) o.clone());
 		}
 
 		result.edgeList = new ArrayList<Edge>(edgeList.size());
-		
+
 		for (Edge o : edgeList) {
 			result.addEdge((Edge) o.clone());
 		}
 
 		result.flowMatrix = new ArrayList<ArrayList<Double>>(flowMatrix.size());
-		
+
 		for (ArrayList<Double> o : flowMatrix) {
 			ArrayList<Double> backup = new ArrayList<Double>(o.size());
 			for (Double q : o) {
@@ -131,10 +134,10 @@ public class Graph implements Cloneable {
 
 		return result;
 	}
-	
+
 	public void printFlowMatrix() {
-		for(ArrayList<Double> a: flowMatrix) {
-			for(Double d: a) {
+		for (ArrayList<Double> a : flowMatrix) {
+			for (Double d : a) {
 				System.out.print(d + "		");
 			}
 			System.out.println();

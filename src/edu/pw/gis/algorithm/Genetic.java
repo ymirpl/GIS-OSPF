@@ -167,23 +167,18 @@ public class Genetic {
 			e.printStackTrace();
 		}
 		
-		for(int i=0; i<genetic.INITIAL_POPULATION_NO; i++)
-		{
-			System.out.println("Graf populacji " + i);
-			System.out.println();
-			genetic.graph_list.get(i).printAdjList();
-		}
+		
 		
 		//genetic.graph_list.get(0).addNode(new Node());
-		genetic.graph_list.get(1).nodeList.get(0).name="DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDddd";
-		
-		for(int i=0; i<genetic.INITIAL_POPULATION_NO; i++)
-		{
-			System.out.println("Graf populacji " + i);
-			System.out.println();
-			System.out.println(genetic.graph_list.get(i).nodeList.get(0).name);
-			genetic.graph_list.get(i).printAdjList();
-		}
+//		genetic.graph_list.get(1).nodeList.get(0).name="DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDddd";
+//		
+//		for(int i=0; i<genetic.INITIAL_POPULATION_NO; i++)
+//		{
+//			System.out.println("Graf populacji " + i);
+//			System.out.println();
+//			System.out.println(genetic.graph_list.get(i).nodeList.get(0).name);
+//			genetic.graph_list.get(i).printAdjList();
+//		}
 	}
 
 }

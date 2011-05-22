@@ -166,11 +166,11 @@ public class SNDParser {
 					if (qName.equalsIgnoreCase("node")) {
 						Node node = new Node(node_id, node_coord_x,
 								node_coord_y, node_name);
-						System.out.println();
-						System.out.println("Node name: " + node.id + " "
-								+ node.name);
-						System.out.println("x: " + node.draw_x + " y: "
-								+ node.draw_y);
+//						System.out.println();
+//						System.out.println("Node name: " + node.id + " "
+//								+ node.name);
+//						System.out.println("x: " + node.draw_x + " y: "
+//								+ node.draw_y);
 						graph.addNode(node);
 					}
 
