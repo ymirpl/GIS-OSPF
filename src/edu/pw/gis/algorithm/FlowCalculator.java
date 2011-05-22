@@ -18,14 +18,16 @@ public class FlowCalculator {
 			ArrayList<Double> row = g.flowMatrix.get(source);
 			for (int target = 0; target < g.flowMatrix.size(); target++) {
 				// compute dijkstra begging from each source
-				if (row.get(target) > 0) {
+				if (row.get(target) > 0 && g.nodeList.get(target).done != true) {
 					// we go ;)
 					g.cleanDistances();
 					d.setStartNode(target);
 					d.compute();
 					calculateFlows(target);
+					g.nodeList.get(target).done = true;
 				}
 			}
+			
 		}
 	}
 

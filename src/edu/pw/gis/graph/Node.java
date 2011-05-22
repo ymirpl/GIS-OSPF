@@ -15,6 +15,7 @@ public class Node implements Cloneable{
 	public double draw_x; // drawing coords
 	public double draw_y;
 	public String name;
+	public boolean done = false;
 
 	public Node() {
 		this.id = -1;
