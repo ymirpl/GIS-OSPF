@@ -20,7 +20,7 @@ public class Node implements Cloneable{
 		this.id = -1;
 		this.outDegree = 0;
 		this.incomingTraffic = 0.0;
-		this.distance = -1;
+		this.distance = 0;
 		this.draw_x = -1.0;
 		this.draw_y = -1.0;
 		this.name = "";
@@ -30,7 +30,7 @@ public class Node implements Cloneable{
 		this.id = id;
 		this.outDegree = 0;
 		this.incomingTraffic = 0.0;
-		this.distance = -1;
+		this.distance = 0;
 		this.draw_x = draw_x;
 		this.draw_y = draw_y;
 		this.name = name;
