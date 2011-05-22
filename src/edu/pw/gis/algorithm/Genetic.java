@@ -59,7 +59,7 @@ public class Genetic {
 		snd_parser.graph = new Graph(snd_parser.nodes_no);
 		snd_parser.readSNDNetworkXML("xml/test.xml");
 		
-		Genetic genetic = new Genetic(10, 2, 0.2, 0.7, 0.01, 0.5, 0.5, 100);
+		Genetic genetic = new Genetic(10, 3, 0.2, 0.7, 0.01, 0.5, 0.5, 100);
 		try {
 			genetic.createInitialPopulation(snd_parser.graph);
 		} catch (CloneNotSupportedException e) {
