@@ -39,7 +39,7 @@ public class FlowCalculator {
 				if (w.e.inTree) {
 					double flow = 0;
 					flow = (g.flowMatrix.get(v.id).get(target_id) + v.incomingTraffic) / v.outDegree;
-					w.e.flow = flow;
+					w.e.flow += flow;
 					w.e.target.incomingTraffic += flow;
 					w.e.usage = w.e.flow/w.e.capacity;
 				}

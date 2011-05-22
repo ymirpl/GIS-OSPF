@@ -69,16 +69,16 @@ public class Graph implements Cloneable {
 		
 		//TODO DEBUG ONLY krawedzie w obie strony
 		
-		this.adjList.get(e.target.id).list.add(new NodeEdge(e.source, e));
-		this.revertedAdjList.get(e.source.id).list
-				.add(new NodeEdge(e.target, e));
+//		this.adjList.get(e.target.id).list.add(new NodeEdge(e.source, e));
+//		this.revertedAdjList.get(e.source.id).list
+//				.add(new NodeEdge(e.target, e));
 		
 		
 	}
 
 	public void printAdjList() {
 		for (AdjElement element : this.adjList) {
-			System.out.print("Node " + element.n.name + " outD: "
+			System.out.println("Node " + element.n.name + " outD: "
 					+ element.n.outDegree + " :: ");
 			for (NodeEdge t : element.list) {
 				System.out.println(t.n.name + "(" + t.e.id + "), inTree:"

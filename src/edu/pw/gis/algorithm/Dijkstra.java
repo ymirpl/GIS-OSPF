@@ -73,6 +73,7 @@ public class Dijkstra {
 	private void setInfinityDistance() {
 		for(Node n: this.g.nodeList) {
 			n.distance = Integer.MAX_VALUE;
+			n.outDegree = 0;
 		}
 	}
 	

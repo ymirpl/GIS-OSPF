@@ -58,17 +58,19 @@ public class Genetic {
 	public Graph generateCloneWithRandomWeights(Graph g) {
 		Random rand = new Random();
 		Graph tmp;
-		try {
-			tmp = (Graph) g.clone();
+			SNDParser snd_parser = new SNDParser();
+			snd_parser.countNodesAndEdgesSNDNetworkXML("xml/test.xml");
+		
+			snd_parser.graph = new Graph(snd_parser.nodes_no);
+
+			snd_parser.readSNDNetworkXML("xml/test.xml");
+			
+			tmp = snd_parser.graph;
 			for (int j = 0; j < tmp.edgeList.size(); j++) {
 				Edge e = tmp.edgeList.get(j);
 				e.weight = (int) (rand.nextInt(this.MAX_WEIGHT + 1)); //TODO dzielienie przez kapacity
 			}
 
-		} catch (CloneNotSupportedException e1) {
-			e1.printStackTrace();
-			return (Graph) null;
-		}
 		return tmp;
 	}
 
