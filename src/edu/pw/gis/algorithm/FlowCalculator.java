@@ -45,8 +45,10 @@ public class FlowCalculator {
 					flow = (g.flowMatrix.get(v.id).get(target_id) + v.incomingTraffic)
 							/ v.outDegree;
 					w.e.flow = flow;
-					w.e.target.incomingTraffic += flow;
-					w.e.usage = w.e.flow / w.e.capacity;
+
+					w.e.target.incomingTraffic = flow;
+					w.e.usage = w.e.flow/w.e.capacity;
+
 				}
 			}
 		}
