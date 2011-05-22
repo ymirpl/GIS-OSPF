@@ -131,6 +131,15 @@ public class Graph implements Cloneable {
 
 		return result;
 	}
+	
+	public void printFlowMatrix() {
+		for(ArrayList<Double> a: flowMatrix) {
+			for(Double d: a) {
+				System.out.print(d + "		");
+			}
+			System.out.println();
+		}
+	}
 
 	public static void main(String[] args) {
 		Graph g = new Graph(2);

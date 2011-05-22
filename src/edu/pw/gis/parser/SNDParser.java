@@ -186,15 +186,9 @@ public class SNDParser {
 						int i = nodes_list.indexOf(demand_source_node_name);
 						int j = nodes_list.indexOf(demand_target_node_name);
 
-						System.out.println(demand_source_node_name + " " + demand_target_node_name);
-						System.out.println("Indeksy: " + i + " " + j);
-						
-						//graph.flowMatrix.get(i).set(j, demand_value);
+						graph.flowMatrix.get(i).set(j, demand_value);
 
 						b_demand = false;
-						b_demand_source = false;
-						b_demand_target = false;
-						b_demand_value = false;
 						demand_source_node_name = "XXX";
 						demand_target_node_name = "YYY";
 						demand_value = -1.0;
@@ -245,10 +239,9 @@ public class SNDParser {
 					}
 
 					if (b_demand_value) {
-//						System.out.println(new String(ch, start,
-//								length));
-//						demand_value = Double.parseDouble(new String(ch, start,
-//								length));
+						demand_value = Double.parseDouble(new String(ch, start,
+								length));
+						b_demand_value = false;
 					}
 				}
 
@@ -291,11 +284,12 @@ public class SNDParser {
 		// for(int i = 0; i < snd_parser.node_list.size(); i++)
 		// System.out.println("(" + i +") " + snd_parser.node_list.get(i));
 
-//		snd_parser.graph.printAdjList();
-//		snd_parser.graph.nodeList.get(3).name = "aaaaaaaa";
-//		System.out.println("----- zmiana -----");
-//		snd_parser.graph.printAdjList();
+		// snd_parser.graph.printAdjList();
+		// snd_parser.graph.nodeList.get(3).name = "aaaaaaaa";
+		// System.out.println("----- zmiana -----");
+		// snd_parser.graph.printAdjList();
 		
+		snd_parser.graph.printFlowMatrix();
 	}
 
 }
