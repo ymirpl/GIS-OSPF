@@ -26,7 +26,7 @@ public class Main {
 
 		snd_parser.readSNDNetworkXML("xml/test.xml");
 		
-		Genetic genetic = new Genetic(1024, 1, 0.2, 0.7, 0.01, 0.5, 0.75, 1);
+		Genetic genetic = new Genetic(65535, 1, 0.2, 0.7, 0.01, 0.5, 0.75, 1);
 		genetic.createInitialPopulation(snd_parser.graph);
 		
 		for(int i=0; i<genetic.MAX_ITERATION_NO; i++) {

@@ -273,16 +273,17 @@ public class SNDParser {
 	public static void main(String argv[]) {
 		System.out.println("test");
 		SNDParser snd_parser = new SNDParser();
-		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/test.xml");
+		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/giul39.xml");
 		System.out.println("liczba krawedzi: " + snd_parser.getEdges_no());
 		System.out.println("liczba wezlow: " + snd_parser.getNodes_no());
 
 		snd_parser.graph = new Graph(snd_parser.nodes_no);
 
-		snd_parser.readSNDNetworkXML("xml/test.xml");
+		snd_parser.readSNDNetworkXML("xml/giul39.xml");
 
-		// for(int i = 0; i < snd_parser.node_list.size(); i++)
-		// System.out.println("(" + i +") " + snd_parser.node_list.get(i));
+		for(String s: snd_parser.nodes_list) {
+			System.out.println(s);
+		}
 
 		// snd_parser.graph.printAdjList();
 		// snd_parser.graph.nodeList.get(3).name = "aaaaaaaa";
