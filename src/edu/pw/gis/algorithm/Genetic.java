@@ -127,8 +127,8 @@ public class Genetic {
 		Random rand = new Random();
 		int rr = rand.nextInt(cardA+1);
 		Graph dad = graph_list.get(rr);
-		rr = rand.nextInt(max - min + 1) + min;
-		Graph mom = 
+//		rr = rand.nextInt(max - min + 1) + min;
+//		Graph mom = 
 		
 		
 		
