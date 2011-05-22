@@ -40,20 +40,6 @@
 				<source>gora</source>
 				<target>lewa</target>
 				<preInstalledModule>
-					<capacity>100</capacity>
-					<cost>0.0</cost>
-				</preInstalledModule>
-				<additionalModules>
-					<addModule>
-						<capacity>100.0</capacity>
-						<cost>133.0</cost>
-					</addModule>
-				</additionalModules>
-			</link>
-			<link id="gora_lewa">
-				<source>gora</source>
-				<target>lewa</target>
-				<preInstalledModule>
 					<capacity>200</capacity>
 					<cost>0.0</cost>
 				</preInstalledModule>
