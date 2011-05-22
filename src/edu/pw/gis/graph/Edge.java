@@ -31,7 +31,7 @@ public class Edge implements Cloneable{
 	}
 	
 	@Override
-	protected Object clone() throws CloneNotSupportedException {
+	protected Edge clone() throws CloneNotSupportedException {
 		Edge result = (Edge)super.clone();
 		return result;
 	}

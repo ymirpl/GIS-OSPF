@@ -37,7 +37,7 @@ public class Node implements Cloneable{
 	}
 	
 	@Override
-	protected Object clone() throws CloneNotSupportedException {
+	protected Node clone() throws CloneNotSupportedException {
 		Node result = (Node)super.clone();
 		return result;
 	}

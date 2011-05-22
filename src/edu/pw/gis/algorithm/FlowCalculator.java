@@ -9,7 +9,7 @@ public class FlowCalculator {
 
 	public FlowCalculator(Graph g) {
 		this.g = g; 
-		d = new Dijkstra(this.g);
+		d = new Dijkstra(g);
 	}
 	
 	public void compute() {

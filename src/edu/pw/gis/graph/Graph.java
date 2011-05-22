@@ -118,16 +118,9 @@ public class Graph implements Cloneable {
 		// this object's internal state
 
 		result.nodeList = new ArrayList<Node>(nodeList.size());
-
-		for (Node o : nodeList) {
-			result.addNode((Node) o.clone());
-		}
-
 		result.edgeList = new ArrayList<Edge>(edgeList.size());
-
-		for (Edge o : edgeList) {
-			result.addEdge((Edge) o.clone());
-		}
+		result.adjList = new ArrayList<AdjElement>(this.noNodes);
+		result.revertedAdjList = new ArrayList<AdjElement>(this.noNodes);
 
 		result.flowMatrix = new ArrayList<ArrayList<Double>>(flowMatrix.size());
 
@@ -138,6 +131,22 @@ public class Graph implements Cloneable {
 			}
 
 			result.flowMatrix.add(backup);
+		}
+		
+		for (AdjElement ae: adjList) {
+			result.adjList.add(ae.clone());
+		}
+		
+		for (AdjElement ae: revertedAdjList) {
+			result.revertedAdjList.add(ae.clone());
+		}
+		
+		for (Node n: nodeList) {
+			result.nodeList.add(n.clone());
+		}
+		
+		for (Edge e: edgeList) {
+			result.edgeList.add(e.clone());
 		}
 
 		return result;

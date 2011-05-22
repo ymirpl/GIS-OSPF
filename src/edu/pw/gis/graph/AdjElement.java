@@ -15,8 +15,12 @@ public class AdjElement implements Cloneable {
 	}
 	
 	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		AdjElement result = (AdjElement)super.clone();
+	protected AdjElement clone() throws CloneNotSupportedException {
+		AdjElement result = new AdjElement();
+		for (NodeEdge o : list) {
+			result.list.add(o.clone());
+		}
+		result.n = this.n.clone();
 		return result;
 	}
 }

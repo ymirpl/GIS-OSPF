@@ -1,6 +1,6 @@
 package edu.pw.gis.graph;
 
-public class NodeEdge {
+public class NodeEdge implements Cloneable{
 	public Node n;
 	public Edge e;
 	
@@ -12,6 +12,11 @@ public class NodeEdge {
 	public NodeEdge() {
 		this.n = null;
 		this.e = null;
+	}
+	
+	protected NodeEdge clone() throws CloneNotSupportedException {
+		NodeEdge result = (NodeEdge)super.clone();
+		return result;
 	}
 	
 }
