@@ -108,42 +108,45 @@ public class Genetic {
 			}
 			
 			else if (i >= cardA && i < cardB) { // klasa B
-				
+				new_graph_list.add(getChild(graph_list.get(0)));
 			}
 			
 			if (i >= cardB) { // klasa C, umieraja, a na ich miejsce losowane sa nowe
 				new_graph_list.add(generateCloneWithRandomWeights(graph_list.get(0))); // wszystko jedno, z jakiego sklonujemy
 			}
 		}
-	
-		
 		
 		graph_list = new_graph_list;
 		new_graph_list = new ArrayList<Graph>();
 	}
 	
 	public Graph getChild(Graph g) {
-		Graph tmp;
+		Graph child;
 		Random rand = new Random();
 		int rr = rand.nextInt(cardA+1);
 		Graph dad = graph_list.get(rr);
-		rr = rand.nextInt(max - min + 1) + min;
-		Graph mom = 
+		rr = rand.nextInt(cardB - cardA + 1) + cardA;
+		Graph mom = graph_list.get(rr);
 		
 		
 		
 		try {
-			tmp = (Graph) g.clone();
-			for (int j = 0; j < tmp.edgeList.size(); j++) {
-				Edge e = tmp.edgeList.get(j);
-				e.weight = (int) (rand.nextInt(this.MAX_WEIGHT + 1) / e.capacity);
+			child = (Graph) g.clone();
+			for (int j = 0; j < child.edgeList.size(); j++) {
+				Edge e = child.edgeList.get(j);
+				if (rand.nextFloat() < MUTATION_RATE) // mutacja 
+					e.weight = (int) (rand.nextInt(this.MAX_WEIGHT + 1));
+				else if (rand.nextFloat() < CROSS_RATE)
+					e.weight = dad.edgeList.get(j).weight;
+				else
+					e.weight = mom.edgeList.get(j).weight;
 			}
 
 		} catch (CloneNotSupportedException e1) {
 			e1.printStackTrace();
 			return (Graph) null;
 		}
-		return tmp;
+		return child;
 	}
 	
 	
