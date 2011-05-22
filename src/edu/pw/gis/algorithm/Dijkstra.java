@@ -74,6 +74,10 @@ public class Dijkstra {
 		for(Node n: this.g.nodeList) {
 			n.distance = Integer.MAX_VALUE;
 			n.outDegree = 0;
+			n.incomingTraffic = 0;
+		}
+		for(Edge e: this.g.edgeList) {
+			e.inTree = false;
 		}
 	}
 	
