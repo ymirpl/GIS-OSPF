@@ -24,6 +24,7 @@ public class SNDParser {
 	public Graph graph;
 
 	private ArrayList<String> nodes_list = new ArrayList<String>();
+
 	/*
 	 * Funkcja zliczaj¹ca liczbê wierszy i krawêdzi w grafie zapisanym w pliku
 	 * XML. Zliczamy wêz³y node i links
@@ -77,12 +78,20 @@ public class SNDParser {
 				boolean b_edge_capacity = false;
 				boolean b_edge_source = false;
 				boolean b_edge_target = false;
+				boolean b_edge = false;
+				boolean b_demand = false;
+				boolean b_demand_source = false;
+				boolean b_demand_target = false;
+				boolean b_demand_value = false;
 
 				// Parametry wêz³a
 				int node_id = -1;
-				double node_coord_x = -1;
-				double node_coord_y = -1;
+				double node_coord_x = -1.0;
+				double node_coord_y = -1.0;
 				String node_name = "";
+				String demand_source_node_name = "";
+				String demand_target_node_name = "";
+				double demand_value = -1.0;
 
 				// Parametry krawêdzi
 				int edge_id = -1;
@@ -102,7 +111,7 @@ public class SNDParser {
 						node_id++;
 						nodes_list.add(node_id, node_name);
 					}
-					
+
 					if (qName.equalsIgnoreCase("link")) {
 						edge_name = attributes.getValue(0);
 						edge_id++;
@@ -116,16 +125,38 @@ public class SNDParser {
 						b_coord_y = true;
 					}
 
+					if (qName.equalsIgnoreCase("link")) {
+						b_edge = true;
+					}
+
 					if (qName.equalsIgnoreCase("capacity")) {
 						b_edge_capacity = true;
 					}
-					
-					if (qName.equalsIgnoreCase("source")) {
+
+					if (b_edge && qName.equalsIgnoreCase("source")) {
 						b_edge_source = true;
 					}
-					
-					if (qName.equalsIgnoreCase("target")) {
+
+					if (b_edge && qName.equalsIgnoreCase("target")) {
 						b_edge_target = true;
+					}
+
+					if (qName.equalsIgnoreCase("demand")) {
+						b_demand = true;
+					}
+
+					if (b_demand && qName.equalsIgnoreCase("source")) {
+						b_demand_source = true;
+
+					}
+
+					if (b_demand && qName.equalsIgnoreCase("target")) {
+						b_demand_target = true;
+
+					}
+
+					if (b_demand && qName.equalsIgnoreCase("demandValue")) {
+						b_demand_value = true;
 					}
 				}
 
@@ -142,10 +173,31 @@ public class SNDParser {
 								+ node.draw_y);
 						graph.addNode(node);
 					}
-					
+
 					if (qName.equalsIgnoreCase("link")) {
-						Edge edge = new Edge(edge_id, edge_capacity, edge_source, edge_target, edge_name);
+						Edge edge = new Edge(edge_id, edge_capacity,
+								edge_source, edge_target, edge_name);
 						graph.addEdge(edge);
+						b_edge = false;
+					}
+
+					if (b_demand && qName.equalsIgnoreCase("demand")) {
+
+						int i = nodes_list.indexOf(demand_source_node_name);
+						int j = nodes_list.indexOf(demand_target_node_name);
+
+						System.out.println(demand_source_node_name + " " + demand_target_node_name);
+						System.out.println("Indeksy: " + i + " " + j);
+						
+						//graph.flowMatrix.get(i).set(j, demand_value);
+
+						b_demand = false;
+						b_demand_source = false;
+						b_demand_target = false;
+						b_demand_value = false;
+						demand_source_node_name = "XXX";
+						demand_target_node_name = "YYY";
+						demand_value = -1.0;
 					}
 				}
 
@@ -165,21 +217,38 @@ public class SNDParser {
 					}
 
 					if (b_edge_capacity) {
-						edge_capacity = Double.parseDouble(new String(ch, start,
-								length));
+						edge_capacity = Double.parseDouble(new String(ch,
+								start, length));
 						b_edge_capacity = false;
 					}
-					
+
 					if (b_edge_source) {
-						edge_source = graph.nodeList.get(nodes_list.indexOf(new String(ch, start,
-								length)));
+						edge_source = graph.nodeList.get(nodes_list
+								.indexOf(new String(ch, start, length)));
 						b_edge_source = false;
 					}
-					
+
 					if (b_edge_target) {
-						edge_target = graph.nodeList.get(nodes_list.indexOf(new String(ch, start,
-								length)));
+						edge_target = graph.nodeList.get(nodes_list
+								.indexOf(new String(ch, start, length)));
 						b_edge_target = false;
+					}
+
+					if (b_demand_source) {
+						demand_source_node_name = new String(ch, start, length);
+						b_demand_source = false;
+					}
+
+					if (b_demand_target) {
+						demand_target_node_name = new String(ch, start, length);
+						b_demand_target = false;
+					}
+
+					if (b_demand_value) {
+//						System.out.println(new String(ch, start,
+//								length));
+//						demand_value = Double.parseDouble(new String(ch, start,
+//								length));
 					}
 				}
 
@@ -222,10 +291,11 @@ public class SNDParser {
 		// for(int i = 0; i < snd_parser.node_list.size(); i++)
 		// System.out.println("(" + i +") " + snd_parser.node_list.get(i));
 
-		snd_parser.graph.printAdjList();
-		snd_parser.graph.nodeList.get(3).name = "aaaaaaaa";
-		System.out.println("----- zmiana -----");
-		snd_parser.graph.printAdjList();
+//		snd_parser.graph.printAdjList();
+//		snd_parser.graph.nodeList.get(3).name = "aaaaaaaa";
+//		System.out.println("----- zmiana -----");
+//		snd_parser.graph.printAdjList();
+		
 	}
 
 }
