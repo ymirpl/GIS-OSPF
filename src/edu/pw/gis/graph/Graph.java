@@ -82,7 +82,7 @@ public class Graph implements Cloneable {
 					+ element.n.outDegree + " :: ");
 			for (NodeEdge t : element.list) {
 				System.out.println(t.n.name + "(" + t.e.id + "), inTree:"
-						+ t.e.inTree + " flow:" + t.e.flow);
+						+ t.e.inTree + " flowSum:" + t.e.flowSum);
 			}
 		}
 		System.out.println("");

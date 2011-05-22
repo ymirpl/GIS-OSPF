@@ -48,6 +48,10 @@ public class FlowCalculator {
 				}
 			}
 		}
+		
+		for (Edge e: g.edgeList) {
+			e.flowSum += e.flow;
+		}
 	}
 
 	public static void testOne() {

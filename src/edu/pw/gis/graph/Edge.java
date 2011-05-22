@@ -17,6 +17,7 @@ public class Edge implements Cloneable{
 	public boolean inTree; // czy nalezy do grafu skroconego wlasnie rowazanego
 	public int id;
 	public String name;
+	public double flowSum;
 	
 	public Edge(int id, double capacity, Node source, Node target, String name) {
 		this.id = id;
@@ -24,6 +25,7 @@ public class Edge implements Cloneable{
 		this.weight = 1;
 		this.flow = 0;
 		this.usage = 0;
+		this.flowSum = 0;
 		this.source = source;
 		this.target = target;
 		this.inTree = false;

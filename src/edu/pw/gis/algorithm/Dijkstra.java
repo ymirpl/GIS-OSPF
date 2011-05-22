@@ -172,8 +172,8 @@ public class Dijkstra {
 	public static void main(String[] args) {
 		//testOne();
 		//testTwo();
-		//testThree();
-		testSNDGraph();
+		testThree();
+		//testSNDGraph();
 		
 		/*
 		Graph g = new Graph(2);

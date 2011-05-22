@@ -50,12 +50,12 @@ public class Genetic {
 			throws CloneNotSupportedException {
 		// TODO tutaj potrzebne g__bokie kopiowanie!!!
 		for (int i = 0; i < this.INITIAL_POPULATION_NO; i++) {
-			Graph tmp = generateCloneWithRandomWeights(g);
-			this.graph_list.add(tmp);
+			generateCloneWithRandomWeights(g);
+			
 		}
 	}
 
-	public Graph generateCloneWithRandomWeights(Graph g) {
+	public void generateCloneWithRandomWeights(Graph g) {
 		Random rand = new Random();
 		Graph tmp;
 			SNDParser snd_parser = new SNDParser();
@@ -68,10 +68,11 @@ public class Genetic {
 			tmp = snd_parser.graph;
 			for (int j = 0; j < tmp.edgeList.size(); j++) {
 				Edge e = tmp.edgeList.get(j);
-				e.weight = (int) (rand.nextInt(this.MAX_WEIGHT + 1)); //TODO dzielienie przez kapacity
+			//	e.weight = (int) (rand.nextInt(this.MAX_WEIGHT + 1)); //TODO dzielienie przez kapacity usuniecie losowania wag
+				e.weight = j+1; // TODO sztywne wagi
 			}
 
-		return tmp;
+		this.graph_list.add(tmp);
 	}
 
 	public void evaluatePopulation() {
@@ -111,8 +112,8 @@ public class Genetic {
 
 			if (i >= cardB) { // klasa C, umieraja, a na ich miejsce losowane sa
 								// nowe
-				new_graph_list.add(generateCloneWithRandomWeights(graph_list
-						.get(0))); // wszystko jedno, z jakiego sklonujemy
+				generateCloneWithRandomWeights(graph_list
+						.get(0)); // wszystko jedno, z jakiego sklonujemy
 			}
 		}
 
@@ -144,7 +145,7 @@ public class Genetic {
 			e1.printStackTrace();
 			return (Graph) null;
 		}
-		return child;
+		return child; //TODO czy to zabija???
 	}
 
 	/**
