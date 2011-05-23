@@ -59,17 +59,17 @@ public class Genetic {
 		Random rand = new Random();
 		Graph tmp;
 			SNDParser snd_parser = new SNDParser();
-			snd_parser.countNodesAndEdgesSNDNetworkXML("xml/simple_test_graph.xml");
+			snd_parser.countNodesAndEdgesSNDNetworkXML("xml/big_test.xml");
 		
 			snd_parser.graph = new Graph(snd_parser.nodes_no);
 
-			snd_parser.readSNDNetworkXML("xml/simple_test_graph.xml");
+			snd_parser.readSNDNetworkXML("xml/big_test.xml");
 			
 			tmp = snd_parser.graph;
 			for (int j = 0; j < tmp.edgeList.size(); j++) {
 				Edge e = tmp.edgeList.get(j);
-			//	e.weight = (int) (rand.nextInt(this.MAX_WEIGHT + 1)); //TODO dzielienie przez kapacity usuniecie losowania wag
-				e.weight = j+1; // TODO sztywne wagi
+				e.weight = (int) (rand.nextInt(this.MAX_WEIGHT + 1)); //TODO dzielienie przez kapacity usuniecie losowania wag
+			//	e.weight = j+1; // TODO sztywne wagi
 			}
 
 		this.graph_list.add(tmp);
