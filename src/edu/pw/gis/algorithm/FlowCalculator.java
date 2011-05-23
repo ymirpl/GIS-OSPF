@@ -29,6 +29,9 @@ public class FlowCalculator {
 			}
 			
 		}
+		for (Edge e: g.edgeList) {
+			e.usage = e.flowSum/e.capacity;
+		}
 	}
 
 	private void calculateFlows(int target_id) {
@@ -47,15 +50,16 @@ public class FlowCalculator {
 					w.e.flow = flow;
 
 					w.e.target.incomingTraffic = flow;
-					w.e.usage = w.e.flow/w.e.capacity;
 
 				}
 			}
 		}
-		
-		for (Edge e: g.edgeList) {
+
+		for (Edge e : g.edgeList) {
 			e.flowSum += e.flow;
+
 		}
+
 	}
 
 	public static void testOne() {

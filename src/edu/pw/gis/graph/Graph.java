@@ -41,8 +41,7 @@ public class Graph implements Cloneable {
 
 	}
 
-	public double computeHighestUsageAndClearFlows() {
-		double usage = 0;
+	public double getHighestUsage() {
 		for (Edge e : edgeList) {
 			if (e.usage > highestUsage) {
 				highestUsage = e.usage;
@@ -51,7 +50,7 @@ public class Graph implements Cloneable {
 			e.flow = 0.0;
 			e.inTree = false;
 		}
-		return usage;
+		return highestUsage;
 	}
 
 	public void addNode(Node n) {
@@ -69,10 +68,12 @@ public class Graph implements Cloneable {
 		
 		//TODO DEBUG ONLY krawedzie w obie strony
 		
-//		this.adjList.get(e.target.id).list.add(new NodeEdge(e.source, e));
-//		this.revertedAdjList.get(e.source.id).list
-//				.add(new NodeEdge(e.target, e));
-		
+//		Edge e2 = new Edge(e.id, e.capacity, e.target, e.source, e.name);
+//		this.edgeList.add(e2);
+//		this.adjList.get(e2.source.id).list.add(new NodeEdge(e2.target, e2));
+//		this.revertedAdjList.get(e2.target.id).list
+//				.add(new NodeEdge(e2.source, e2));
+//		
 		
 	}
 
@@ -112,43 +113,14 @@ public class Graph implements Cloneable {
 	public Graph clone() throws CloneNotSupportedException {
 		Graph result = new Graph(this.noNodes);
 
-		// mutable fields need to be made independent of this object, for
-		// reasons
-		// similar to those for defensive copies - to prevent unwanted access to
-		// this object's internal state
-
-		result.nodeList = new ArrayList<Node>(nodeList.size());
-		result.edgeList = new ArrayList<Edge>(edgeList.size());
-		result.adjList = new ArrayList<AdjElement>(this.noNodes);
-		result.revertedAdjList = new ArrayList<AdjElement>(this.noNodes);
-
-		result.flowMatrix = new ArrayList<ArrayList<Double>>(flowMatrix.size());
-
-		for (ArrayList<Double> o : flowMatrix) {
-			ArrayList<Double> backup = new ArrayList<Double>(o.size());
-			for (Double q : o) {
-				backup.add(Double.parseDouble(q.toString()));
-			}
-
-			result.flowMatrix.add(backup);
+		for (Node n: this.nodeList) {
+			result.addNode(new Node(n.id, n.draw_x, n.draw_y, n.name));
 		}
 		
-		for (AdjElement ae: adjList) {
-			result.adjList.add(ae.clone());
+		for (Edge e: this.edgeList) {
+			result.addEdge(new Edge(e.id, e.capacity, result.nodeList.get(e.source.id), result.nodeList.get(e.target.id), e.name));
 		}
 		
-		for (AdjElement ae: revertedAdjList) {
-			result.revertedAdjList.add(ae.clone());
-		}
-		
-		for (Node n: nodeList) {
-			result.nodeList.add(n.clone());
-		}
-		
-		for (Edge e: edgeList) {
-			result.edgeList.add(e.clone());
-		}
-
 		return result;
 	}
 
