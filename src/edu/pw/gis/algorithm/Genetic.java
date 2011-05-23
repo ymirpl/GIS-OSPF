@@ -80,7 +80,7 @@ public class Genetic {
 			FlowCalculator c = new FlowCalculator(g);
 			c.compute();
 			g.printAdjList();
-			g.computeHighestUsageAndClearFlows();
+			g.getHighestUsage();
 			System.out.println(g.highestUsage);
 
 		}
@@ -107,7 +107,7 @@ public class Genetic {
 			}
 
 			else if (i >= cardA && i < cardB) { // klasa B
-				new_graph_list.add(getChild(graph_list.get(0)));
+				getChild(graph_list.get(0));
 			}
 
 			if (i >= cardB) { // klasa C, umieraja, a na ich miejsce losowane sa
@@ -120,8 +120,13 @@ public class Genetic {
 		graph_list = new_graph_list;
 		new_graph_list = new ArrayList<Graph>();
 	}
+	
+	public void printUsages() {
+		for (Graph g: graph_list)
+			System.out.println("Usage: " + g.getHighestUsage());
+	}
 
-	public Graph getChild(Graph g) {
+	public void getChild(Graph g) {
 		Graph child;
 		Random rand = new Random();
 		int rr = rand.nextInt(cardA + 1);
@@ -143,9 +148,9 @@ public class Genetic {
 
 		} catch (CloneNotSupportedException e1) {
 			e1.printStackTrace();
-			return (Graph) null;
+			child = null;
 		}
-		return child; //TODO czy to zabija???
+		new_graph_list.add(child); //TODO czy to zabija???
 	}
 
 	/**
@@ -154,10 +159,10 @@ public class Genetic {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		SNDParser snd_parser = new SNDParser();
-		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/test.xml");
+		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/simple_test_graph.xml");
 
 		snd_parser.graph = new Graph(snd_parser.nodes_no);
-		snd_parser.readSNDNetworkXML("xml/test.xml");
+		snd_parser.readSNDNetworkXML("xml/simple_test_graph.xml");
 
 		Genetic genetic = new Genetic(10, 3, 0.2, 0.7, 0.01, 0.5, 0.5, 100);
 		try {

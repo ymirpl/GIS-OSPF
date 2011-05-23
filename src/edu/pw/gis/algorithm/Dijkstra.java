@@ -158,10 +158,10 @@ public class Dijkstra {
 	public static void testSNDGraph()
 	{
 		SNDParser snd_parser = new SNDParser();
-		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/test.xml");
+		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/simple_test_graph.xml");
 		
 		snd_parser.graph = new Graph(snd_parser.nodes_no);
-		snd_parser.readSNDNetworkXML("xml/test.xml");
+		snd_parser.readSNDNetworkXML("xml/simple_test_graph.xml");
 		
 		Dijkstra d = new Dijkstra(snd_parser.graph);
 		d.setStartNode(7);
