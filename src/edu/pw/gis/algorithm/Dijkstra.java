@@ -32,7 +32,7 @@ public class Dijkstra {
 	}
 	
 	public void compute() throws IllegalArgumentException {
-		
+		HashMap<Node, Edge> parallel = new HashMap<Node, Edge>(); // trzymamy rozwiazania dla krawedzi rownoleglych
 		if (startNodeId < 0) {
 			throw new IllegalArgumentException("Set start node first.");
 		}
@@ -57,8 +57,17 @@ public class Dijkstra {
 			for (NodeEdge v : g.revertedAdjList.get(u.id).list) { // use reverted list
 				int new_distance = u.distance + v.e.weight;
 				if (new_distance <= v.n.distance) {
-					v.n.outDegree += 1;
+					
+					if (parallel.containsKey(v.n)) { // juz jest krawedz to tego wierzcholka, trzeba ja usunac z Tree i nie dodawac outDegree
+						parallel.get(v.n).inTree = false;
+					}
+					else {
+						v.n.outDegree += 1;
+					}
+					
 					v.e.inTree = true;
+					parallel.put(v.n, v.e); // do tego wezla prowadzi taka krawedz najlepiej
+					
 					if (new_distance < v.n.distance) {
 						Q.remove(v.n);
 						v.n.distance = new_distance;
