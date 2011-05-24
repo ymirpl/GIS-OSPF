@@ -49,30 +49,25 @@ public class Genetic {
 	public void createInitialPopulation(Graph g)
 			throws CloneNotSupportedException {
 		// TODO tutaj potrzebne g__bokie kopiowanie!!!
+		
+		SNDParser snd_parser = new SNDParser();
+		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/simple_test_graph.xml");
+		snd_parser.graph = new Graph(snd_parser.nodes_no);
+		snd_parser.readSNDNetworkXML("xml/simple_test_graph.xml");
+		
+		
 		for (int i = 0; i < this.INITIAL_POPULATION_NO; i++) {
-			generateCloneWithRandomWeights(g);
-			
+			generateCloneWithRandomWeights(snd_parser.graph);
 		}
+		
+		graph_list = new_graph_list;
+		new_graph_list = new ArrayList<Graph>();
 	}
 
-	public void generateCloneWithRandomWeights(Graph g) {
-		Random rand = new Random();
-		Graph tmp;
-			SNDParser snd_parser = new SNDParser();
-			snd_parser.countNodesAndEdgesSNDNetworkXML("xml/big_test.xml");
-		
-			snd_parser.graph = new Graph(snd_parser.nodes_no);
-
-			snd_parser.readSNDNetworkXML("xml/big_test.xml");
-			
-			tmp = snd_parser.graph;
-			for (int j = 0; j < tmp.edgeList.size(); j++) {
-				Edge e = tmp.edgeList.get(j);
-				e.weight = (int) (rand.nextInt(this.MAX_WEIGHT + 1)); //TODO dzielienie przez kapacity usuniecie losowania wag
-			//	e.weight = j+1; // TODO sztywne wagi
-			}
-
-		this.graph_list.add(tmp);
+	public void generateCloneWithRandomWeights(Graph g) throws CloneNotSupportedException {
+		Graph tmp = g.clone();	
+		tmp.randomWeights(this.MAX_WEIGHT);
+		this.new_graph_list.add(tmp);
 	}
 
 	public void evaluatePopulation() {
@@ -99,7 +94,7 @@ public class Genetic {
 
 	}
 
-	public void evolutionStep() {
+	public void evolutionStep() throws CloneNotSupportedException {
 		for (int i = 0; i < graph_list.size(); i++) {
 
 			if (i < cardA) { // klasa A, przezywaja wszyscy

@@ -59,6 +59,14 @@ public class Graph implements Cloneable {
 										// kolejnosci idekow
 		this.revertedAdjList.get(n.id).n = n;
 	}
+	
+	public void randomWeights(int max_weight) {
+		Random rand = new Random();
+		for (Edge e: edgeList) {
+			e.weight = (int) (rand.nextInt(max_weight) + 1); //TODO dzielienie przez kapacity usuniecie losowania wag
+		//	e.weight = j+1; // TODO sztywne wagi
+		}
+	}
 
 	public void addEdge(Edge e) {
 		this.edgeList.add(e);
@@ -112,6 +120,8 @@ public class Graph implements Cloneable {
 	@Override
 	public Graph clone() throws CloneNotSupportedException {
 		Graph result = new Graph(this.noNodes);
+		
+		result.noNodes = this.noNodes;
 
 		for (Node n: this.nodeList) {
 			result.addNode(new Node(n.id, n.draw_x, n.draw_y, n.name));
@@ -119,6 +129,13 @@ public class Graph implements Cloneable {
 		
 		for (Edge e: this.edgeList) {
 			result.addEdge(new Edge(e.id, e.capacity, result.nodeList.get(e.source.id), result.nodeList.get(e.target.id), e.name));
+		}
+		
+		for (int i = 0; i < result.noNodes; ++i) {
+			ArrayList<Double> row = this.flowMatrix.get(i);
+			for (int j = 0; j < result.noNodes; ++j) {
+				result.flowMatrix.get(i).set(j, row.get(j));
+			}
 		}
 		
 		return result;
