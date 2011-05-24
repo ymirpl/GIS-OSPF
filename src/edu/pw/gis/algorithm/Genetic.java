@@ -24,8 +24,10 @@ public class Genetic {
 	public ArrayList<Graph> graph_list; // badany graf
 	public ArrayList<Graph> new_graph_list; // badany graf
 
-	private int cardA; // liczba osobnikow w klasie A
-	private int cardB; // liczba osobnikow w klasie B
+	private final int cardA; // liczba osobnikow w klasie A
+	private final int cardB; // liczba osobnikow w klasie B
+
+	public boolean debug = false;
 
 	public Genetic(int max_weight, int initial_population, double alfa_rate,
 			double beta_rate, double mutation_rate, double cross_rate,
@@ -48,35 +50,35 @@ public class Genetic {
 
 	public void createInitialPopulation(Graph g)
 			throws CloneNotSupportedException {
-		// TODO tutaj potrzebne g__bokie kopiowanie!!!
-		
-		SNDParser snd_parser = new SNDParser();
-		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/simple_test_graph.xml");
-		snd_parser.graph = new Graph(snd_parser.nodes_no);
-		snd_parser.readSNDNetworkXML("xml/simple_test_graph.xml");
-		
-		
+
 		for (int i = 0; i < this.INITIAL_POPULATION_NO; i++) {
-			generateCloneWithRandomWeights(snd_parser.graph);
+			generateCloneWithRandomWeights(g);
 		}
-		
+
 		graph_list = new_graph_list;
 		new_graph_list = new ArrayList<Graph>();
 	}
 
-	public void generateCloneWithRandomWeights(Graph g) throws CloneNotSupportedException {
-		Graph tmp = g.clone();	
-		tmp.randomWeights(this.MAX_WEIGHT);
-		this.new_graph_list.add(tmp);
+	public void generateCloneWithRandomWeights(Graph g) {
+		Graph tmp;
+		try {
+			tmp = g.clone();
+			tmp.randomWeights(this.MAX_WEIGHT);
+			this.new_graph_list.add(tmp);
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void evaluatePopulation() {
 		for (Graph g : graph_list) {
 			FlowCalculator c = new FlowCalculator(g);
 			c.compute();
-			g.printAdjList();
+			if (this.debug)
+				g.printAdjList();
 			g.getHighestUsage();
-			System.out.println(g.highestUsage);
+			if (this.debug)
+				System.out.println(g.highestUsage);
 
 		}
 
@@ -94,7 +96,7 @@ public class Genetic {
 
 	}
 
-	public void evolutionStep() throws CloneNotSupportedException {
+	public void evolutionStep() {
 		for (int i = 0; i < graph_list.size(); i++) {
 
 			if (i < cardA) { // klasa A, przezywaja wszyscy
@@ -105,20 +107,23 @@ public class Genetic {
 				getChild(graph_list.get(0));
 			}
 
-			if (i >= cardB) { // klasa C, umieraja, a na ich miejsce losowane sa
-								// nowe
-				generateCloneWithRandomWeights(graph_list
-						.get(0)); // wszystko jedno, z jakiego sklonujemy
+			else if (i >= cardB) { // klasa C, umieraja, a na ich miejsce
+									// losowane sa
+									// nowe
+				generateCloneWithRandomWeights(graph_list.get(0)); // wszystko
+																	// jedno, z
+																	// jakiego
+																	// sklonujemy
 			}
 		}
 
 		graph_list = new_graph_list;
 		new_graph_list = new ArrayList<Graph>();
 	}
-	
+
 	public void printUsages() {
-		for (Graph g: graph_list)
-			System.out.println("Usage: " + g.getHighestUsage());
+		for (Graph g : graph_list)
+			System.out.println("Usage: " + g.highestUsage);
 	}
 
 	public void getChild(Graph g) {
@@ -145,7 +150,28 @@ public class Genetic {
 			e1.printStackTrace();
 			child = null;
 		}
-		new_graph_list.add(child); //TODO czy to zabija???
+		new_graph_list.add(child);
+	}
+
+	public void go() {
+		for (int i = 0; i < MAX_ITERATION_NO; i++) {
+
+			evaluatePopulation();
+			
+			if (i % 50 == 0) { // TODO add if debug here 
+				System.out.println("new population " + i
+						+ "===================================================");
+				printUsages();
+			}
+
+			if (graph_list.get(0).highestUsage <= MAX_USAGE) {
+				System.out.println("Desired usage reached:"
+						+ graph_list.get(0).highestUsage);
+				break;
+			}
+
+			evolutionStep();
+		}
 	}
 
 	/**

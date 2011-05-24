@@ -7,6 +7,7 @@ import java.util.*;
 public class FlowCalculator {
 	public Graph g;
 	private Dijkstra d;
+	public boolean debug = false;
 
 	public FlowCalculator(Graph g) {
 		this.g = g;
@@ -20,7 +21,6 @@ public class FlowCalculator {
 				// compute dijkstra begging from each source
 				if (row.get(target) > 0 && g.nodeList.get(target).done != true) {
 					// we go ;)
-					g.cleanDistances();
 					d.setStartNode(target);
 					d.compute();
 					calculateFlows(target);

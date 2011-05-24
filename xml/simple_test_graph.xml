@@ -92,6 +92,118 @@
 					</addModule>
 				</additionalModules>
 			</link>
+			<link id="gora_lewa">
+				<source>gora</source>
+				<target>lewa</target>
+				<preInstalledModule>
+					<capacity>200</capacity>
+					<cost>0.0</cost>
+				</preInstalledModule>
+				<additionalModules>
+					<addModule>
+						<capacity>200.0</capacity>
+						<cost>133.0</cost>
+					</addModule>
+				</additionalModules>
+			</link>
+			<link id="gora_prawa">
+				<source>gora</source>
+				<target>prawa</target>
+				<preInstalledModule>
+					<capacity>50</capacity>
+					<cost>0.0</cost>
+				</preInstalledModule>
+				<additionalModules>
+					<addModule>
+						<capacity>50.0</capacity>
+						<cost>133.0</cost>
+					</addModule>
+				</additionalModules>
+			</link>
+			<link id="lewa_dol">
+				<source>lewa</source>
+				<target>dol</target>
+				<preInstalledModule>
+					<capacity>70</capacity>
+					<cost>0.0</cost>
+				</preInstalledModule>
+				<additionalModules>
+					<addModule>
+						<capacity>70.0</capacity>
+						<cost>133.0</cost>
+					</addModule>
+				</additionalModules>
+			</link>
+			<link id="prawa_dol">
+				<source>prawa</source>
+				<target>dol</target>
+				<preInstalledModule>
+					<capacity>60</capacity>
+					<cost>0.0</cost>
+				</preInstalledModule>
+				<additionalModules>
+					<addModule>
+						<capacity>60.0</capacity>
+						<cost>133.0</cost>
+					</addModule>
+				</additionalModules>
+			</link>
+			<link id="lewa_gora">
+				<source>lewa</source>
+				<target>gora</target>
+				<preInstalledModule>
+					<capacity>200</capacity>
+					<cost>0.0</cost>
+				</preInstalledModule>
+				<additionalModules>
+					<addModule>
+						<capacity>200.0</capacity>
+						<cost>133.0</cost>
+					</addModule>
+				</additionalModules>
+			</link>
+			<link id="prawa_gora">
+				<source>prawa</source>
+				<target>gora</target>
+				<preInstalledModule>
+					<capacity>50</capacity>
+					<cost>0.0</cost>
+				</preInstalledModule>
+				<additionalModules>
+					<addModule>
+						<capacity>50.0</capacity>
+						<cost>133.0</cost>
+					</addModule>
+				</additionalModules>
+			</link>
+			<link id="dol_lewa">
+				<source>dol</source>
+				<target>lewa</target>
+				<preInstalledModule>
+					<capacity>70</capacity>
+					<cost>0.0</cost>
+				</preInstalledModule>
+				<additionalModules>
+					<addModule>
+						<capacity>70.0</capacity>
+						<cost>133.0</cost>
+					</addModule>
+				</additionalModules>
+			</link>
+			<link id="dol_prawa">
+				<source>dol</source>
+				<target>prawa</target>
+				<preInstalledModule>
+					<capacity>60</capacity>
+					<cost>0.0</cost>
+				</preInstalledModule>
+				<additionalModules>
+					<addModule>
+						<capacity>60.0</capacity>
+						<cost>133.0</cost>
+					</addModule>
+				</additionalModules>
+			</link>
 		</links>
 	</networkStructure>
 	<demands>

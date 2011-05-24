@@ -37,7 +37,7 @@ public class Dijkstra {
 			throw new IllegalArgumentException("Set start node first.");
 		}
 		
-		setInfinityDistance();
+		resetMeasures();
 		
 		Node startNode = g.nodeList.get(startNodeId);
 		Q.remove(startNode);
@@ -79,7 +79,7 @@ public class Dijkstra {
 
 	}
 	
-	private void setInfinityDistance() {
+	private void resetMeasures() {
 		for(Node n: this.g.nodeList) {
 			n.distance = Integer.MAX_VALUE;
 			n.outDegree = 0;

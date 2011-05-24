@@ -76,11 +76,11 @@ public class Graph implements Cloneable {
 		
 		//TODO DEBUG ONLY krawedzie w obie strony
 		
-		Edge e2 = new Edge(e.id, e.capacity, e.target, e.source, e.name);
-		this.edgeList.add(e2);
-		this.adjList.get(e2.source.id).list.add(new NodeEdge(e2.target, e2));
-		this.revertedAdjList.get(e2.target.id).list
-				.add(new NodeEdge(e2.source, e2));
+//		Edge e2 = new Edge(e.id, e.capacity, e.target, e.source, e.name);
+//		this.edgeList.add(e2);
+//		this.adjList.get(e2.source.id).list.add(new NodeEdge(e2.target, e2));
+//		this.revertedAdjList.get(e2.target.id).list
+//				.add(new NodeEdge(e2.source, e2));
 		
 		
 	}
@@ -107,14 +107,6 @@ public class Graph implements Cloneable {
 			}
 		}
 		System.out.println("");
-	}
-
-	public void cleanDistances() {
-		// reverts all node distances to MAX_INT, so that we can compute
-		// Dijkstra for other starting nodes
-		for (int i = 0; i < this.noNodes; ++i) {
-			nodeList.get(i).distance = Integer.MAX_VALUE;
-		}
 	}
 
 	@Override
