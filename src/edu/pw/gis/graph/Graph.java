@@ -40,19 +40,6 @@ public class Graph implements Cloneable {
 		}
 
 	}
-
-	public double getHighestUsage() {
-		for (Edge e : edgeList) {
-			if (e.usage > highestUsage) {
-				highestUsage = e.usage;
-			}
-			e.usage = 0.0;
-			e.flow = 0.0;
-			e.inTree = false;
-		}
-		return highestUsage;
-	}
-
 	public void addNode(Node n) {
 		this.nodeList.add(n);
 		this.adjList.get(n.id).n = n; // zalozenie, ze przychodza wezly w
@@ -114,6 +101,7 @@ public class Graph implements Cloneable {
 		Graph result = new Graph(this.noNodes);
 		
 		result.noNodes = this.noNodes;
+		result.highestUsage = this.highestUsage;
 
 		for (Node n: this.nodeList) {
 			result.addNode(new Node(n.id, n.draw_x, n.draw_y, n.name));

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import edu.pw.gis.graph.Edge;
 import edu.pw.gis.graph.Graph;
@@ -71,15 +73,18 @@ public class Genetic {
 	}
 
 	public void evaluatePopulation() {
+		ExecutorService pool = Executors.newFixedThreadPool(3);
+		
 		for (Graph g : graph_list) {
-			FlowCalculator c = new FlowCalculator(g);
-			c.compute();
-			if (this.debug)
-				g.printAdjList();
-			g.getHighestUsage();
-			if (this.debug)
-				System.out.println(g.highestUsage);
+			pool.submit(new FlowCalculator(g));
+			//FlowCalculator f = new FlowCalculator(g);
+			//f.run();
+		}
+		
+		pool.shutdown();
 
+		while (!pool.isTerminated()) {
+			// czekamy na wykonanie wszystkich watkow
 		}
 
 		// sortowanie celem pozniejszego podzialu na klasy
@@ -180,10 +185,10 @@ public class Genetic {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		SNDParser snd_parser = new SNDParser();
-		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/simple_test_graph.xml");
+		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/big_test.xml");
 
 		snd_parser.graph = new Graph(snd_parser.nodes_no);
-		snd_parser.readSNDNetworkXML("xml/simple_test_graph.xml");
+		snd_parser.readSNDNetworkXML("xml/big_test.xml");
 
 		Genetic genetic = new Genetic(10, 3, 0.2, 0.7, 0.01, 0.5, 0.5, 100);
 		try {
