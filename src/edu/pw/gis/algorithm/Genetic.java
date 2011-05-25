@@ -50,8 +50,7 @@ public class Genetic {
 
 	}
 
-	public void createInitialPopulation(Graph g)
-			throws CloneNotSupportedException {
+	public void createInitialPopulation(Graph g) {
 
 		for (int i = 0; i < this.INITIAL_POPULATION_NO; i++) {
 			generateCloneWithRandomWeights(g);
@@ -76,7 +75,7 @@ public class Genetic {
 		ExecutorService pool = Executors.newFixedThreadPool(3);
 		
 		for (Graph g : graph_list) {
-			pool.submit(new FlowCalculator(g));
+			pool.execute(new FlowCalculator(g));
 			//FlowCalculator f = new FlowCalculator(g);
 			//f.run();
 		}
@@ -144,7 +143,7 @@ public class Genetic {
 			for (int j = 0; j < child.edgeList.size(); j++) {
 				Edge e = child.edgeList.get(j);
 				if (rand.nextFloat() < MUTATION_RATE) // mutacja
-					e.weight = (int) (rand.nextInt(this.MAX_WEIGHT + 1));
+					e.weight = (int) (rand.nextInt(this.MAX_WEIGHT)+1);
 				else if (rand.nextFloat() < CROSS_RATE)
 					e.weight = dad.edgeList.get(j).weight;
 				else
@@ -160,10 +159,11 @@ public class Genetic {
 
 	public void go() {
 		for (int i = 0; i < MAX_ITERATION_NO; i++) {
-
-			evaluatePopulation();
 			
-			if (i % 50 == 0) { // TODO add if debug here 
+			evaluatePopulation();
+
+			
+			if (i % 20 == 0) { // TODO add if debug here 
 				System.out.println("new population " + i
 						+ "===================================================");
 				printUsages();
@@ -185,18 +185,13 @@ public class Genetic {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		SNDParser snd_parser = new SNDParser();
-		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/big_test.xml");
+		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/simple_test_graph.xml");
 
 		snd_parser.graph = new Graph(snd_parser.nodes_no);
-		snd_parser.readSNDNetworkXML("xml/big_test.xml");
+		snd_parser.readSNDNetworkXML("xml/simple_test_graph.xml");
 
 		Genetic genetic = new Genetic(10, 3, 0.2, 0.7, 0.01, 0.5, 0.5, 100);
-		try {
-			genetic.createInitialPopulation(snd_parser.graph);
-		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		genetic.createInitialPopulation(snd_parser.graph);
 
 		// genetic.graph_list.get(0).addNode(new Node());
 		// genetic.graph_list.get(1).nodeList.get(0).name="DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDddd";

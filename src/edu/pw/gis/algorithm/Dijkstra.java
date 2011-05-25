@@ -9,6 +9,7 @@ public class Dijkstra {
 	private int startNodeId = -1;
 	private PriorityQueue<Node> Q;
 	private ArrayList<NodeEdge> pathList;
+	public boolean debug;
 	
 	public Dijkstra(Graph g) {
 		this.g = g;
@@ -48,8 +49,9 @@ public class Dijkstra {
 			Node u = Q.poll();
 			
 			if (u.distance == Integer.MAX_VALUE) {
-				System.out.println("Niespojny");
-				// graf niespojny
+				if (this.debug)
+					System.out.println("Niespojny");
+					// graf niespojny
 				break;
 			}
 
@@ -168,10 +170,10 @@ public class Dijkstra {
 	public static void testSNDGraph()
 	{
 		SNDParser snd_parser = new SNDParser();
-		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/big_test.xml");
+		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/simple_test_graph.xml");
 		
 		snd_parser.graph = new Graph(snd_parser.nodes_no);
-		snd_parser.readSNDNetworkXML("xml/big_test.xml");
+		snd_parser.readSNDNetworkXML("xml/simple_test_graph.xml");
 		
 		Dijkstra d = new Dijkstra(snd_parser.graph);
 		d.setStartNode(7);

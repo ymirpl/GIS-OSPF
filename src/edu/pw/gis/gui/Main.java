@@ -20,13 +20,13 @@ public class Main {
 	public static void main(String[] args) throws CloneNotSupportedException {
 	
 		SNDParser snd_parser = new SNDParser();
-		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/big_test.xml");
+		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/simple_test_graph.xml");
 	
 		snd_parser.graph = new Graph(snd_parser.nodes_no);
 
-		snd_parser.readSNDNetworkXML("xml/big_test.xml");
+		snd_parser.readSNDNetworkXML("xml/simple_test_graph.xml");
 		
-		Genetic genetic = new Genetic(10, 300, 0.2, 0.7, 0.01, 0.5, 0.00, 1000);
+		Genetic genetic = new Genetic(10, 100, 0.2, 0.7, 0.01, 0.7, 0.00, 700);
 
 		genetic.createInitialPopulation(snd_parser.graph);
 		
