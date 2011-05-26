@@ -52,7 +52,7 @@ public class Genetic {
 	}
 
 	/**
-	 * 
+	 * Metoda losuje poczatkowa populacje grafow
 	 */
 	public void createInitialPopulation(Graph g) {
 
@@ -64,6 +64,9 @@ public class Genetic {
 		new_graph_list = new ArrayList<Graph>();
 	}
 
+	/**
+	 * Metoda dodaje do listy new_graph_list nowy graf z losowymi wagami krawedzi
+	 */
 	public void generateCloneWithRandomWeights(Graph g) {
 		Graph tmp;
 
@@ -73,6 +76,9 @@ public class Genetic {
 		this.new_graph_list.add(tmp);
 	}
 
+	/**
+	 * 
+	 */
 	public void evaluatePopulation() {
 		ExecutorService pool = Executors.newFixedThreadPool(5);
 
@@ -110,7 +116,7 @@ public class Genetic {
 			}
 
 			else if (i >= cardA && i < cardB) { // klasa B
-				getChild(graph_list.get(0));
+				getChild(graph_list.get(0)); // rodzimy dzieci
 			}
 
 			else if (i >= cardB) { // klasa C, umieraja, a na ich miejsce
@@ -144,13 +150,13 @@ public class Genetic {
 		Graph dad = graph_list.get(rr);
 		rr = rand.nextInt(cardB - cardA + 1) + cardA;
 		Graph mom = graph_list.get(rr);
+		// wylosowano mame  tate, tata pochodzi z lepszej klasy
 
 		child = (Graph) g.clone();
 		for (int j = 0; j < child.edgeList.size(); j++) {
 			Edge e = child.edgeList.get(j);
 			if (rand.nextFloat() < MUTATION_RATE) // mutacja
-				//e.weight = (int) (rand.nextInt(this.MAX_WEIGHT) + 1);
-				e.weight = 5;
+				e.weight = (int) (rand.nextInt(this.MAX_WEIGHT) + 1);
 			else if (rand.nextFloat() < CROSS_RATE)
 				e.weight = dad.edgeList.get(j).weight;
 			else

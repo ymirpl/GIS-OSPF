@@ -24,8 +24,8 @@ public class Main {
 	static double ALFA_RATE = 0.2;
 	static double BETA_RATE = 0.7;
 	static double MUTATION_RATE = 0.01;
-	static double CROSS_RATE = 0.2;
-	static double MAX_USAGE = 0.5;
+	static double CROSS_RATE = 0.7;
+	static double MAX_USAGE = 0.2;
 	static int MAX_ITERATION_NO = 65535;
 	static JFrame frame = new JFrame();
 
