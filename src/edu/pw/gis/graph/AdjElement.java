@@ -13,14 +13,5 @@ public class AdjElement {
 	public AdjElement() {
 		this.n = null;
 	}
-	
-//	@Override
-//	protected AdjElement clone() throws CloneNotSupportedException {
-//		AdjElement result = new AdjElement();
-//		for (NodeEdge o : list) {
-//			result.list.add(o.clone());
-//		}
-//		result.n = this.n.clone();
-//		return result;
-//	}
+
 }

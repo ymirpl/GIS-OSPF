@@ -15,19 +15,18 @@ import java.text.DecimalFormat;
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.ButtonGroup;
 import javax.swing.JApplet;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 
 import org.apache.commons.collections15.Transformer;
 
 import edu.pw.gis.algorithm.Genetic;
 import edu.pw.gis.parser.SNDParser;
-import edu.uci.ics.jung.algorithms.layout.CircleLayout;
+import edu.uci.ics.jung.algorithms.layout.FRLayout;
 import edu.uci.ics.jung.algorithms.layout.Layout;
 import edu.uci.ics.jung.graph.DirectedSparseMultigraph;
 import edu.uci.ics.jung.graph.Graph;
@@ -38,7 +37,6 @@ import edu.uci.ics.jung.visualization.control.CrossoverScalingControl;
 import edu.uci.ics.jung.visualization.control.DefaultModalGraphMouse;
 import edu.uci.ics.jung.visualization.control.ModalGraphMouse;
 import edu.uci.ics.jung.visualization.control.ScalingControl;
-import edu.uci.ics.jung.visualization.decorators.EdgeShape;
 import edu.uci.ics.jung.visualization.decorators.PickableEdgePaintTransformer;
 import edu.uci.ics.jung.visualization.decorators.PickableVertexPaintTransformer;
 import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
@@ -95,7 +93,7 @@ public class PrettyGraph extends JApplet {
         getGraph(g);
         myGraph = g;
         
-        Layout<String, Integer> layout = new CircleLayout<String, Integer>(jungGraph);
+        Layout<String, Integer> layout = new FRLayout<String, Integer>(jungGraph);
         vv =  new VisualizationViewer<String, Integer>(layout, new Dimension(1024,780));
         vv.setBackground(Color.gray);
 
@@ -137,40 +135,6 @@ public class PrettyGraph extends JApplet {
             }
         });
         
-        ButtonGroup radio = new ButtonGroup();
-        JRadioButton lineButton = new JRadioButton("Line");
-        lineButton.addItemListener(new ItemListener(){
-            public void itemStateChanged(ItemEvent e) {
-                if(e.getStateChange() == ItemEvent.SELECTED) {
-                    vv.getRenderContext().setEdgeShapeTransformer(new EdgeShape.Line<String, Integer>());
-                    vv.repaint();
-                }
-            }
-        });
-        
-        JRadioButton quadButton = new JRadioButton("QuadCurve");
-        quadButton.addItemListener(new ItemListener(){
-            public void itemStateChanged(ItemEvent e) {
-                if(e.getStateChange() == ItemEvent.SELECTED) {
-                    vv.getRenderContext().setEdgeShapeTransformer(new EdgeShape.QuadCurve<String, Integer>());
-                    vv.repaint();
-                }
-            }
-        });
-        
-        JRadioButton cubicButton = new JRadioButton("CubicCurve");
-        cubicButton.addItemListener(new ItemListener(){
-            public void itemStateChanged(ItemEvent e) {
-                if(e.getStateChange() == ItemEvent.SELECTED) {
-                    vv.getRenderContext().setEdgeShapeTransformer(new EdgeShape.CubicCurve<String, Integer>());
-                    vv.repaint();
-                }
-            }
-        });
-        radio.add(lineButton);
-        radio.add(quadButton);
-        radio.add(cubicButton);
-
         graphMouse.setMode(ModalGraphMouse.Mode.PICKING);
         
         JCheckBox rotate = new JCheckBox("<html><center>Obróć opisy<p> krawędzi </center></html>");
@@ -200,12 +164,15 @@ public class PrettyGraph extends JApplet {
         JPanel modePanel = new JPanel(new GridLayout(2,1));
         modePanel.setBorder(BorderFactory.createTitledBorder("Mysz"));
         modePanel.add(graphMouse.getModeComboBox());
+        
+        JLabel label = new JLabel("Opis krawędzi: użycie / waga / przepływ / pojemność                                 ");
+        label.setHorizontalTextPosition(JLabel.CENTER);
 
         controls.add(zoomPanel);
         controls.add(labelPanel);
+        controls.add(label);
         controls.add(modePanel);
         content.add(controls, BorderLayout.SOUTH);
-        quadButton.setSelected(true);
     }
     
     

@@ -76,19 +76,19 @@ public class Genetic {
 	}
 
 	public void evaluatePopulation() {
-		// ExecutorService pool = Executors.newFixedThreadPool(1);
+		ExecutorService pool = Executors.newFixedThreadPool(5);
 
 		for (Graph g : graph_list) {
-			// pool.submit(new FlowCalculator(g));
-			FlowCalculator f = new FlowCalculator(g);
-			f.run();
+			pool.submit(new FlowCalculator(g));
+//			FlowCalculator f = new FlowCalculator(g);
+//			f.run();
 		}
 
-		// pool.shutdown();
-		//
-		// while (!pool.isTerminated()) {
-		// // czekamy na wykonanie wszystkich watkow
-		// }
+		 pool.shutdown();
+		
+		 while (!pool.isTerminated()) {
+		 // czekamy na wykonanie wszystkich watkow
+		 }
 
 		// sortowanie celem pozniejszego podzialu na klasy
 		Collections.sort(graph_list, new Comparator<Graph>() {
