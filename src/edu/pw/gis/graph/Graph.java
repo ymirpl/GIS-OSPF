@@ -84,13 +84,14 @@ public class Graph {
 	 */
 	public void printAdjList() {
 		DecimalFormat twoDigit = new DecimalFormat("#,##0.00");
+		System.out.println("zrodlo \t cel \t uzycie \t waga \t przeplyw \t pojemnosc");
 		for (AdjElement element : this.adjList) {
 			//System.out.println("Wezel " + element.n.name + " :: ");
 			for (NodeEdge t : element.list) {
 				if (t.e.flowSum > 0) {
 					System.out.print(element.n.name + " \t " +t.n.name + "\t");
 					System.out.println(twoDigit.format(t.e.usage) + "\t" + t.e.weight + " \t "
-							+ twoDigit.format(t.e.flowSum) + " \t " + t.e.capacity);
+							+ twoDigit.format(t.e.flowSum) + " \t " + twoDigit.format(t.e.capacity));
 				}
 			}
 		}

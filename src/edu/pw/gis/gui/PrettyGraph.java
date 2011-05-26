@@ -141,7 +141,7 @@ public class PrettyGraph extends JApplet {
 		graphMouse.setMode(ModalGraphMouse.Mode.PICKING);
 
 		JCheckBox rotate = new JCheckBox(
-				"<html><center>Obróć opisy<p> krawędzi </center></html>");
+				"<html><center>Obroc opisy<p> krawedzi </center></html>");
 		rotate.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				AbstractButton b = (AbstractButton) e.getSource();
@@ -159,7 +159,7 @@ public class PrettyGraph extends JApplet {
 		zoomPanel.add(minus);
 
 		JPanel rotatePanel = new JPanel();
-		rotatePanel.setBorder(BorderFactory.createTitledBorder("Wyrównanie"));
+		rotatePanel.setBorder(BorderFactory.createTitledBorder("Wyrownanie"));
 		rotatePanel.add(rotate);
 
 		JPanel labelPanel = new JPanel(new BorderLayout());
@@ -170,7 +170,7 @@ public class PrettyGraph extends JApplet {
 		modePanel.add(graphMouse.getModeComboBox());
 
 		JLabel label = new JLabel(
-				"Opis krawędzi: użycie / waga / przepływ / pojemność                                 ");
+				"Opis krawedzi: uzycie / waga / przeplyw / pojemnosc                                 ");
 		label.setHorizontalTextPosition(JLabel.CENTER);
 
 		controls.add(zoomPanel);

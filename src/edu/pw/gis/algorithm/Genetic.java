@@ -150,14 +150,14 @@ public class Genetic {
 		Graph dad = graph_list.get(rr);
 		rr = rand.nextInt(cardB - cardA + 1) + cardA;
 		Graph mom = graph_list.get(rr);
-		// wylosowano mame  tate, tata pochodzi z lepszej klasy
+		// wylosowano mame i tate, tata pochodzi z lepszej klasy
 
 		child = (Graph) g.clone();
 		for (int j = 0; j < child.edgeList.size(); j++) {
 			Edge e = child.edgeList.get(j);
 			if (rand.nextFloat() < MUTATION_RATE) // mutacja
 				e.weight = (int) (rand.nextInt(this.MAX_WEIGHT) + 1);
-			else if (rand.nextFloat() < CROSS_RATE)
+			else if (rand.nextFloat() < CROSS_RATE) // bierzemy gen od rodzica z lepszej klasy
 				e.weight = dad.edgeList.get(j).weight;
 			else
 				e.weight = mom.edgeList.get(j).weight;
@@ -186,7 +186,7 @@ public class Genetic {
 			}
 
 			if (graph_list.get(0).highestUsage <= MAX_USAGE) {
-				System.out.println("Desired usage reached:"
+				System.out.println("Osiagnieto zalozone uzycie:"
 						+ graph_list.get(0).highestUsage);
 				break;
 			}
@@ -202,10 +202,9 @@ public class Genetic {
 	}
 
 	/**
-	 * @param args
+	 * Test
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		SNDParser snd_parser = new SNDParser("xml/simple_test_graph.xml");
 
 		Genetic genetic = new Genetic(10, 3, 0.2, 0.7, 0.01, 0.5, 0.5, 100);

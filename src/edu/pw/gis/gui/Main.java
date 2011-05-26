@@ -4,6 +4,7 @@
 package edu.pw.gis.gui;
 
 import java.awt.Container;
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
@@ -30,65 +31,66 @@ public class Main {
 	static JFrame frame = new JFrame();
 
 	public static void main_interface() {
+		DecimalFormat twoDigit = new DecimalFormat("#,##0.00");
 		Scanner in = new Scanner(System.in);
 		int decision;
 		do {
-			System.out.println("Choose: ");
-			System.out.println("1. Set file path (actual = " + FILE_PATH + ")");
-			System.out.println("2. Set max weight (actual = " + MAX_WEIGHT
+			System.out.println("Wybierz: ");
+			System.out.println("1. Sciezka do pliku (usatwione = " + FILE_PATH + ")");
+			System.out.println("2. Ustaw maksymalna wage (usatwione = " + MAX_WEIGHT
 					+ ")");
-			System.out.println("3. Set initial population (actual = "
+			System.out.println("3. Usatw rozmiar populacji (usatwione = "
 					+ INITIAL_POPULATION + ")");
-			System.out.println("4. Set alfa rate (actual = " + ALFA_RATE + ")");
-			System.out.println("5. Set beta rate (actual = " + BETA_RATE + ")");
-			System.out.println("6. Set mutation rate (actual = "
+			System.out.println("4. Ustaw wsp. alfa (usatwione = " + twoDigit.format(ALFA_RATE) + ")");
+			System.out.println("5. Ustaw wsp. beta (usatwione = " + twoDigit.format(BETA_RATE) + ")");
+			System.out.println("6. Ustaw wsp. mutacji (usatwione = "
 					+ MUTATION_RATE + ")");
-			System.out.println("7. Set cross rate (actual = " + CROSS_RATE
+			System.out.println("7. Ustaw wsp. krosowania (usatwione = " + twoDigit.format(CROSS_RATE)
 					+ ")");
-			System.out.println("8. Set happy max usage (actual = " + MAX_USAGE
+			System.out.println("8. Ustaw uzycie zadowalajace (usatwione = " + twoDigit.format(MAX_USAGE)
 					+ ")");
-			System.out.println("9. Set max iteration number (actual = "
+			System.out.println("9. Ustaw maksymalna liczbe pokolen (usatwione = "
 					+ MAX_ITERATION_NO + ")");
-			System.out.println("10. Run algorithm");
-			System.out.println("0. End program");
+			System.out.println("10. Uruchom algorytm");
+			System.out.println("0. Zakoncz");
 
 			decision = in.nextInt();
 
 			switch (decision) {
 			case 1:
-				System.out.println("File path = ");
+				System.out.println("Sciezka = ");
 				FILE_PATH = in.next();
 				break;
 			case 2:
-				System.out.println("Max weight (integer value <1,65535>) = ");
+				System.out.println("Maksymalna waga (integer value <1,65535>) = ");
 				MAX_WEIGHT = in.nextInt();
 				break;
 			case 3:
-				System.out.println("Initial population (integer value (0,65535>) = ");
+				System.out.println("Rozmiar populacji (integer value (0,65535>) = ");
 				INITIAL_POPULATION = in.nextInt();
 				break;
 			case 4:
-				System.out.println("Alfa rate (double value <0,1>) = ");
+				System.out.println("Wsp. alfa (double value <0,1>) = ");
 				ALFA_RATE = in.nextDouble();
 				break;
 			case 5:
-				System.out.println("Beta rate (double value <0,1>) = ");
+				System.out.println("Wsp. beta (double value <0,1>) = ");
 				BETA_RATE = in.nextDouble();
 				break;
 			case 6:
-				System.out.println("Mutation rate (double value <0,1>) = ");
+				System.out.println("Wsp. mutacji (double value <0,1>) = ");
 				MUTATION_RATE = in.nextDouble();
 				break;
 			case 7:
-				System.out.println("Cross rate (double value <0,1>) = ");
+				System.out.println("Wsp. krosowania (double value <0,1>) = ");
 				CROSS_RATE = in.nextDouble();
 				break;
 			case 8:
-				System.out.println("Happy max usage (double value) (0,1> = ");
+				System.out.println("Uzycia zadowalajace (double value) (0,1> = ");
 				MAX_USAGE = in.nextDouble();
 				break;
 			case 9:
-				System.out.println("Max iteration number (integer value (0,65535>) = ");
+				System.out.println("Liczba pokolen (integer value (0,65535>) = ");
 				MAX_ITERATION_NO = in.nextInt();
 				break;
 			case 10:
