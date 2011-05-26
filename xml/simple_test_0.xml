@@ -52,7 +52,7 @@
 				<target>prawa</target>
 				<additionalModules>
 					<addModule>
-						<capacity>70.0</capacity>
+						<capacity>90.0</capacity>
 						<cost>133.0</cost>
 					</addModule>
 				</additionalModules>
@@ -83,27 +83,27 @@
 		<demand id="gora_prawa">
 			<source>gora</source>
 			<target>prawa</target>
-			<demandValue>0</demandValue>
+			<demandValue>40</demandValue>
 		</demand>
 		<demand id="gora_lewa">
 			<source>gora</source>
 			<target>lewa</target>
-			<demandValue>10</demandValue>
+			<demandValue>100</demandValue>
 		</demand>
 		<demand id="gora_dol">
 			<source>gora</source>
 			<target>dol</target>
-			<demandValue>15</demandValue>
+			<demandValue>150</demandValue>
 		</demand>
 		<demand id="prawa_dol">
 			<source>prawa</source>
 			<target>dol</target>
-			<demandValue>1</demandValue>
+			<demandValue>10</demandValue>
 		</demand>
 		<demand id="lewa_dol">
 			<source>lewa</source>
 			<target>dol</target>
-			<demandValue>2</demandValue>
+			<demandValue>20</demandValue>
 		</demand>
 	</demands>
 </network>

@@ -60,7 +60,7 @@ public class Dijkstra {
 				int new_distance = u.distance + v.e.weight;
 				if (new_distance <= v.n.distance) {
 					
-					if (parallel.containsKey(v.n)) { // juz jest krawedz to tego wierzcholka, trzeba ja usunac z Tree i nie dodawac outDegree
+					if (parallel.containsKey(v.n) && new_distance < v.n.distance) { // juz jest krawedz to tego wierzcholka, trzeba ja usunac z Tree i nie dodawac outDegree
 						parallel.get(v.n).inTree = false;
 					}
 					else {

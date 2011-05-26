@@ -149,7 +149,8 @@ public class Genetic {
 		for (int j = 0; j < child.edgeList.size(); j++) {
 			Edge e = child.edgeList.get(j);
 			if (rand.nextFloat() < MUTATION_RATE) // mutacja
-				e.weight = (int) (rand.nextInt(this.MAX_WEIGHT) + 1);
+				//e.weight = (int) (rand.nextInt(this.MAX_WEIGHT) + 1);
+				e.weight = 5;
 			else if (rand.nextFloat() < CROSS_RATE)
 				e.weight = dad.edgeList.get(j).weight;
 			else

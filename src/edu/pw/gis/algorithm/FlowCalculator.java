@@ -52,7 +52,7 @@ public class FlowCalculator implements Runnable {
 							/ v.outDegree;
 					w.e.flow = flow;
 
-					w.e.target.incomingTraffic = flow;
+					w.e.target.incomingTraffic += flow;
 
 				}
 			}

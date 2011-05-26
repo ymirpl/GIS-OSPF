@@ -60,26 +60,30 @@ public class Graph {
 		//
 
 		for (Edge e : edgeList) {
-//			if (e.usage > 1) {
-//				e.weight = max_weight;
-//			} else {
-				for (j = 1; max_weight < max_capacity / j; j = j * 10)
-					;
-				tmp = rand.nextInt(max_weight);
-				e.weight = Math.min((int) (tmp * j / e.capacity) + 1,
-						max_weight); // TODO dzielienie
-			
-				//e.weight = rand.nextInt(max_weight) + 1;
-				
-				
-				
-				// przez
-				// kapacity
-				// usuniecie
-				// losowania wag
-				// // e.weight = j+1; // TODO sztywne wagi
-		//	}
+			e.weight = 5;
 		}
+		
+//		for (Edge e : edgeList) {
+////			if (e.usage > 1) {
+////				e.weight = max_weight;
+////			} else {
+//				for (j = 1; max_weight < max_capacity / j; j = j * 10)
+//					;
+//				tmp = rand.nextInt(max_weight);
+//				e.weight = Math.min((int) (tmp * j / e.capacity) + 1,
+//						max_weight); // TODO dzielienie
+//			
+//				//e.weight = rand.nextInt(max_weight) + 1;
+//				
+//				
+//				
+//				// przez
+//				// kapacity
+//				// usuniecie
+//				// losowania wag
+//				// // e.weight = j+1; // TODO sztywne wagi
+//		//	}
+//		}
 	}
 
 	public void addEdge(Edge e) {
