@@ -30,6 +30,8 @@ public class SNDParser {
 		countNodesAndEdgesSNDNetworkXML(xml_network_path);
 		
 		graph = new Graph(nodes_no);
+		
+		graph.max_capacity = max_capacity;
 
 		readSNDNetworkXML(xml_network_path);
 	}

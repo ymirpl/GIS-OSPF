@@ -5,7 +5,7 @@ package edu.pw.gis.graph;
 
 import java.util.*;
 
-public class Graph implements Cloneable {
+public class Graph {
 	public List<Edge> edgeList = new ArrayList<Edge>();
 	public List<Node> nodeList = new ArrayList<Node>();
 	public double highestUsage = 0.0;
@@ -19,6 +19,10 @@ public class Graph implements Cloneable {
 											// wierzcholka
 	public ArrayList<AdjElement> revertedAdjList; // lista sasiedztwa, w ktorej
 
+	public double max_capacity;
+
+	Random rand = new Random();
+	
 	public Graph(int noNodes) {
 		this.noNodes = noNodes;
 
@@ -48,15 +52,33 @@ public class Graph implements Cloneable {
 		this.revertedAdjList.get(n.id).n = n;
 	}
 
-	public void randomWeights(int max_weight) {
-		Random rand = new Random();
+	public void randomWeights(int max_weight, double max_capacity) {
+		
+		int tmp;
+		int j;
+
+		//
+
 		for (Edge e : edgeList) {
-			e.weight = (int) (rand.nextInt(max_weight) + 1); // TODO dzielienie
-																// przez
-																// kapacity
-																// usuniecie
-																// losowania wag
-			// e.weight = j+1; // TODO sztywne wagi
+//			if (e.usage > 1) {
+//				e.weight = max_weight;
+//			} else {
+				for (j = 1; max_weight < max_capacity / j; j = j * 10)
+					;
+				tmp = rand.nextInt(max_weight);
+				e.weight = Math.min((int) (tmp * j / e.capacity) + 1,
+						max_weight); // TODO dzielienie
+			
+				//e.weight = rand.nextInt(max_weight) + 1;
+				
+				
+				
+				// przez
+				// kapacity
+				// usuniecie
+				// losowania wag
+				// // e.weight = j+1; // TODO sztywne wagi
+		//	}
 		}
 	}
 
@@ -78,11 +100,11 @@ public class Graph implements Cloneable {
 
 	public void printAdjList() {
 		for (AdjElement element : this.adjList) {
-			System.out.println("Node " + element.n.name + " outD: "
-					+ element.n.outDegree + " :: ");
+			System.out.println("Node :: ");
 			for (NodeEdge t : element.list) {
-				System.out.println(t.n.name + "(" + t.e.id + "), inTree:"
-						+ t.e.inTree + " flowSum:" + t.e.flowSum);
+				System.out.println(t.n.name + "(" + t.e.id + "), Capacity:"
+						+ t.e.capacity + " flowSum:" + t.e.flowSum + " weight "
+						+ t.e.weight);
 			}
 		}
 		System.out.println("");
@@ -100,12 +122,12 @@ public class Graph implements Cloneable {
 		System.out.println("");
 	}
 
-	@Override
-	public Graph clone() throws CloneNotSupportedException {
+	public Graph clone() {
 		Graph result = new Graph(this.noNodes);
 
 		result.noNodes = this.noNodes;
-		result.highestUsage = this.highestUsage;
+		result.max_capacity = this.max_capacity;
+		result.highestUsage = 0.0;
 
 		for (Node n : this.nodeList) {
 			result.addNode(new Node(n.id, n.draw_x, n.draw_y, n.name));
@@ -113,7 +135,7 @@ public class Graph implements Cloneable {
 
 		for (Edge e : this.edgeList) {
 			result.addEdge(new Edge(e.id, e.capacity, result.nodeList
-					.get(e.source.id), result.nodeList.get(e.target.id), e.name));
+					.get(e.source.id), result.nodeList.get(e.target.id), e.name, e.usage));
 		}
 
 		for (int i = 0; i < result.noNodes; ++i) {
