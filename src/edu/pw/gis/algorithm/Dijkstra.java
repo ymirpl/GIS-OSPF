@@ -124,10 +124,7 @@ public class Dijkstra {
 	}
 	
 	public static void testTwo() {
-		SNDParser snd_parser = new SNDParser();
-		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/giul39.xml");
-		snd_parser.graph = new Graph(snd_parser.nodes_no);
-		snd_parser.readSNDNetworkXML("xml/giul39.xml");
+		SNDParser snd_parser = new SNDParser("xml/giul39.xml");
 		
 		Dijkstra d = new Dijkstra(snd_parser.graph);
 		d.setStartNode(0);
@@ -169,11 +166,7 @@ public class Dijkstra {
 	
 	public static void testSNDGraph()
 	{
-		SNDParser snd_parser = new SNDParser();
-		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/simple_test_graph.xml");
-		
-		snd_parser.graph = new Graph(snd_parser.nodes_no);
-		snd_parser.readSNDNetworkXML("xml/simple_test_graph.xml");
+		SNDParser snd_parser = new SNDParser("xml/simple_test_graph.xml");
 		
 		Dijkstra d = new Dijkstra(snd_parser.graph);
 		d.setStartNode(7);

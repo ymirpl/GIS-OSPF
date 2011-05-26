@@ -22,16 +22,20 @@ public class SNDParser {
 	public int nodes_no = 0;
 	public int edges_no = 0;
 	public int links_no = 0;
+	public double max_capacity = 0;
 	public Graph graph;
+	public String xml_network_path;
+
+	public SNDParser(String xml_network_path) {
+		countNodesAndEdgesSNDNetworkXML(xml_network_path);
+		
+		graph = new Graph(nodes_no);
+
+		readSNDNetworkXML(xml_network_path);
+	}
 
 	private ArrayList<String> nodes_list = new ArrayList<String>();
 
-	/*
-	 * Funkcja zliczaj¹ca liczbê wierszy i krawêdzi w grafie zapisanym w pliku
-	 * XML. Zliczamy wêz³y node i links
-	 * 
-	 * @param xml_path: œcie¿ka do pliku XML z zapisanym grafem
-	 */
 	public void countNodesAndEdgesSNDNetworkXML(String xml_path) {
 
 		try {
@@ -42,7 +46,7 @@ public class SNDParser {
 			DefaultHandler handler = new DefaultHandler() {
 
 				boolean b_edge = false;
-				boolean b_additional_modules = false;
+				boolean b_capacity = false;
 
 				public void startElement(String uri, String localName,
 						String qName, Attributes attributes)
@@ -58,13 +62,13 @@ public class SNDParser {
 						b_edge = true;
 						links_no++;
 					}
-					
-					if (qName.equalsIgnoreCase("additionalModules")){
-						b_additional_modules = true;
+
+					if (b_edge && qName.equalsIgnoreCase("capacity")) {
+						edges_no++;
 					}
 
-					if (b_edge && b_additional_modules && qName.equalsIgnoreCase("capacity")) {
-						edges_no++;
+					if (b_edge && qName.equals("capacity")) {
+						b_capacity = true;
 					}
 				}
 
@@ -74,8 +78,19 @@ public class SNDParser {
 					if (qName.equalsIgnoreCase("link")) {
 						b_edge = false;
 					}
-					if (qName.equalsIgnoreCase("additionalModules")) {
-						b_additional_modules = false;
+				}
+
+				public void characters(char ch[], int start, int length)
+						throws SAXException {
+
+					if (b_capacity) {
+						if (max_capacity < Double.parseDouble(new String(ch,
+								start, length))) {
+							max_capacity = Double.parseDouble(new String(ch,
+									start, length));
+							;
+						}
+						b_capacity = false;
 					}
 				}
 
@@ -136,11 +151,6 @@ public class SNDParser {
 						nodes_list.add(node_id, node_name);
 					}
 
-					if (qName.equalsIgnoreCase("link")) {
-						edge_name = attributes.getValue(0);
-						edge_id++;
-					}
-
 					if (qName.equalsIgnoreCase("x")) {
 						b_coord_x = true;
 					}
@@ -153,7 +163,8 @@ public class SNDParser {
 						b_edge = true;
 					}
 
-					if (qName.equalsIgnoreCase("capacity")) {
+					if (b_edge && qName.equalsIgnoreCase("capacity")) {
+						edge_id++;
 						b_edge_capacity = true;
 					}
 
@@ -190,18 +201,16 @@ public class SNDParser {
 					if (qName.equalsIgnoreCase("node")) {
 						Node node = new Node(node_id, node_coord_x,
 								node_coord_y, node_name);
-						// System.out.println();
-						// System.out.println("Node name: " + node.id + " "
-						// + node.name);
-						// System.out.println("x: " + node.draw_x + " y: "
-						// + node.draw_y);
 						graph.addNode(node);
 					}
 
-					if (qName.equalsIgnoreCase("link")) {
+					if (b_edge && qName.equalsIgnoreCase("capacity")) {
 						Edge edge = new Edge(edge_id, edge_capacity,
 								edge_source, edge_target, edge_name);
 						graph.addEdge(edge);
+
+					}
+					if (b_edge && qName.equalsIgnoreCase("link")) {
 						b_edge = false;
 					}
 
@@ -267,6 +276,12 @@ public class SNDParser {
 								length));
 						b_demand_value = false;
 					}
+
+					if (b_edge_capacity) {
+						edge_capacity = Double.parseDouble(new String(ch,
+								start, length));
+						b_edge_capacity = false;
+					}
 				}
 
 			};
@@ -279,27 +294,12 @@ public class SNDParser {
 	}
 
 	public static void main(String argv[]) {
-		System.out.println("test");
-		SNDParser snd_parser = new SNDParser();
-		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/simple_test_graph.xml");
+		SNDParser snd_parser = new SNDParser("xml/simple_test_graph.xml");
 		System.out.println("liczba wezlow: " + snd_parser.nodes_no);
 		System.out.println("liczba polaczen: " + snd_parser.links_no);
 		System.out.println("liczba krawedzi: " + snd_parser.edges_no);
-
-//		snd_parser.graph = new Graph(snd_parser.nodes_no);
-//
-//		snd_parser.readSNDNetworkXML("xml/giul39.xml");
-
-//		for (String s : snd_parser.nodes_list) {
-//			System.out.println(s);
-//		}
-
-		// snd_parser.graph.printAdjList();
-		// snd_parser.graph.nodeList.get(3).name = "aaaaaaaa";
-		// System.out.println("----- zmiana -----");
-		// snd_parser.graph.printAdjList();
-
-//		snd_parser.graph.printFlowMatrix();
+		snd_parser.graph.printAdjList();
+		
 	}
 
 }

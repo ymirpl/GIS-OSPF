@@ -7,10 +7,8 @@ import edu.uci.ics.jung.graph.DirectedSparseGraph;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.UndirectedSparseGraph;
 import edu.uci.ics.jung.graph.util.EdgeType;
-import edu.uci.ics.jung.io.PajekNetReader;
 import edu.uci.ics.jung.visualization.VisualizationViewer;
 
-import org.apache.commons.collections15.FactoryUtils;
 import java.io.IOException;
 import javax.swing.JFrame;
 
@@ -21,14 +19,10 @@ public class PrettyGraph
 
 	public static void main(String[] args) throws IOException {
 
-		SNDParser snd_parser = new SNDParser();
-		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/simple_test_graph.xml");
 
-		snd_parser.graph = new edu.pw.gis.graph.Graph(snd_parser.nodes_no);
-
-		snd_parser.readSNDNetworkXML("xml/simple_test_graph.xml");
-
-		Genetic genetic = new Genetic(10, 100, 0.2, 0.7, 0.01, 0.7, 0.00, 1);
+		SNDParser snd_parser = new SNDParser("xml/simple_test_graph.xml");
+		
+		Genetic genetic = new Genetic(10, 100, 0.2, 0.7, 0.01, 0.7, 0.00, 700);
 
 		genetic.createInitialPopulation(snd_parser.graph);
 

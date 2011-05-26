@@ -194,12 +194,8 @@ public class Genetic {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		SNDParser snd_parser = new SNDParser();
-		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/simple_test_graph.xml");
-
-		snd_parser.graph = new Graph(snd_parser.nodes_no);
-		snd_parser.readSNDNetworkXML("xml/simple_test_graph.xml");
-
+		SNDParser snd_parser = new SNDParser("xml/simple_test_graph.xml");
+		
 		Genetic genetic = new Genetic(10, 3, 0.2, 0.7, 0.01, 0.5, 0.5, 100);
 		genetic.createInitialPopulation(snd_parser.graph);
 
