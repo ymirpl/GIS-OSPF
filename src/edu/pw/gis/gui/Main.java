@@ -20,20 +20,17 @@ public class Main {
 	public static void main(String[] args) throws CloneNotSupportedException {
 	
 		SNDParser snd_parser = new SNDParser();
-		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/simple_test_graph.xml");
+		snd_parser.countNodesAndEdgesSNDNetworkXML("xml/big_test.xml");
 	
 		snd_parser.graph = new Graph(snd_parser.nodes_no);
 
-		snd_parser.readSNDNetworkXML("xml/simple_test_graph.xml");
+		snd_parser.readSNDNetworkXML("xml/big_test.xml");
 		
-		Genetic genetic = new Genetic(10, 100, 0.2, 0.7, 0.01, 0.7, 0.00, 700);
+		Genetic genetic = new Genetic(10, 100, 0.2, 0.7, 0.01, 0.7, 0.00, 7000);
 
 		genetic.createInitialPopulation(snd_parser.graph);
 		
-		long start = System.currentTimeMillis();
-		genetic.go();
-		long end = System.currentTimeMillis();
-		System.out.println("Execution time was "+(end-start)+" ms.");
+		genetic.go(System.currentTimeMillis());
 
 		
 		Graph top = genetic.graph_list.get(0);

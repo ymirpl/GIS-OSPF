@@ -28,6 +28,7 @@ public class Genetic {
 
 	private final int cardA; // liczba osobnikow w klasie A
 	private final int cardB; // liczba osobnikow w klasie B
+	private long startTime;
 
 	public boolean debug = false;
 
@@ -75,7 +76,7 @@ public class Genetic {
 		ExecutorService pool = Executors.newFixedThreadPool(3);
 		
 		for (Graph g : graph_list) {
-			pool.execute(new FlowCalculator(g));
+			pool.submit(new FlowCalculator(g));
 			//FlowCalculator f = new FlowCalculator(g);
 			//f.run();
 		}
@@ -157,12 +158,12 @@ public class Genetic {
 		new_graph_list.add(child);
 	}
 
-	public void go() {
+	public void go(long start) {
+		startTime = start;
 		for (int i = 0; i < MAX_ITERATION_NO; i++) {
 			
 			evaluatePopulation();
 
-			
 			if (i % 20 == 0) { // TODO add if debug here 
 				System.out.println("new population " + i
 						+ "===================================================");
@@ -172,6 +173,11 @@ public class Genetic {
 			if (graph_list.get(0).highestUsage <= MAX_USAGE) {
 				System.out.println("Desired usage reached:"
 						+ graph_list.get(0).highestUsage);
+				break;
+			}
+			
+			if (System.currentTimeMillis() - startTime > 10000) {
+				System.out.println("Time exceeded. Finishing computation.");
 				break;
 			}
 
