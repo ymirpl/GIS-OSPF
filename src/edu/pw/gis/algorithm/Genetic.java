@@ -63,6 +63,7 @@ public class Genetic {
 
 	public void generateCloneWithRandomWeights(Graph g) {
 		Graph tmp;
+
 		try {
 			tmp = g.clone();
 			tmp.randomWeights(this.MAX_WEIGHT);
@@ -74,13 +75,14 @@ public class Genetic {
 
 	public void evaluatePopulation() {
 		ExecutorService pool = Executors.newFixedThreadPool(3);
-		
+
 		for (Graph g : graph_list) {
 			pool.submit(new FlowCalculator(g));
 			//FlowCalculator f = new FlowCalculator(g);
 			//f.run();
+
 		}
-		
+
 		pool.shutdown();
 
 		while (!pool.isTerminated()) {
@@ -144,7 +146,7 @@ public class Genetic {
 			for (int j = 0; j < child.edgeList.size(); j++) {
 				Edge e = child.edgeList.get(j);
 				if (rand.nextFloat() < MUTATION_RATE) // mutacja
-					e.weight = (int) (rand.nextInt(this.MAX_WEIGHT)+1);
+					e.weight = (int) (rand.nextInt(this.MAX_WEIGHT) + 1);
 				else if (rand.nextFloat() < CROSS_RATE)
 					e.weight = dad.edgeList.get(j).weight;
 				else
@@ -161,12 +163,14 @@ public class Genetic {
 	public void go(long start) {
 		startTime = start;
 		for (int i = 0; i < MAX_ITERATION_NO; i++) {
-			
+
 			evaluatePopulation();
 
-			if (i % 20 == 0) { // TODO add if debug here 
-				System.out.println("new population " + i
-						+ "===================================================");
+			if (i % 20 == 0) { // TODO add if debug here
+				System.out
+						.println("new population "
+								+ i
+								+ "===================================================");
 				printUsages();
 			}
 

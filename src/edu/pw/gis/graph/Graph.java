@@ -40,18 +40,23 @@ public class Graph implements Cloneable {
 		}
 
 	}
+
 	public void addNode(Node n) {
 		this.nodeList.add(n);
 		this.adjList.get(n.id).n = n; // zalozenie, ze przychodza wezly w
 										// kolejnosci idekow
 		this.revertedAdjList.get(n.id).n = n;
 	}
-	
+
 	public void randomWeights(int max_weight) {
 		Random rand = new Random();
-		for (Edge e: edgeList) {
-			e.weight = (int) (rand.nextInt(max_weight) + 1); //TODO dzielienie przez kapacity usuniecie losowania wag
-		//	e.weight = j+1; // TODO sztywne wagi
+		for (Edge e : edgeList) {
+			e.weight = (int) (rand.nextInt(max_weight) + 1); // TODO dzielienie
+																// przez
+																// kapacity
+																// usuniecie
+																// losowania wag
+			// e.weight = j+1; // TODO sztywne wagi
 		}
 	}
 
@@ -60,16 +65,15 @@ public class Graph implements Cloneable {
 		this.adjList.get(e.source.id).list.add(new NodeEdge(e.target, e));
 		this.revertedAdjList.get(e.target.id).list
 				.add(new NodeEdge(e.source, e));
-		
-		//TODO DEBUG ONLY krawedzie w obie strony
-		
-//		Edge e2 = new Edge(e.id, e.capacity, e.target, e.source, e.name);
-//		this.edgeList.add(e2);
-//		this.adjList.get(e2.source.id).list.add(new NodeEdge(e2.target, e2));
-//		this.revertedAdjList.get(e2.target.id).list
-//				.add(new NodeEdge(e2.source, e2));
-		
-		
+
+		// TODO DEBUG ONLY krawedzie w obie strony
+
+		// Edge e2 = new Edge(e.id, e.capacity, e.target, e.source, e.name);
+		// this.edgeList.add(e2);
+		// this.adjList.get(e2.source.id).list.add(new NodeEdge(e2.target, e2));
+		// this.revertedAdjList.get(e2.target.id).list
+		// .add(new NodeEdge(e2.source, e2));
+
 	}
 
 	public void printAdjList() {
@@ -99,25 +103,26 @@ public class Graph implements Cloneable {
 	@Override
 	public Graph clone() throws CloneNotSupportedException {
 		Graph result = new Graph(this.noNodes);
-		
+
 		result.noNodes = this.noNodes;
 		result.highestUsage = this.highestUsage;
 
-		for (Node n: this.nodeList) {
+		for (Node n : this.nodeList) {
 			result.addNode(new Node(n.id, n.draw_x, n.draw_y, n.name));
 		}
-		
-		for (Edge e: this.edgeList) {
-			result.addEdge(new Edge(e.id, e.capacity, result.nodeList.get(e.source.id), result.nodeList.get(e.target.id), e.name));
+
+		for (Edge e : this.edgeList) {
+			result.addEdge(new Edge(e.id, e.capacity, result.nodeList
+					.get(e.source.id), result.nodeList.get(e.target.id), e.name));
 		}
-		
+
 		for (int i = 0; i < result.noNodes; ++i) {
 			ArrayList<Double> row = this.flowMatrix.get(i);
 			for (int j = 0; j < result.noNodes; ++j) {
 				result.flowMatrix.get(i).set(j, row.get(j));
 			}
 		}
-		
+
 		return result;
 	}
 
