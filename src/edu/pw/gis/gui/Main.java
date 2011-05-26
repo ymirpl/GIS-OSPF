@@ -21,8 +21,8 @@ public class Main {
 
 		// SNDParser snd_parser = new SNDParser("xml/simple_test_1.xml");
 		// SNDParser snd_parser = new SNDParser("xml/simple_test_0.xml");
-//		SNDParser snd_parser = new SNDParser("xml/test.xml");
-		 SNDParser snd_parser = new SNDParser("xml/big_test.xml");
+		// SNDParser snd_parser = new SNDParser("xml/test.xml");
+		SNDParser snd_parser = new SNDParser("xml/big_test.xml");
 		// SNDParser snd_parser = new SNDParser("xml/giul39.xml");
 
 		// snd_parser.graph.printAdjList();

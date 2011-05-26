@@ -65,33 +65,30 @@ public class Genetic {
 		Graph tmp;
 
 		tmp = g.clone();
-		
+
 		tmp.randomWeights(this.MAX_WEIGHT, g.max_capacity);
-//		System.out.println("tmp g");
-//		tmp.printAdjList();
-//		System.out.println(" end tmp g");
-		
-		
+		// System.out.println("tmp g");
+		// tmp.printAdjList();
+		// System.out.println(" end tmp g");
+
 		this.new_graph_list.add(tmp);
 
 	}
 
 	public void evaluatePopulation() {
-		//ExecutorService pool = Executors.newFixedThreadPool(1);
+		// ExecutorService pool = Executors.newFixedThreadPool(1);
 
 		for (Graph g : graph_list) {
-			//pool.submit(new FlowCalculator(g));
-			 FlowCalculator f = new FlowCalculator(g);
-			 f.run();
+			// pool.submit(new FlowCalculator(g));
+			FlowCalculator f = new FlowCalculator(g);
+			f.run();
 		}
 
-//		pool.shutdown();
-//
-//		while (!pool.isTerminated()) {
-//			// czekamy na wykonanie wszystkich watkow
-//		}
-		
-
+		// pool.shutdown();
+		//
+		// while (!pool.isTerminated()) {
+		// // czekamy na wykonanie wszystkich watkow
+		// }
 
 		// sortowanie celem pozniejszego podzialu na klasy
 		Collections.sort(graph_list, new Comparator<Graph>() {
@@ -129,11 +126,10 @@ public class Genetic {
 		}
 
 		new_graph_list.get(0).printAdjList();
-		
+
 		graph_list = new_graph_list;
 		new_graph_list = new ArrayList<Graph>();
-		
-		
+
 	}
 
 	public void printUsages() {
@@ -175,12 +171,13 @@ public class Genetic {
 								+ i
 								+ "===================================================");
 				printUsages();
-//				for (Graph g : graph_list) {
-//					//g.printAdjList();
-//				}
-				System.out.println("end population "
-						+ i
-						+ "===================================================");
+				// for (Graph g : graph_list) {
+				// //g.printAdjList();
+				// }
+				System.out
+						.println("end population "
+								+ i
+								+ "===================================================");
 			}
 
 			if (graph_list.get(0).highestUsage <= MAX_USAGE) {
@@ -189,12 +186,15 @@ public class Genetic {
 				break;
 			}
 
-//			if (System.currentTimeMillis() - startTime > 10000 && false) {
-//				System.out.println("Time exceeded. Finishing computation.");
-//				break;
-//			}
-			
-			
+			// if (System.currentTimeMillis() - startTime > 10000 && false) {
+			// System.out.println("Time exceeded. Finishing computation.");
+			// break;
+			// }
+
+			if (System.currentTimeMillis() - startTime > 10000) {
+				System.out.println("Time exceeded. Finishing computation.");
+				break;
+			}
 
 			evolutionStep();
 		}
@@ -208,6 +208,7 @@ public class Genetic {
 		SNDParser snd_parser = new SNDParser("xml/simple_test_graph.xml");
 
 		Genetic genetic = new Genetic(10, 3, 0.2, 0.7, 0.01, 0.5, 0.5, 100);
+
 		genetic.createInitialPopulation(snd_parser.graph);
 
 		// genetic.graph_list.get(0).addNode(new Node());
@@ -221,5 +222,4 @@ public class Genetic {
 		// genetic.graph_list.get(i).printAdjList();
 		// }
 	}
-
 }

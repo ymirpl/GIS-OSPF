@@ -126,7 +126,9 @@ public class Graph {
 		Graph result = new Graph(this.noNodes);
 
 		result.noNodes = this.noNodes;
+		
 		result.max_capacity = this.max_capacity;
+
 		result.highestUsage = 0.0;
 
 		for (Node n : this.nodeList) {
