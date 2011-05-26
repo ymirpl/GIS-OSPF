@@ -3,6 +3,7 @@
  */
 package edu.pw.gis.graph;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class Graph {
@@ -82,12 +83,15 @@ public class Graph {
 	 * przeplywy
 	 */
 	public void printAdjList() {
+		DecimalFormat twoDigit = new DecimalFormat("#,##0.00");
 		for (AdjElement element : this.adjList) {
-			System.out.println("Wezel " + element.n.name + " :: ");
+			//System.out.println("Wezel " + element.n.name + " :: ");
 			for (NodeEdge t : element.list) {
-				System.out.println(t.n.name + ":");
-				System.out.println(t.e.usage + "\t" + t.e.weight + " \t "
-						+ t.e.flowSum + " \t " + t.e.capacity);
+				if (t.e.flowSum > 0) {
+					System.out.print(element.n.name + " \t " +t.n.name + "\t");
+					System.out.println(twoDigit.format(t.e.usage) + "\t" + t.e.weight + " \t "
+							+ twoDigit.format(t.e.flowSum) + " \t " + t.e.capacity);
+				}
 			}
 		}
 		System.out.println("");

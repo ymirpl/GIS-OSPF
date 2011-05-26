@@ -116,13 +116,14 @@ public class Main {
 	public static void run_algorithm() {
 		SNDParser snd_parser = new SNDParser(FILE_PATH);
 		Genetic genetic = new Genetic(MAX_WEIGHT, INITIAL_POPULATION,
-				ALFA_RATE, BETA_RATE, MUTATION_RATE, CROSS_RATE, 0.00, 10);
+				ALFA_RATE, BETA_RATE, MUTATION_RATE, CROSS_RATE, MAX_USAGE, MAX_ITERATION_NO);
 
 		genetic.createInitialPopulation(snd_parser.graph);
 
 		genetic.go(System.currentTimeMillis());
 
 		edu.pw.gis.graph.Graph top = genetic.graph_list.get(0);
+		genetic.printHighestUsage();
 		System.out.println("Graf wynikowy: ");
 		top.printAdjList();
 		

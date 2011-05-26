@@ -123,8 +123,6 @@ public class Genetic {
 			}
 		}
 
-		new_graph_list.get(0).printAdjList();
-
 		graph_list = new_graph_list;
 		new_graph_list = new ArrayList<Graph>();
 
@@ -168,7 +166,7 @@ public class Genetic {
 
 			evaluatePopulation();
 
-			if (i % 50 == 0) {
+			if (i % 50 == 0 && this.debug) {
 				System.out
 						.println("new population "
 								+ i
