@@ -3,22 +3,19 @@
  */
 package edu.pw.gis.graph;
 
-/**
- * @author ymir
- *
- */
-public class Edge{
+public class Edge {
 	public double capacity; // pojemnosc
 	public int weight; // waga
 	public double flow; // bierzacy przeplyw
 	public double usage; // procentowe uzycie
-	public Node source;
-	public Node target;
+	public Node source; // wierzcholek poczatkowy
+	public Node target; // wierzcholek docelowy
 	public boolean inTree; // czy nalezy do grafu skroconego wlasnie rowazanego
-	public int id;
-	public String name;
-	public double flowSum;
-	
+	public int id; // indetyfikator (musi byc zgodny z kolejny miejscem we
+					// wszelkich tablicach)
+	public String name; // nazwa (nieuzywane)
+	public double flowSum; // calkowity przeplyw
+
 	public Edge(int id, double capacity, Node source, Node target, String name) {
 		this.id = id;
 		this.capacity = capacity;
@@ -31,8 +28,9 @@ public class Edge{
 		this.inTree = false;
 		this.name = name;
 	}
-	
-	public Edge(int id, double capacity, Node source, Node target, String name, double usage) {
+
+	public Edge(int id, double capacity, Node source, Node target, String name,
+			double usage) {
 		this.id = id;
 		this.capacity = capacity;
 		this.weight = 1;
@@ -45,11 +43,4 @@ public class Edge{
 		this.name = name;
 		this.usage = usage;
 	}
-	
-//	@Override
-//	protected Edge clone() throws CloneNotSupportedException {
-//		Edge result = (Edge)super.clone();
-//		return result;
-//	}
-
 }

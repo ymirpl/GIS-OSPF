@@ -6,9 +6,9 @@ package edu.pw.gis.graph;
 import java.util.*;
 
 public class Graph {
-	public List<Edge> edgeList = new ArrayList<Edge>();
-	public List<Node> nodeList = new ArrayList<Node>();
-	public double highestUsage = 0.0;
+	public List<Edge> edgeList = new ArrayList<Edge>(); // krawedzie 
+	public List<Node> nodeList = new ArrayList<Node>(); // wezly
+	public double highestUsage = 0.0; // maksymlane uzycie (f-cja celu)
 
 	public int noNodes; // number of nodes
 
@@ -17,9 +17,9 @@ public class Graph {
 													// wezlow
 	public ArrayList<AdjElement> adjList; // listy sasiedztwa dla kazdego
 											// wierzcholka
-	public ArrayList<AdjElement> revertedAdjList; // lista sasiedztwa, w ktorej
+	public ArrayList<AdjElement> revertedAdjList; // lista sasiedztwa, w ktorej kierunki wszystkich krawedzi sa odwrocone
 
-	public double max_capacity;
+	public double max_capacity; // pojemnosc najbardziej pojemnej krawedzi w sieci
 
 	Random rand = new Random();
 	
@@ -28,7 +28,7 @@ public class Graph {
 
 		this.flowMatrix = new ArrayList<ArrayList<Double>>(this.noNodes);
 
-		for (int i = 0; i < this.noNodes; ++i) {
+		for (int i = 0; i < this.noNodes; ++i) { // macierz przeplywow -- inicjalizacja rozmiarow
 			this.flowMatrix.add(i, new ArrayList<Double>(this.noNodes));
 			for (int j = 0; j < this.noNodes; ++j) {
 				this.flowMatrix.get(i).add(j, Double.parseDouble("0.0"));
@@ -48,60 +48,34 @@ public class Graph {
 	public void addNode(Node n) {
 		this.nodeList.add(n);
 		this.adjList.get(n.id).n = n; // zalozenie, ze przychodza wezly w
-										// kolejnosci idekow
+										// kolejnosci ich id
 		this.revertedAdjList.get(n.id).n = n;
 	}
 
 	public void randomWeights(int max_weight, double max_capacity) {
-		
-//		int tmp;
-//		int j;
-
-		//
-
+		int tmp;
+		int j;
 		for (Edge e : edgeList) {
-			e.weight = 5;
+			for (j = 1; max_weight < max_capacity / j; j = j * 10)
+				; // przeskalowanie wylosowanej wagi tak, aby korespondowala z
+					// pojemnosciami krawedzi
+			tmp = rand.nextInt(max_weight);
+			e.weight = Math.min((int) (tmp * j / e.capacity) + 1, max_weight);
+			// wagi o wiekszych pojemnosciach dostaja mniejsze wagi
 		}
-		
-//		for (Edge e : edgeList) {
-////			if (e.usage > 1) {
-////				e.weight = max_weight;
-////			} else {
-//				for (j = 1; max_weight < max_capacity / j; j = j * 10)
-//					;
-//				tmp = rand.nextInt(max_weight);
-//				e.weight = Math.min((int) (tmp * j / e.capacity) + 1,
-//						max_weight); // TODO dzielienie
-//			
-//				//e.weight = rand.nextInt(max_weight) + 1;
-//				
-//				
-//				
-//				// przez
-//				// kapacity
-//				// usuniecie
-//				// losowania wag
-//				// // e.weight = j+1; // TODO sztywne wagi
-//		//	}
-//		}
 	}
 
 	public void addEdge(Edge e) {
+		// trzeba dodac krawedz do trzech list
 		this.edgeList.add(e);
 		this.adjList.get(e.source.id).list.add(new NodeEdge(e.target, e));
 		this.revertedAdjList.get(e.target.id).list
 				.add(new NodeEdge(e.source, e));
-
-		// TODO DEBUG ONLY krawedzie w obie strony
-
-		// Edge e2 = new Edge(e.id, e.capacity, e.target, e.source, e.name);
-		// this.edgeList.add(e2);
-		// this.adjList.get(e2.source.id).list.add(new NodeEdge(e2.target, e2));
-		// this.revertedAdjList.get(e2.target.id).list
-		// .add(new NodeEdge(e2.source, e2));
-
 	}
 
+	/**
+	 * Wypisuje krawedzie polaczone z wierzcholekim, ich wagi, pojemnosci, przeplywy
+	 */
 	public void printAdjList() {
 		for (AdjElement element : this.adjList) {
 			System.out.println("Node :: ");
@@ -154,6 +128,9 @@ public class Graph {
 		return result;
 	}
 
+	/**
+	 * Wypisuje macierz przeplywow
+	 */
 	public void printFlowMatrix() {
 		for (ArrayList<Double> a : flowMatrix) {
 			for (Double d : a) {
@@ -163,6 +140,9 @@ public class Graph {
 		}
 	}
 
+	/**
+	 * Test jedostkowy
+	 */
 	public static void main(String[] args) {
 		Graph g = new Graph(2);
 		Node n = new Node(0, 0, 0, "janek");

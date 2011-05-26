@@ -2,6 +2,9 @@ package edu.pw.gis.graph;
 
 import java.util.ArrayList;
 
+/**
+ * Element list sasiedztwa. Zawiera 
+ */
 public class AdjElement {
 	public Node n;
 	public ArrayList<NodeEdge> list = new ArrayList<NodeEdge>();

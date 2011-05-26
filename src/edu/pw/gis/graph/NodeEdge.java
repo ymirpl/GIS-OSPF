@@ -1,5 +1,9 @@
 package edu.pw.gis.graph;
 
+
+/**
+ * Struktura przechowujaca pare: krawedz i wierzcholek docelowy
+ */
 public class NodeEdge {
 	public Node n;
 	public Edge e;
@@ -13,10 +17,4 @@ public class NodeEdge {
 		this.n = null;
 		this.e = null;
 	}
-	
-//	protected NodeEdge clone() throws CloneNotSupportedException {
-//		NodeEdge result = (NodeEdge)super.clone();
-//		return result;
-//	}
-	
 }

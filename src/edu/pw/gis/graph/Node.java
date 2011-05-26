@@ -8,14 +8,14 @@ package edu.pw.gis.graph;
  * 
  */
 public class Node{
-	public int id;
-	public int outDegree;
-	public double incomingTraffic;
-	public int distance;
-	public double draw_x; // drawing coords
-	public double draw_y;
-	public String name;
-	public boolean done = false;
+	public int id; // identyfikator
+	public int outDegree; // stopien wychodzacy po obliczeniu najkrotszych sciezek, konieczny do dzielenie przeplywu zgodnie z ECMP 
+	public double incomingTraffic; // przeplyw wchodzacy
+	public int distance; // odleglsc wyznaczone dijkstra
+	public double draw_x; // koordynaty rysowania (nieuzywane)
+	public double draw_y; // 
+	public String name; // nazwa do wyswietlania
+	public boolean done = false; // czy wierzchoelek byl juz przeliczony jako docelowy we flowCalculator
 
 	public Node() {
 		this.id = -1;
@@ -36,10 +36,4 @@ public class Node{
 		this.draw_y = draw_y;
 		this.name = name;
 	}
-	
-//	@Override
-//	protected Node clone() throws CloneNotSupportedException {
-//		Node result = (Node)super.clone();
-//		return result;
-//	}
 }
