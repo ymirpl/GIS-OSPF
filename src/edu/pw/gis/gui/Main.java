@@ -3,8 +3,11 @@
  */
 package edu.pw.gis.gui;
 
+import java.awt.Container;
+
+import javax.swing.JFrame;
+
 import edu.pw.gis.algorithm.Genetic;
-import edu.pw.gis.graph.Graph;
 import edu.pw.gis.parser.SNDParser;
 
 /**
@@ -27,16 +30,32 @@ public class Main {
 
 		// snd_parser.graph.printAdjList();
 
-		Genetic genetic = new Genetic(10, 64, 0.1, 0.7, 0.01, 0.7, 0.00, 64);
-
-		genetic.createInitialPopulation(snd_parser.graph);
-
-		snd_parser.graph.printAdjList();
-
-		genetic.go(System.currentTimeMillis());
+		// Genetic genetic = new Genetic(10, 64, 0.1, 0.7, 0.01, 0.7, 0.00, 64);
+		//
+		// genetic.createInitialPopulation(snd_parser.graph);
+		//
+		// snd_parser.graph.printAdjList();
+		//
+		// genetic.go(System.currentTimeMillis());
 
 		// Graph top = genetic.graph_list.get(0);
 		// top.printAdjList();
+
+		Genetic genetic = new Genetic(10, 100, 0.2, 0.7, 0.01, 0.7, 0.00, 300);
+
+		genetic.createInitialPopulation(snd_parser.graph);
+
+		genetic.go(System.currentTimeMillis());
+
+		edu.pw.gis.graph.Graph top = genetic.graph_list.get(0);
+		top.printAdjList();
+
+		JFrame frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Container content = frame.getContentPane();
+		content.add(new PrettyGraph(top));
+		frame.pack();
+		frame.setVisible(true);
 
 	}
 
