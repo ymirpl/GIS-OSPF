@@ -123,6 +123,7 @@ public class Main {
 		genetic.go(System.currentTimeMillis());
 
 		edu.pw.gis.graph.Graph top = genetic.graph_list.get(0);
+		System.out.println("Graf wynikowy: ");
 		top.printAdjList();
 		
 //		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

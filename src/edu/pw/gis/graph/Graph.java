@@ -83,11 +83,11 @@ public class Graph {
 	 */
 	public void printAdjList() {
 		for (AdjElement element : this.adjList) {
-			System.out.println("Node :: ");
+			System.out.println("Wezel " + element.n.name + " :: ");
 			for (NodeEdge t : element.list) {
-				System.out.println(t.n.name + "(" + t.e.id + "), Capacity:"
-						+ t.e.capacity + " flowSum:" + t.e.flowSum + " weight "
-						+ t.e.weight);
+				System.out.println(t.n.name + ":");
+				System.out.println(t.e.usage + "\t" + t.e.weight + " \t "
+						+ t.e.flowSum + " \t " + t.e.capacity);
 			}
 		}
 		System.out.println("");

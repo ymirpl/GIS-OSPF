@@ -17,12 +17,12 @@ public class Genetic {
 	public final int INITIAL_POPULATION_NO; // liczba populacji (ilosc grafow)
 	public final double ALFA_RATE; // wsp_czynnik wyboru klasy A
 	public final double BETA_RATE; // wsp_czynnik wyboru klasy B
-	public final double MUTATION_RATE; // wsp_czynnik mutacji
-	public final double CROSS_RATE; // wsp_czynnik krzy_owania
-	public final double MAX_USAGE; // Pozadane maksymalne procentowe obci__enie
+	public final double MUTATION_RATE; // wspolczynnik mutacji
+	public final double CROSS_RATE; // wspolczynnik krzyzowania
+	public final double MAX_USAGE; // Pozadane maksymalne procentowe obciazenie
 									// kraw_dzi
-	public final double MAX_ITERATION_NO; // Maksymalna ilo__ iteracji (ilo__
-											// pokole_)
+	public final double MAX_ITERATION_NO; // Maksymalna ilosc iteracji (ilosc
+											// pokolen)
 	public ArrayList<Graph> graph_list; // badany graf
 	public ArrayList<Graph> new_graph_list; // badany graf
 
@@ -51,6 +51,9 @@ public class Genetic {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void createInitialPopulation(Graph g) {
 
 		for (int i = 0; i < this.INITIAL_POPULATION_NO; i++) {
@@ -67,12 +70,7 @@ public class Genetic {
 		tmp = g.clone();
 
 		tmp.randomWeights(this.MAX_WEIGHT, g.max_capacity);
-		// System.out.println("tmp g");
-		// tmp.printAdjList();
-		// System.out.println(" end tmp g");
-
 		this.new_graph_list.add(tmp);
-
 	}
 
 	public void evaluatePopulation() {
@@ -134,7 +132,11 @@ public class Genetic {
 
 	public void printUsages() {
 		for (Graph g : graph_list)
-			System.out.println("Usage: " + g.highestUsage);
+			System.out.println("Uzycie: " + g.highestUsage);
+	}
+	
+	public void printHighestUsage() {
+		System.out.println("Najwieksze uzycie: " + graph_list.get(0).highestUsage);		
 	}
 
 	public void getChild(Graph g) {
@@ -166,15 +168,13 @@ public class Genetic {
 
 			evaluatePopulation();
 
-			if (i % 1 == 0) { // TODO add if debug here
+			if (i % 50 == 0) {
 				System.out
 						.println("new population "
 								+ i
 								+ "===================================================");
-				printUsages();
-				// for (Graph g : graph_list) {
-				// //g.printAdjList();
-				// }
+				//printUsages();
+				printHighestUsage();
 				System.out
 						.println("end population "
 								+ i
@@ -187,13 +187,9 @@ public class Genetic {
 				break;
 			}
 
-			// if (System.currentTimeMillis() - startTime > 10000 && false) {
-			// System.out.println("Time exceeded. Finishing computation.");
-			// break;
-			// }
-
+			// ograniczenie na czas wykonania (10 sekund)
 			if (System.currentTimeMillis() - startTime > 10000) {
-				System.out.println("Time exceeded. Finishing computation.");
+				System.out.println("Ups. 10 sec passed. Time exceeded.");
 				break;
 			}
 
