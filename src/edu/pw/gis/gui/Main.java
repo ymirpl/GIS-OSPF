@@ -18,7 +18,7 @@ import edu.pw.gis.parser.SNDParser;
 public class Main {
 
 
-	static String FILE_PATH = "xml/simple_test_0.xml";
+	static String FILE_PATH = "xml/big_test.xml";
 	static int MAX_WEIGHT = 65535;
 	static int INITIAL_POPULATION = 64;
 	static double ALFA_RATE = 0.2;

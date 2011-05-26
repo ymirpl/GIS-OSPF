@@ -3,7 +3,7 @@ package edu.pw.gis.graph;
 import java.util.ArrayList;
 
 /**
- * Element list sasiedztwa. Zawiera 
+ * Element list sasiedztwa. Zawiera liste krawedzi wraz z wierzcholkami do ktorych prowadza oraz wierzcholek ktorego dotyczy ta lista jego sasiadow.
  */
 public class AdjElement {
 	public Node n;

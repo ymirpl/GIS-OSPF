@@ -14,12 +14,12 @@ import edu.pw.gis.parser.SNDParser;
 public class Genetic {
 
 	public final int MAX_WEIGHT; // maksymalna waga kraw_dzi
-	public final int INITIAL_POPULATION_NO; // liczba populacji (ilo__ wektor_w)
+	public final int INITIAL_POPULATION_NO; // liczba populacji (ilosc grafow)
 	public final double ALFA_RATE; // wsp_czynnik wyboru klasy A
 	public final double BETA_RATE; // wsp_czynnik wyboru klasy B
 	public final double MUTATION_RATE; // wsp_czynnik mutacji
 	public final double CROSS_RATE; // wsp_czynnik krzy_owania
-	public final double MAX_USAGE; // Po__dane maksymalne procentowe obci__enie
+	public final double MAX_USAGE; // Pozadane maksymalne procentowe obci__enie
 									// kraw_dzi
 	public final double MAX_ITERATION_NO; // Maksymalna ilo__ iteracji (ilo__
 											// pokole_)

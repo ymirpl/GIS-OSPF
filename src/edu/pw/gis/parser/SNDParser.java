@@ -19,20 +19,17 @@ import edu.pw.gis.graph.Node;
  */
 public class SNDParser {
 
-	public int nodes_no = 0;
-	public int edges_no = 0;
-	public int links_no = 0;
-	public double max_capacity = 0;
+	public int nodes_no = 0; // liczba wierzcholkow
+	public int edges_no = 0; // liczba krawedzi (nieuzywane)
+	public int links_no = 0; // nieuzywane
+	public double max_capacity = 0; // maksymalna pojemnosc krawdzi w sieci
 	public Graph graph;
 	public String xml_network_path;
 
 	public SNDParser(String xml_network_path) {
-		countNodesAndEdgesSNDNetworkXML(xml_network_path);
-		
+		countNodesAndEdgesSNDNetworkXML(xml_network_path); // konieczne przeliczenie wierzcholkow przed inicjalizacja struktury grafu
 		graph = new Graph(nodes_no);
-		
 		graph.max_capacity = max_capacity;
-
 		readSNDNetworkXML(xml_network_path);
 	}
 
@@ -105,6 +102,9 @@ public class SNDParser {
 		}
 	}
 
+	/** 
+	 * Metoda parsuje xml z sieci. Przystosowana do formatow uzywanch przez sndlib
+	 */
 	public void readSNDNetworkXML(String xml_path) {
 
 		try {
@@ -125,7 +125,7 @@ public class SNDParser {
 				boolean b_demand_target = false;
 				boolean b_demand_value = false;
 
-				// Parametry wêz³a
+				// Parametry wï¿½zï¿½a
 				int node_id = -1;
 				double node_coord_x = -1.0;
 				double node_coord_y = -1.0;
@@ -134,7 +134,7 @@ public class SNDParser {
 				String demand_target_node_name = "";
 				double demand_value = -1.0;
 
-				// Parametry krawêdzi
+				// Parametry krawï¿½dzi
 				int edge_id = -1;
 				double edge_capacity; // pojemnosc
 				Node edge_source;
@@ -212,10 +212,13 @@ public class SNDParser {
 						graph.addEdge(edge);
 
 					}
+					
 					if (b_edge && qName.equalsIgnoreCase("link")) {
 						b_edge = false;
 					}
 
+					
+					// wypelniamy macierz przeplywow
 					if (b_demand && qName.equalsIgnoreCase("demand")) {
 
 						int i = nodes_list.indexOf(demand_source_node_name);
@@ -295,6 +298,9 @@ public class SNDParser {
 		}
 	}
 
+	/**
+	 * Test poprwnosci dzialania parsera
+	 */
 	public static void main(String argv[]) {
 		SNDParser snd_parser = new SNDParser("xml/simple_test_graph.xml");
 		System.out.println("liczba wezlow: " + snd_parser.nodes_no);

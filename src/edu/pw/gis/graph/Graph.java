@@ -6,7 +6,7 @@ package edu.pw.gis.graph;
 import java.util.*;
 
 public class Graph {
-	public List<Edge> edgeList = new ArrayList<Edge>(); // krawedzie 
+	public List<Edge> edgeList = new ArrayList<Edge>(); // krawedzie
 	public List<Node> nodeList = new ArrayList<Node>(); // wezly
 	public double highestUsage = 0.0; // maksymlane uzycie (f-cja celu)
 
@@ -17,18 +17,22 @@ public class Graph {
 													// wezlow
 	public ArrayList<AdjElement> adjList; // listy sasiedztwa dla kazdego
 											// wierzcholka
-	public ArrayList<AdjElement> revertedAdjList; // lista sasiedztwa, w ktorej kierunki wszystkich krawedzi sa odwrocone
+	public ArrayList<AdjElement> revertedAdjList; // lista sasiedztwa, w ktorej
+													// kierunki wszystkich
+													// krawedzi sa odwrocone
 
-	public double max_capacity; // pojemnosc najbardziej pojemnej krawedzi w sieci
+	public double max_capacity; // pojemnosc najbardziej pojemnej krawedzi w
+								// sieci
 
 	Random rand = new Random();
-	
+
 	public Graph(int noNodes) {
 		this.noNodes = noNodes;
 
 		this.flowMatrix = new ArrayList<ArrayList<Double>>(this.noNodes);
 
-		for (int i = 0; i < this.noNodes; ++i) { // macierz przeplywow -- inicjalizacja rozmiarow
+		for (int i = 0; i < this.noNodes; ++i) { // macierz przeplywow --
+													// inicjalizacja rozmiarow
 			this.flowMatrix.add(i, new ArrayList<Double>(this.noNodes));
 			for (int j = 0; j < this.noNodes; ++j) {
 				this.flowMatrix.get(i).add(j, Double.parseDouble("0.0"));
@@ -74,7 +78,8 @@ public class Graph {
 	}
 
 	/**
-	 * Wypisuje krawedzie polaczone z wierzcholekim, ich wagi, pojemnosci, przeplywy
+	 * Wypisuje krawedzie polaczone z wierzcholekim, ich wagi, pojemnosci,
+	 * przeplywy
 	 */
 	public void printAdjList() {
 		for (AdjElement element : this.adjList) {
@@ -100,11 +105,16 @@ public class Graph {
 		System.out.println("");
 	}
 
+	/**
+	 * Klonowanie grafu. Konieczne jest przepisanie wszystkich wezlwo i krawedzi
+	 * za pomoca metoda addNode i addEdge tak, aby byly zapisane odpowiednio w
+	 * strukturach wewnetrznych grafu
+	 */
 	public Graph clone() {
 		Graph result = new Graph(this.noNodes);
 
 		result.noNodes = this.noNodes;
-		
+
 		result.max_capacity = this.max_capacity;
 
 		result.highestUsage = 0.0;
@@ -115,7 +125,8 @@ public class Graph {
 
 		for (Edge e : this.edgeList) {
 			result.addEdge(new Edge(e.id, e.capacity, result.nodeList
-					.get(e.source.id), result.nodeList.get(e.target.id), e.name, e.usage));
+					.get(e.source.id), result.nodeList.get(e.target.id),
+					e.name, e.usage));
 		}
 
 		for (int i = 0; i < result.noNodes; ++i) {
