@@ -80,8 +80,8 @@ public class Genetic {
 
 		for (Graph g : graph_list) {
 			pool.submit(new FlowCalculator(g));
-//			FlowCalculator f = new FlowCalculator(g);
-//			f.run();
+			// FlowCalculator f = new FlowCalculator(g);
+			// f.run();
 		}
 
 		 pool.shutdown();

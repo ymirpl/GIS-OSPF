@@ -54,8 +54,8 @@ public class Graph {
 
 	public void randomWeights(int max_weight, double max_capacity) {
 		
-		int tmp;
-		int j;
+//		int tmp;
+//		int j;
 
 		//
 
