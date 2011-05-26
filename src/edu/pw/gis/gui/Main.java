@@ -22,7 +22,7 @@ public class Main {
 
 		SNDParser snd_parser = new SNDParser("xml/big_test.xml");
 		
-		Genetic genetic = new Genetic(10, 100, 0.2, 0.7, 0.01, 0.7, 0.00, 7000);
+		Genetic genetic = new Genetic(10, 100, 0.0, 0.0, 0.01, 0.7, 0.00, 7000);
 
 		genetic.createInitialPopulation(snd_parser.graph);
 		

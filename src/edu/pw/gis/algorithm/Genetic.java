@@ -180,7 +180,7 @@ public class Genetic {
 				break;
 			}
 			
-			if (System.currentTimeMillis() - startTime > 10000) {
+			if (System.currentTimeMillis() - startTime > 10000 && false) {
 				System.out.println("Time exceeded. Finishing computation.");
 				break;
 			}
@@ -196,7 +196,7 @@ public class Genetic {
 		// TODO Auto-generated method stub
 		SNDParser snd_parser = new SNDParser("xml/simple_test_graph.xml");
 		
-		Genetic genetic = new Genetic(10, 3, 0.2, 0.7, 0.01, 0.5, 0.5, 100);
+		Genetic genetic = new Genetic(10, 3, 0.0, 0.0, 0.01, 0.5, 0.5, 100);
 		genetic.createInitialPopulation(snd_parser.graph);
 
 		// genetic.graph_list.get(0).addNode(new Node());

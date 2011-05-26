@@ -105,7 +105,7 @@ public class Graph implements Cloneable {
 		Graph result = new Graph(this.noNodes);
 
 		result.noNodes = this.noNodes;
-		result.highestUsage = this.highestUsage;
+		result.highestUsage = 0.0;
 
 		for (Node n : this.nodeList) {
 			result.addNode(new Node(n.id, n.draw_x, n.draw_y, n.name));
