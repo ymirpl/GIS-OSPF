@@ -9,6 +9,7 @@ public class Dijkstra {
 	private int startNodeId = -1;
 	private PriorityQueue<Node> Q;
 	private ArrayList<NodeEdge> pathList;
+	public boolean debug;
 	
 	public Dijkstra(Graph g) {
 		this.g = g;
@@ -32,12 +33,12 @@ public class Dijkstra {
 	}
 	
 	public void compute() throws IllegalArgumentException {
-		
+		HashMap<Node, Edge> parallel = new HashMap<Node, Edge>(); // trzymamy rozwiazania dla krawedzi rownoleglych
 		if (startNodeId < 0) {
 			throw new IllegalArgumentException("Set start node first.");
 		}
 		
-		setInfinityDistance();
+		resetMeasures();
 		
 		Node startNode = g.nodeList.get(startNodeId);
 		Q.remove(startNode);
@@ -48,8 +49,9 @@ public class Dijkstra {
 			Node u = Q.poll();
 			
 			if (u.distance == Integer.MAX_VALUE) {
-				System.out.println("Niespojny");
-				// graf niespojny
+				if (this.debug)
+					System.out.println("Niespojny");
+					// graf niespojny
 				break;
 			}
 
@@ -57,8 +59,17 @@ public class Dijkstra {
 			for (NodeEdge v : g.revertedAdjList.get(u.id).list) { // use reverted list
 				int new_distance = u.distance + v.e.weight;
 				if (new_distance <= v.n.distance) {
-					v.n.outDegree += 1;
+					
+					if (parallel.containsKey(v.n)) { // juz jest krawedz to tego wierzcholka, trzeba ja usunac z Tree i nie dodawac outDegree
+						parallel.get(v.n).inTree = false;
+					}
+					else {
+						v.n.outDegree += 1;
+					}
+					
 					v.e.inTree = true;
+					parallel.put(v.n, v.e); // do tego wezla prowadzi taka krawedz najlepiej
+					
 					if (new_distance < v.n.distance) {
 						Q.remove(v.n);
 						v.n.distance = new_distance;
@@ -70,7 +81,7 @@ public class Dijkstra {
 
 	}
 	
-	private void setInfinityDistance() {
+	private void resetMeasures() {
 		for(Node n: this.g.nodeList) {
 			n.distance = Integer.MAX_VALUE;
 			n.outDegree = 0;
@@ -79,6 +90,7 @@ public class Dijkstra {
 		for(Edge e: this.g.edgeList) {
 			e.inTree = false;
 			e.flow = 0;
+			e.usage = 0;
 		}
 	}
 	

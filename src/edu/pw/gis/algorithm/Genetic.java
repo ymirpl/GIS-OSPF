@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import edu.pw.gis.graph.Edge;
 import edu.pw.gis.graph.Graph;
@@ -24,8 +26,10 @@ public class Genetic {
 	public ArrayList<Graph> graph_list; // badany graf
 	public ArrayList<Graph> new_graph_list; // badany graf
 
-	private int cardA; // liczba osobnikow w klasie A
-	private int cardB; // liczba osobnikow w klasie B
+	private final int cardA; // liczba osobnikow w klasie A
+	private final int cardB; // liczba osobnikow w klasie B
+
+	public boolean debug = false;
 
 	public Genetic(int max_weight, int initial_population, double alfa_rate,
 			double beta_rate, double mutation_rate, double cross_rate,
@@ -46,43 +50,41 @@ public class Genetic {
 
 	}
 
-	public void createInitialPopulation(Graph g)
-			throws CloneNotSupportedException {
-		// TODO tutaj potrzebne g__bokie kopiowanie!!!
+	public void createInitialPopulation(Graph g) {
+
 		for (int i = 0; i < this.INITIAL_POPULATION_NO; i++) {
 			generateCloneWithRandomWeights(g);
-			
 		}
+
+		graph_list = new_graph_list;
+		new_graph_list = new ArrayList<Graph>();
 	}
 
 	public void generateCloneWithRandomWeights(Graph g) {
-		Random rand = new Random();
 		Graph tmp;
-			SNDParser snd_parser = new SNDParser();
-			snd_parser.countNodesAndEdgesSNDNetworkXML("xml/simple_test_graph.xml");
-		
-			snd_parser.graph = new Graph(snd_parser.nodes_no);
 
-			snd_parser.readSNDNetworkXML("xml/simple_test_graph.xml");
-			
-			tmp = snd_parser.graph;
-			for (int j = 0; j < tmp.edgeList.size(); j++) {
-				Edge e = tmp.edgeList.get(j);
-				e.weight = (int) (rand.nextInt(this.MAX_WEIGHT + 1)); //TODO dzielienie przez kapacity usuniecie losowania wag
-			//	e.weight = j+1; // TODO sztywne wagi
-			}
-
-		this.graph_list.add(tmp);
+		try {
+			tmp = g.clone();
+			tmp.randomWeights(this.MAX_WEIGHT);
+			this.new_graph_list.add(tmp);
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void evaluatePopulation() {
-		for (Graph g : graph_list) {
-			FlowCalculator c = new FlowCalculator(g);
-			c.compute();
-			g.printAdjList();
-			g.getHighestUsage();
-			System.out.println(g.highestUsage);
+		ExecutorService pool = Executors.newFixedThreadPool(3);
 
+		for (Graph g : graph_list) {
+			pool.execute(new FlowCalculator(g));
+			// FlowCalculator f = new FlowCalculator(g);
+			// f.run();
+		}
+
+		pool.shutdown();
+
+		while (!pool.isTerminated()) {
+			// czekamy na wykonanie wszystkich watkow
 		}
 
 		// sortowanie celem pozniejszego podzialu na klasy
@@ -110,20 +112,23 @@ public class Genetic {
 				getChild(graph_list.get(0));
 			}
 
-			if (i >= cardB) { // klasa C, umieraja, a na ich miejsce losowane sa
-								// nowe
-				generateCloneWithRandomWeights(graph_list
-						.get(0)); // wszystko jedno, z jakiego sklonujemy
+			else if (i >= cardB) { // klasa C, umieraja, a na ich miejsce
+									// losowane sa
+									// nowe
+				generateCloneWithRandomWeights(graph_list.get(0)); // wszystko
+																	// jedno, z
+																	// jakiego
+																	// sklonujemy
 			}
 		}
 
 		graph_list = new_graph_list;
 		new_graph_list = new ArrayList<Graph>();
 	}
-	
+
 	public void printUsages() {
-		for (Graph g: graph_list)
-			System.out.println("Usage: " + g.getHighestUsage());
+		for (Graph g : graph_list)
+			System.out.println("Usage: " + g.highestUsage);
 	}
 
 	public void getChild(Graph g) {
@@ -139,7 +144,7 @@ public class Genetic {
 			for (int j = 0; j < child.edgeList.size(); j++) {
 				Edge e = child.edgeList.get(j);
 				if (rand.nextFloat() < MUTATION_RATE) // mutacja
-					e.weight = (int) (rand.nextInt(this.MAX_WEIGHT + 1));
+					e.weight = (int) (rand.nextInt(this.MAX_WEIGHT) + 1);
 				else if (rand.nextFloat() < CROSS_RATE)
 					e.weight = dad.edgeList.get(j).weight;
 				else
@@ -150,7 +155,30 @@ public class Genetic {
 			e1.printStackTrace();
 			child = null;
 		}
-		new_graph_list.add(child); //TODO czy to zabija???
+		new_graph_list.add(child);
+	}
+
+	public void go() {
+		for (int i = 0; i < MAX_ITERATION_NO; i++) {
+
+			evaluatePopulation();
+
+			if (i % 20 == 0) { // TODO add if debug here
+				System.out
+						.println("new population "
+								+ i
+								+ "===================================================");
+				printUsages();
+			}
+
+			if (graph_list.get(0).highestUsage <= MAX_USAGE) {
+				System.out.println("Desired usage reached:"
+						+ graph_list.get(0).highestUsage);
+				break;
+			}
+
+			evolutionStep();
+		}
 	}
 
 	/**
@@ -165,12 +193,7 @@ public class Genetic {
 		snd_parser.readSNDNetworkXML("xml/simple_test_graph.xml");
 
 		Genetic genetic = new Genetic(10, 3, 0.2, 0.7, 0.01, 0.5, 0.5, 100);
-		try {
-			genetic.createInitialPopulation(snd_parser.graph);
-		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		genetic.createInitialPopulation(snd_parser.graph);
 
 		// genetic.graph_list.get(0).addNode(new Node());
 		// genetic.graph_list.get(1).nodeList.get(0).name="DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDddd";

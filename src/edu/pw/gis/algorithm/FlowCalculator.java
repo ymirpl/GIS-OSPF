@@ -4,9 +4,10 @@ import edu.pw.gis.graph.*;
 
 import java.util.*;
 
-public class FlowCalculator {
+public class FlowCalculator implements Runnable {
 	public Graph g;
 	private Dijkstra d;
+	public boolean debug = false;
 
 	public FlowCalculator(Graph g) {
 		this.g = g;
@@ -20,7 +21,6 @@ public class FlowCalculator {
 				// compute dijkstra begging from each source
 				if (row.get(target) > 0 && g.nodeList.get(target).done != true) {
 					// we go ;)
-					g.cleanDistances();
 					d.setStartNode(target);
 					d.compute();
 					calculateFlows(target);
@@ -29,8 +29,11 @@ public class FlowCalculator {
 			}
 			
 		}
-		for (Edge e: g.edgeList) {
-			e.usage = e.flowSum/e.capacity;
+		for (Edge e : g.edgeList) {
+			e.usage = e.flowSum / e.capacity;
+			if (e.usage > g.highestUsage) {
+				g.highestUsage = e.usage;
+			}
 		}
 	}
 
@@ -57,9 +60,12 @@ public class FlowCalculator {
 
 		for (Edge e : g.edgeList) {
 			e.flowSum += e.flow;
-
 		}
-
+	}
+	
+	@Override
+	public void run() {
+		this.compute();
 	}
 
 	public static void testOne() {
