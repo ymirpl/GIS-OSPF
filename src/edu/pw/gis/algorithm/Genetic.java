@@ -59,11 +59,11 @@ public class Genetic {
 		Random rand = new Random();
 		Graph tmp;
 			SNDParser snd_parser = new SNDParser();
-			snd_parser.countNodesAndEdgesSNDNetworkXML("xml/big_test.xml");
+			snd_parser.countNodesAndEdgesSNDNetworkXML("xml/simple_test_graph.xml");
 		
 			snd_parser.graph = new Graph(snd_parser.nodes_no);
 
-			snd_parser.readSNDNetworkXML("xml/big_test.xml");
+			snd_parser.readSNDNetworkXML("xml/simple_test_graph.xml");
 			
 			tmp = snd_parser.graph;
 			for (int j = 0; j < tmp.edgeList.size(); j++) {
