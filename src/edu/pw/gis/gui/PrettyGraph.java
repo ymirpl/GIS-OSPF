@@ -4,8 +4,8 @@ import edu.pw.gis.graph.*;
 import edu.pw.gis.parser.SNDParser;
 import edu.uci.ics.jung.algorithms.layout.FRLayout;
 import edu.uci.ics.jung.graph.DirectedSparseGraph;
+import edu.uci.ics.jung.graph.DirectedSparseMultigraph;
 import edu.uci.ics.jung.graph.Graph;
-import edu.uci.ics.jung.graph.UndirectedSparseGraph;
 import edu.uci.ics.jung.graph.util.EdgeType;
 import edu.uci.ics.jung.visualization.VisualizationViewer;
 
@@ -22,7 +22,7 @@ public class PrettyGraph
 
 		SNDParser snd_parser = new SNDParser("xml/simple_test_graph.xml");
 		
-		Genetic genetic = new Genetic(10, 100, 0.2, 0.7, 0.01, 0.7, 0.00, 700);
+		Genetic genetic = new Genetic(10, 100, 0.2, 0.7, 0.01, 0.7, 0.00, 1);
 
 		genetic.createInitialPopulation(snd_parser.graph);
 
@@ -36,14 +36,14 @@ public class PrettyGraph
     }
  
 	public void getGraph(edu.pw.gis.graph.Graph g) throws IOException {
-		jungGraph = new DirectedSparseGraph<String, Integer>();
+		jungGraph = new DirectedSparseMultigraph<String, Integer>();
 		for(Node n: g.nodeList) {
 			jungGraph.addVertex(n.name);
 		}
 		
 		int i = 0;
 		for (Edge e: g.edgeList) {
-			
+			System.out.println(e.id + e.source.name + e.target.name);
 			jungGraph.addEdge(e.id, e.source.name, e.target.name, EdgeType.DIRECTED);
 		}
 		
