@@ -36,20 +36,20 @@ public class Main {
 		int decision;
 		do {
 			System.out.println("Wybierz: ");
-			System.out.println("1. Sciezka do pliku (usatwione = " + FILE_PATH + ")");
-			System.out.println("2. Ustaw maksymalna wage (usatwione = " + MAX_WEIGHT
+			System.out.println("1. Sciezka do pliku (ustawione = " + FILE_PATH + ")");
+			System.out.println("2. Ustaw maksymalna wage (ustawione = " + MAX_WEIGHT
 					+ ")");
-			System.out.println("3. Usatw rozmiar populacji (usatwione = "
+			System.out.println("3. Usatw rozmiar populacji (ustawione = "
 					+ INITIAL_POPULATION + ")");
-			System.out.println("4. Ustaw wsp. alfa (usatwione = " + twoDigit.format(ALFA_RATE) + ")");
-			System.out.println("5. Ustaw wsp. beta (usatwione = " + twoDigit.format(BETA_RATE) + ")");
-			System.out.println("6. Ustaw wsp. mutacji (usatwione = "
-					+ MUTATION_RATE + ")");
-			System.out.println("7. Ustaw wsp. krosowania (usatwione = " + twoDigit.format(CROSS_RATE)
+			System.out.println("4. Ustaw wsp. alfa (ustawione = " + twoDigit.format(ALFA_RATE) + ")");
+			System.out.println("5. Ustaw wsp. beta (ustawione = " + twoDigit.format(BETA_RATE) + ")");
+			System.out.println("6. Ustaw wsp. mutacji (ustawione = "
+					+ twoDigit.format(MUTATION_RATE) + ")");
+			System.out.println("7. Ustaw wsp. krosowania (ustawione = " + twoDigit.format(CROSS_RATE)
 					+ ")");
-			System.out.println("8. Ustaw uzycie zadowalajace (usatwione = " + twoDigit.format(MAX_USAGE)
+			System.out.println("8. Ustaw uzycie zadowalajace (ustawione = " + twoDigit.format(MAX_USAGE)
 					+ ")");
-			System.out.println("9. Ustaw maksymalna liczbe pokolen (usatwione = "
+			System.out.println("9. Ustaw maksymalna liczbe pokolen (ustawione = "
 					+ MAX_ITERATION_NO + ")");
 			System.out.println("10. Uruchom algorytm");
 			System.out.println("0. Zakoncz");
@@ -111,7 +111,7 @@ public class Main {
 		} while (decision != 0);
 
 		System.out.println("-------------------------------------------");
-		System.out.println("Program ended");
+		System.out.println("Zakonczono dzialanie programu.");
 		System.out.println("-------------------------------------------");
 	}
 
@@ -131,6 +131,7 @@ public class Main {
 		
 //		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Container content = frame.getContentPane();
+		content.removeAll();
 		content.add(new PrettyGraph(top));
 		frame.pack();
 		frame.setVisible(true);

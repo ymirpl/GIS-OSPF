@@ -65,6 +65,7 @@ public class Graph {
 				; // przeskalowanie wylosowanej wagi tak, aby korespondowala z
 					// pojemnosciami krawedzi
 			tmp = rand.nextInt(max_weight);
+			// e.weight = tmp;
 			e.weight = Math.min((int) (tmp * j / e.capacity) + 1, max_weight);
 			// wagi o wiekszych pojemnosciach dostaja mniejsze wagi
 		}
